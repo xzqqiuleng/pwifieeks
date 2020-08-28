@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/preview_top_menu_container"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/preview_toMenu_height"
+    android:background="@color/background"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/preview_toMenu_height"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <com.peek.camera.view.view.CompositeImageText xmlns:ns1="http://schemas.android.com/apk/res-auto"
+            xmlns:ns2="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/Records"
+            style="@style/style_top_menu_main"
+            ns1:imgImage="@mipmap/record"
+            ns2:textString="@string/record" />
+
+        <com.peek.camera.view.view.CompositeImageText xmlns:ns3="http://schemas.android.com/apk/res-auto"
+            xmlns:ns4="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/screenShot"
+            style="@style/style_top_menu_main"
+            ns3:imgImage="@mipmap/shot"
+            ns4:textString="@string/capture" />
+
+        <com.peek.camera.view.view.CompositeImageText xmlns:ns5="http://schemas.android.com/apk/res-auto"
+            xmlns:ns6="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/biaoji"
+            style="@style/style_top_menu_main"
+            ns5:imgImage="@mipmap/pencil"
+            ns6:textString="@string/biaoji" />
+
+        <com.peek.camera.view.view.CompositeImageText xmlns:ns7="http://schemas.android.com/apk/res-auto"
+            xmlns:ns8="http://schemas.android.com/apk/res-auto"
+            xmlns:ns9="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/ranging"
+            style="@style/style_top_menu_main"
+            ns7:imgImage="@mipmap/ruler_gray"
+            ns8:textColor="@color/white"
+            ns9:textString="@string/celiang" />
+
+        <com.peek.camera.view.view.CompositeImageText xmlns:ns10="http://schemas.android.com/apk/res-auto"
+            xmlns:ns11="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/preview_video"
+            style="@style/style_top_menu_main"
+            ns10:imgImage="@mipmap/playback1"
+            ns11:textString="@string/backVideo" />
+
+        <com.peek.camera.view.view.CompositeImageText xmlns:ns12="http://schemas.android.com/apk/res-auto"
+            xmlns:ns13="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/preview_picture"
+            style="@style/style_top_menu_main"
+            ns12:imgImage="@mipmap/picfile"
+            ns13:textString="@string/picture" />
+
+        <com.peek.camera.view.view.CompositeImageText xmlns:ns14="http://schemas.android.com/apk/res-auto"
+            xmlns:ns15="http://schemas.android.com/apk/res-auto"
+            xmlns:ns16="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/preview_clearFog"
+            style="@style/style_top_menu_main"
+            ns14:imgImage="@mipmap/chuwu_off"
+            ns15:textColor="@color/white"
+            ns16:textString="@string/chuWu" />
+
+        <com.peek.camera.view.view.CompositeImageText xmlns:ns17="http://schemas.android.com/apk/res-auto"
+            xmlns:ns18="http://schemas.android.com/apk/res-auto"
+            xmlns:ns19="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/preview_locate"
+            style="@style/style_top_menu_main"
+            ns17:imgImage="@mipmap/locate_off"
+            ns18:textColor="@color/white"
+            ns19:textString="@string/locate" />
+    </LinearLayout>
+
+    <com.peek.camera.view.view.CompositeImageText xmlns:ns20="http://schemas.android.com/apk/res-auto"
+        xmlns:ns21="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/preview_moveAngel"
+        style="@style/style_top_menu_main"
+        android:layout_width="wrap_content"
+        android:clickable="false"
+        ns20:imgImage="@mipmap/angle"
+        ns21:textString="@string/angle" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <com.peek.camera.view.view.CompositeImageText xmlns:ns22="http://schemas.android.com/apk/res-auto"
+            xmlns:ns23="http://schemas.android.com/apk/res-auto"
+            xmlns:ns24="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/preview_connectState"
+            style="@style/style_top_menu_main"
+            android:layout_width="wrap_content"
+            ns22:imgImage="@mipmap/disconnect"
+            ns23:textColor="@color/red"
+            ns24:textString="@string/firstConnectState" />
+
+        <FrameLayout
+            android:layout_width="@dimen/preview_topMenu_locateImg_height"
+            android:layout_height="@dimen/preview_topMenu_locateImg_height"
+            android:layout_gravity="center_horizontal">
+
+            <ImageView
+                android:id="@+id/img_ConnectHint"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_gravity="bottom|right|center_vertical|center_horizontal|center"
+                android:layout_marginBottom="2dp"
+                android:src="@mipmap/hint"
+                android:visibility="gone" />
+        </FrameLayout>
+    </FrameLayout>
+
+    <com.peek.camera.view.view.CompositeImageText xmlns:ns25="http://schemas.android.com/apk/res-auto"
+        xmlns:ns26="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/preview_setting"
+        style="@style/style_top_menu_main"
+        ns25:imgImage="@mipmap/setting"
+        ns26:textString="@string/setting" />
+
+    <include layout="@layout/battery_layout" />
+</LinearLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CompositeImageText">
+        <attr name="textString" format="string"/>
+        <attr name="imgImage" format="reference"/>
+        <attr name="textColor" format="color"/>
+    </declare-styleable>
+    <declare-styleable name="MySpinner">
+        <attr name="kswAnimationDuration" format="integer">
+        </attr>
+        <attr name="kswAutoAdjustTextPosition" format="boolean">
+        </attr>
+        <attr name="kswBackColor" format="reference|color">
+        </attr>
+        <attr name="kswBackDrawable" format="reference">
+        </attr>
+        <attr name="kswBackMeasureRatio" format="float">
+        </attr>
+        <attr name="kswBackRadius" format="reference|dimension">
+        </attr>
+        <attr name="kswFadeBack" format="boolean">
+        </attr>
+        <attr name="kswTextMarginH" format="dimension">
+        </attr>
+        <attr name="kswTextOff" format="string">
+        </attr>
+        <attr name="kswTextOn" format="string">
+        </attr>
+        <attr name="kswThumbColor" format="reference|color">
+        </attr>
+        <attr name="kswThumbDrawable" format="reference">
+        </attr>
+        <attr name="kswThumbHeight" format="reference|dimension">
+        </attr>
+        <attr name="kswThumbMargin" format="reference|dimension">
+        </attr>
+        <attr name="kswThumbMarginBottom" format="reference|dimension">
+        </attr>
+        <attr name="kswThumbMarginLeft" format="reference|dimension">
+        </attr>
+        <attr name="kswThumbMarginRight" format="reference|dimension">
+        </attr>
+        <attr name="kswThumbMarginTop" format="reference|dimension">
+        </attr>
+        <attr name="kswThumbRadius" format="reference|dimension">
+        </attr>
+        <attr name="kswThumbWidth" format="reference|dimension">
+        </attr>
+        <attr name="kswTintColor" format="reference|color">
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="SwitchButton">
+
+    </declare-styleable>
+</resources>

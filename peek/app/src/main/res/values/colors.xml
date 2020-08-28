@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#282737</color>
+    <color name="backgroundDark">#171616</color>
+
+    <color name="btn_press">#50ff9900</color>
+
+    <color name="colorAccent">#ff4081</color>
+    <color name="colorBackgroudDark">#1b1b1b</color>
+    <color name="colorBase">#ff9900</color>
+    <color name="colorBase_dark">#80ff9900</color>
+    <color name="colorBase_light">#feb13e</color>
+    <color name="colorPress">#7d5720</color>
+    <color name="colorPrimary">#3f51b5</color>
+    <color name="colorPrimaryDark">#303f9f</color>
+    <color name="colorReminderText">#ebc700</color>
+    <color name="colorText">#ff9900</color>
+    <color name="color_editHint">#50ff9900</color>
+    <color name="colorview">#99ff9900</color>
+
+    <color name="dialogRecordChange">#b5282737</color>
+
+    <color name="gray_10">#4e4e4e</color>
+    <color name="half_background">#80282737</color>
+    <color name="half_gray_10">#a04e4e4e</color>
+    <color name="half_spacerlayer">#40242727</color>
+
+    <color name="hint_foreground_material_dark">@color/bright_foreground_disabled_material_dark</color>
+    <color name="hint_foreground_material_light">@color/bright_foreground_disabled_material_light</color>
+    <color name="imageRed">#eb4f38</color>
+
+    <color name="nothing">#00111111</color>
+
+    <color name="red">@android:color/holo_red_light</color>
+
+    <color name="seekbar">#939393</color>
+    <color name="spacerlayer">#242727</color>
+    <color name="suspend">#50282737</color>
+
+    <color name="toast_tv_color">#ffffff</color>
+    <color name="white">#ffffff</color>
+</resources>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/bg_dialog"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_capture_quexian_distance_edt"
+                style="@style/dialog_quexian_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:padding="5dp"
+                android:text="@string/capture_quexian_distance_e"
+                android:textColor="@color/colorText" />
+
+            <EditText
+                android:id="@+id/capture_quexian_distance_edt"
+                style="@style/dialog_quexian_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/capture_quexian_clock_tv"
+                android:background="@drawable/bg_dialog_editext"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/tv_capture_quexian_style_sp"
+                style="@style/dialog_quexian_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_capture_quexian_distance_edt"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="5dp"
+                android:padding="5dp"
+                android:text="@string/capture_quexian_style_e"
+                android:textColor="@color/colorText" />
+
+            <com.peek.camera.view.view.MySpinner
+                android:id="@+id/capture_quexian_style_sp"
+                style="@style/dialog_quexian_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/capture_quexian_distance_edt"
+                android:layout_alignBaseline="@+id/tv_capture_quexian_style_sp"
+                android:layout_toRightOf="@+id/capture_quexian_clock_tv"
+                android:background="@drawable/bg_dialog_editext" />
+
+            <TextView
+                android:id="@+id/capture_quexian_name_tv"
+                style="@style/dialog_quexian_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_capture_quexian_style_sp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="5dp"
+                android:padding="5dp"
+                android:text="@string/capture_quexian_name_e"
+                android:textColor="@color/colorText" />
+
+            <com.peek.camera.view.view.MySpinner
+                android:id="@+id/capture_quexian_name_sp"
+                style="@style/dialog_quexian_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/capture_quexian_style_sp"
+                android:layout_alignBaseline="@+id/capture_quexian_name_tv"
+                android:layout_toRightOf="@+id/capture_quexian_clock_tv"
+                android:background="@drawable/bg_dialog_editext" />
+
+            <TextView
+                android:id="@+id/capture_quexian_clock_tv"
+                style="@style/dialog_quexian_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/capture_quexian_name_tv"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="5dp"
+                android:padding="5dp"
+                android:text="@string/capture_quexian_clock_e"
+                android:textColor="@color/colorText" />
+
+            <TextView
+                android:id="@+id/tv_quexianEdit_clockShow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/capture_quexian_name_tv"
+                android:layout_alignBaseline="@+id/capture_quexian_clock_tv"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/bg_btn_circle"
+                android:clickable="true"
+                android:paddingLeft="15dp"
+                android:paddingTop="4dp"
+                android:paddingRight="15dp"
+                android:paddingBottom="4dp"
+                android:text="@string/example"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/record_dialog_edit" />
+
+            <EditText
+                android:id="@+id/capture_quexian_clock_edt"
+                style="@style/dialog_quexian_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/capture_quexian_name_sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/tv_quexianEdit_clockShow"
+                android:layout_toRightOf="@+id/capture_quexian_clock_tv"
+                android:background="@drawable/bg_dialog_editext"
+                android:inputType="number" />
+
+            <TextView
+                android:id="@+id/capture_quexian_grade_tv"
+                style="@style/dialog_quexian_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/capture_quexian_clock_tv"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="5dp"
+                android:padding="5dp"
+                android:text="@string/capture_quexian_grade_e"
+                android:textColor="@color/colorText" />
+
+            <com.peek.camera.view.view.MySpinner
+                android:id="@+id/capture_quexian_grade_sp"
+                style="@style/dialog_quexian_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/capture_quexian_clock_edt"
+                android:layout_alignBaseline="@+id/capture_quexian_grade_tv"
+                android:layout_toRightOf="@+id/capture_quexian_clock_tv"
+                android:background="@drawable/bg_dialog_editext" />
+
+            <TextView
+                android:id="@+id/capture_quexian_length_tv"
+                style="@style/dialog_quexian_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/capture_quexian_grade_tv"
+                android:layout_alignParentLeft="true"
+                android:layout_marginBottom="5dp"
+                android:padding="5dp"
+                android:text="@string/capture_quexian_length_e"
+                android:textColor="@color/colorText" />
+
+            <EditText
+                android:id="@+id/capture_quexian_length_edt"
+                style="@style/dialog_quexian_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/capture_quexian_grade_sp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/capture_quexian_clock_tv"
+                android:background="@drawable/bg_dialog_editext"
+                android:clickable="true"
+                android:focusable="true"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/capture_quexian_detail_tv"
+                style="@style/dialog_quexian_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/capture_quexian_length_tv"
+                android:layout_marginBottom="5dp"
+                android:padding="5dp"
+                android:text="@string/capture_quexian_detail_e"
+                android:textColor="@color/colorText" />
+
+            <TextView
+                android:id="@+id/capture_quexian_detail_edt"
+                style="@style/dialog_quexian_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/capture_quexian_length_edt"
+                android:layout_alignBaseline="@+id/capture_quexian_detail_tv"
+                android:layout_toRightOf="@+id/capture_quexian_clock_tv"
+                android:gravity="top"
+                android:scrollHorizontally="false"
+                android:singleLine="false" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/quexian_cancel"
+                style="@style/dialog_btn_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_circle"
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="6dp"
+                android:text="@string/cancel" />
+
+            <TextView
+                android:id="@+id/quexian_sure"
+                style="@style/dialog_btn_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_circle"
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="6dp"
+                android:text="@string/sure" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

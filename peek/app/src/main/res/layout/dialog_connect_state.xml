@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <RadioGroup
+        android:id="@+id/radioGroup_dialog_connectStatic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:checkedButton="@+id/repeater"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_connect_repeater"
+            style="@style/small_textSet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:button="@drawable/radiobutton_bg_color"
+            android:text="@string/repeater" />
+
+        <RadioButton
+            android:id="@+id/rb_connect_mainFrame"
+            style="@style/small_textSet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/radiobutton_bg_color"
+            android:text="@string/mainFrame" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/connect_first"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radioGroup_dialog_connectStatic"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/connect_text"
+            android:text="@string/videoZhuji" />
+
+        <ImageView
+            android:id="@+id/connect_video_connect"
+            android:layout_width="@dimen/connect_img_width"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:src="@mipmap/disconnect" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/connect_first"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/connect_text"
+            android:text="@string/controlZhuji" />
+
+        <ImageView
+            android:id="@+id/connect_control_connect"
+            android:layout_width="@dimen/connect_img_width"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:src="@mipmap/disconnect" />
+    </LinearLayout>
+</RelativeLayout>

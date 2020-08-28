@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfDefectType xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <DefectType>
+        <Index>0</Index>
+        <Name>No Defect</Name>
+        <Code>WQX</Code>
+    </DefectType>
+    <DefectType>
+        <Index>1</Index>
+        <Name>Structure Defect</Name>
+        <Code>JGXQX</Code>
+        <Defect>
+            <Index>0</Index>
+            <Name>Pipe Broken</Name>
+            <Code>PL</Code>
+            <Define>管道的外部压力超过自身的承受力致使管子发生破裂。其形式有纵向、环向和复合3种</Define>
+            <DefectDescribe>
+                <Level>1</Level>
+                <Content>Crack -- One or more of the following conditions exist:
+                        1) fine cracks are visible on the pipe wall;
+                        2) A small amount of sediment is generated from the cracks on thepipe wall;
+                        3) Mild peeling.
+                </Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>2</Level>
+                <Content>Rift - A significant gap has formed in the rupture, but the shape of the pipe is unaffected and the rupture does not fall off.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>3</Level>
+                <Content>Broken--The circumferential coverage of the broken or collapsed debris of the pipe wall is not more than 60°.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>4</Level>
+                <Content>Collapse--One or more of the following conditions exist:
+                       1) The circumferential coverage of the crack, crack or broken edge of the pipe material is greater than the arc length of 60°;
+                       2) The circumferential extent of the wall material falling off is greater than the arc length of 60°.
+                </Content>
+            </DefectDescribe>
+        </Defect>
+        <Defect>
+            <Index>1</Index>
+            <Name>Deformation</Name>
+            <Code>BX</Code>
+            <Define>管道受外力挤压造成形状变异</Define>
+            <DefectDescribe>
+                <Level>1</Level>
+                <Content>The deformation is not more than 5% of the pipe diameter.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>2</Level>
+                <Content>The deformation is 5%~15% of the pipe diameter.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>3</Level>
+                <Content>Deformed to 15% to 25% of pipe diameter</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>4</Level>
+                <Content>The deformation is greater than 25% of the pipe diameter.</Content>
+            </DefectDescribe>
+        </Defect>
+        <Defect>
+            <Index>2</Index>
+            <Name>Corrosion</Name>
+            <Code>FS</Code>
+            <Define>The inner wall of the pipe is eroded and lost or peeled off, and the surface of the pipe is rough or steel exposed.</Define>
+            <DefectDescribe>
+                <Level>1</Level>
+                <Content>Mild corrosion - the surface is slightly peeled off and the surface of the tube is uneven.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>2</Level>
+                <Content>Moderate corrosion - surface flaking reveals coarse aggregate or steel.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>3</Level>
+                <Content>Severe corrosion - coarse aggregate or steel bars are completely exposed.</Content>
+            </DefectDescribe>
+        </Defect>
+        <Defect>
+            <Index>3</Index>
+            <Name>Joint Displaced</Name>
+            <Code>CK</Code>
+            <Define>同一接口的两个管口产生横向偏差， 未处于管道的正确位置</Define>
+            <DefectDescribe>
+                <Level>1</Level>
+                <Content>Mild joint displaced - the pipe joint displaced are not more than 1/2 of the pipe wall thickness.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>2</Level>
+                <Content>Moderately joint displaced - the pipe jonit displaced are between 1/2 and 1 of the pipe wall thickness.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>3</Level>
+                <Content>Severely joint displaced--the pipe joint displaced are 1~2 times the thickness of the pipe wall.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>4</Level>
+                <Content>More severely joint displaced - the pipe jonit displaced are more than twice the thickness of the pipe wall.</Content>
+            </DefectDescribe>
+        </Defect>
+        <Defect>
+            <Index>4</Index>
+            <Name>ups and downs</Name>
+            <Code>QF</Code>
+            <Define>接口位置低处形成洼水</Define>
+            <DefectDescribe>
+                <Level>1</Level>
+                <Content>Fluctuation height / pipe diameter ≤ 20%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>2</Level>
+                <Content>20% &lt; undulation / diameter ≤ 35%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>3</Level>
+                <Content>35% &lt; undulation / pipe diameter ≤ 50%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>4</Level>
+                <Content>Fluctuatin height / diameter &gt; 50%.</Content>
+            </DefectDescribe>
+        </Defect>
+        <Defect>
+            <Index>5</Index>
+            <Name>Disjointed</Name>
+            <Code>TJ</Code>
+            <Define>两根管道的端部未充分接合或接口脱离</Define>
+            <DefectDescribe>
+                <Level>1</Level>
+                <Content>Lightly disjointed - a small amount of mud is squeezed into the end of the pipe.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>2</Level>
+                <Content>Moderate disjointed - the disjoint distance is no more than 20mm.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>3</Level>
+                <Content>Severe disjoint - the disjoint distance is 20mm~50mm.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>4</Level>
+                <Content>More Severe disjoint - the disjoint distance is 50mm or more.</Content>
+            </DefectDescribe>
+        </Defect>
+        <Defect>
+            <Index>6</Index>
+            <Name>Interface material shedding</Name>
+            <Code>TL</Code>
+            <Define>橡胶圈、沥青、水泥等类似的接口材料进入管道</Define>
+            <DefectDescribe>
+                <Level>1</Level>
+                <Content>The interface material is visible in the above part of the horizontal centerline of the pipe.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>2</Level>
+                <Content>The interface material is visible in the lower part of the horizontal centerline of the pipe.</Content>
+            </DefectDescribe>
+        </Defect>
+        <Defect>
+            <Index>7</Index>
+            <Name>Wrong branch pipe</Name>
+            <Code>AJ</Code>
+            <Define>支管未通过检查井直接侧向接入主管</Define>
+            <DefectDescribe>
+                <Level>1</Level>
+                <Content>The length of the branch pipe into the main pipe is not more than 10% of the diameter of the main pipe.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>2</Level>
+                <Content>The length of the branch pipe into the main pipe is between 10% and 20% of the diameter of the main pipe.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>3</Level>
+                <Content>The length of the branch pipe into the main pipe is greater than 20% of the diameter of the main pipe.</Content>
+            </DefectDescribe>
+        </Defect>
+        <Defect>
+            <Index>8</Index>
+            <Name>Foreign matter penetration</Name>
+            <Code>CR</Code>
+            <Define>非管道系统附属设施的物体穿透管壁进入管内</Define>
+            <DefectDescribe>
+                <Level>1</Level>
+                <Content>The foreign matter is in the pipeline and its cross-sectional area of the occupied water is not more than 10%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>2</Level>
+                <Content>The foreign matter is in the pipeline and its cross-sectional area of the occupied water is 10%~30%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>3</Level>
+                <Content>
+                    The foreign matter is in the pipeline and its cross-sectional area of the occupied water is more than 30%.
+                </Content>
+            </DefectDescribe>
+        </Defect>
+        <Defect>
+            <Index>9</Index>
+            <Name>Infitration</Name>
+            <Code>SL</Code>
+            <Define>管外的水流入管道</Define>
+            <DefectDescribe>
+                <Level>1</Level>
+                <Content>Seepage - water continues to drip from the defect. Flow along the pipe wall.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>2</Level>
+                <Content>Dripping - Water continues to flow out of the defect and out of the pipe wall.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>3</Level>
+                <Content>Running - Water rushes from the defect point, and the area of the water leakage surface is not more than 1/3 of the pipe section.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>4</Level>
+                <Content>Gushing - Water floods or ejects from a defect point, and the area of the leaking water surface is larger than 1/3 of the section of the pipeline.</Content>
+            </DefectDescribe>
+        </Defect>
+    </DefectType>
+    <DefectType>
+        <Index>2</Index>
+        <Name>Service Defect</Name>
+        <Code>GNXQX</Code>
+        <Defect>
+            <Index>0</Index>
+            <Name>Deposits Settled</Name>
+            <Code>CJ</Code>
+            <Define>杂质在管道底部沉淀淤积</Define>
+            <DefectDescribe>
+                <Level>1</Level>
+                <Content>The thickness of the deposit is 20% to 30% of the diameter of the pipe.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>2</Level>
+                <Content>The thickness of the deposit is 30% to 40% of the diameter of the pipe.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>3</Level>
+                <Content>The thickness of the deposit is 40% to 50% of the diameter of the pipe.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>4</Level>
+                <Content>The thickness of the deposit is greater than 50% of the pipe diameter.</Content>
+            </DefectDescribe>
+        </Defect>
+        <Defect>
+            <Index>1</Index>
+            <Name>Encrustation</Name>
+            <Code>JG</Code>
+            <Define>管道内壁上的附着物</Define>
+            <DefectDescribe>
+                <Level>1</Level>
+                <Content>The cross-section loss caused by hard scaling is not more than 15%; the cross-water loss caused by soft scaling is between 15% and 25%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>2</Level>
+                <Content>The cross-water section loss caused by hard scaling is between 15% and 25%; the soft water cross-section loss caused by soft scaling is between 25% and 50%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>3</Level>
+                <Content>The cross-water section loss caused by hard scaling is between 25% and 50%; the soft water cross-section loss caused by soft scaling is between 50% and 80%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>4</Level>
+                <Content>The cross-sectional loss caused by hard scaling is greater than 50%; the cross-water loss caused by soft scaling is greater than 80%.</Content>
+            </DefectDescribe>
+        </Defect>
+        <Defect>
+            <Index>2</Index>
+            <Name>Obstruction</Name>
+            <Code>ZW</Code>
+            <Define>管道内影响过流的阻挡物</Define>
+            <DefectDescribe>
+                <Level>1</Level>
+                <Content>The loss of water occupied section area is not more than 15%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>2</Level>
+                <Content>The loss of water occupied section area is between 15% and 25%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>3</Level>
+                <Content>The loss of water occupied section area is between 25% and 50%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>4</Level>
+                <Content>The loss of water occupied section area is 50%.</Content>
+            </DefectDescribe>
+        </Defect>
+        <Defect>
+            <Index>3</Index>
+            <Name>Residual wall, Brick, Dam root</Name>
+            <Code>CQ</Code>
+            <Define>管道闭水试验时砌筑的临时砖墙封堵，试验后未拆除或拆除不彻底的遗留物</Define>
+            <DefectDescribe>
+                <Level>1</Level>
+                <Content>The loss of water occupied section area is not more than 15%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>2</Level>
+                <Content>The loss of water occupied section area is between 15% and 25%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>3</Level>
+                <Content>The loss of water occupied section area is between 25% and 50%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>4</Level>
+                <Content>The loss of water occupied section area is 50%.</Content>
+            </DefectDescribe>
+        </Defect>
+        <Defect>
+            <Index>4</Index>
+            <Name>Root</Name>
+            <Code>SG</Code>
+            <Define>单根树根或是树根群自然生长进入管道</Define>
+            <DefectDescribe>
+                <Level>1</Level>
+                <Content>The loss of water occupied section area is not more than 15%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>2</Level>
+                <Content>The loss of water occupied section area is between 15% and 25%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>3</Level>
+                <Content>The loss of water occupied section area is between 25% and 50%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>4</Level>
+                <Content>The loss of water occupied section area is 50%.</Content>
+            </DefectDescribe>
+        </Defect>
+        <Defect>
+            <Index>5</Index>
+            <Name>Scum</Name>
+            <Code>FZ</Code>
+            <Define>管道内水面上的漂浮物（测记录表，不参与计算）</Define>
+            <DefectDescribe>
+                <Level>1</Level>
+                <Content>Sporadic floating objects, floating objects occupy no more than 30% of the water surface area.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>2</Level>
+                <Content>The loss of water occupied section area is between 15% and 25%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>3</Level>
+                <Content>The loss of water occupied section area is between 25% and 50%.</Content>
+            </DefectDescribe>
+            <DefectDescribe>
+                <Level>4</Level>
+                <Content>The loss of water occupied section area is 50%.</Content>
+            </DefectDescribe>
+        </Defect>
+    </DefectType>
+</ArrayOfDefectType>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="4dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:id="@+id/tv_battery_terminal"
+                android:layout_width="@dimen/preview_topMenu_locateImg_height"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_battery_0"
+                android:gravity="center"
+                android:text="0%"
+                android:textColor="@color/imageRed"
+                android:textSize="@dimen/preview_topMenu_battery_textsize" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_battery_terminal_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/battery_system"
+            android:textColor="@color/imageRed"
+            android:textSize="@dimen/preview_top_textsize" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="4dp"
+            android:paddingBottom="1dp">
+
+            <TextView
+                android:id="@+id/tv_battery_device"
+                android:layout_width="@dimen/preview_topMenu_locateImg_height"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_battery_0"
+                android:gravity="center"
+                android:text="0%"
+                android:textColor="@color/imageRed"
+                android:textSize="@dimen/preview_topMenu_battery_textsize" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_battery_device_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/battery"
+            android:textColor="@color/imageRed"
+            android:textSize="@dimen/preview_top_textsize" />
+    </LinearLayout>
+
+    <com.peek.camera.view.view.CompositeImageText xmlns:ns1="http://schemas.android.com/apk/res-auto"
+        xmlns:ns2="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/preview_closeApp"
+        style="@style/style_top_menu_main"
+        ns1:imgImage="@mipmap/power_switch"
+        ns2:textString="@string/power_switch" />
+</LinearLayout>

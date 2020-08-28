@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="file_name_set_model">
+        <item>@string/normalModel</item>
+        <item>@string/orderModel</item>
+        <item>@string/customModel</item>
+    </array>
+    <array name="no_array">
+    </array>
+    <array name="que_xian_style">
+        <item>@string/noFlaw</item>
+        <item>@string/structuralFlaw</item>
+        <item>@string/functionalityflaw</item>
+    </array>
+    <array name="record_task_direction">
+        <item>@string/custom</item>
+        <item>@string/flowDown</item>
+        <item>@string/reflux</item>
+    </array>
+    <array name="record_task_guancai">
+        <item>@string/custom</item>
+        <item>@string/glassSteelTube</item>
+        <item>@string/stellTube</item>
+        <item>@string/reinforcedConcretePipe</item>
+        <item>@string/doubleWallCorrugatedPipe</item>
+        <item>@string/concretePipe</item>
+        <item>@string/silentStockTube</item>
+        <item>@string/asbestosCementPipe</item>
+        <item>@string/stonewarePipe</item>
+        <item>@string/clayPipe</item>
+        <item>@string/masonryDitch</item>
+        <item>@string/castIronPipe</item>
+        <item>@string/alkathene</item>
+        <item>@string/AC</item>
+        <item>@string/BR</item>
+        <item>@string/CI</item>
+        <item>@string/CO</item>
+        <item>@string/CSB</item>
+        <item>@string/CSU</item>
+        <item>@string/CC</item>
+        <item>@string/DI</item>
+        <item>@string/GRC</item>
+        <item>@string/GRP</item>
+        <item>@string/PSC</item>
+        <item>@string/PVC</item>
+        <item>@string/PE</item>
+        <item>@string/RPM</item>
+        <item>@string/SI</item>
+        <item>@string/ST</item>
+        <item>@string/VC</item>
+        <item>@string/PP</item>
+        <item>@string/PF</item>
+        <item>@string/MAC</item>
+        <item>@string/MAR</item>
+        <item>@string/U</item>
+    </array>
+    <array name="record_task_sort">
+        <item>@string/custom</item>
+        <item>@string/rain</item>
+        <item>@string/wasterWater</item>
+        <item>@string/rainAndWasterWater</item>
+    </array>
+</resources>
