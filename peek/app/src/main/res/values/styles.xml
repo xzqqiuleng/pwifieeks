@@ -16,6 +16,9 @@
         <item name="android:windowBackground">@android:color/white</item>
     </style>
     <style name="activity_pic_show_list">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/pic_show_list</item>
         <item name="android:layout_gravity">left|center_horizontal|clip_horizontal</item>
         <item name="android:padding">2dp</item>
@@ -67,6 +70,8 @@
     <style name="dialog_record_list_item">
         <item name="android:textColor">@color/colorText</item>
         <item name="android:ellipsize">end</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">left|center_horizontal|clip_horizontal</item>
         <item name="android:maxWidth">45dp</item>
         <item name="android:maxEms">5</item>

@@ -25,14 +25,14 @@ public class Login_info {
     public static final boolean baseIsSaveToExSdcard = false;
     public static final boolean baseIsYingJieMa = false;
     public static final String baseMainFrameWifiPassword = "bmwpeek2shost";
-    public static final String baseMainFrameWifiSSID = "Peek2S_AP";
+    public static final String baseMainFrameWifiSSID = "IMDT_WH";
     public static final String baseRepeaterWifiPassword = "bmwpeek2shost";
-    public static final String baseRepeaterWifiSSID = "Peek2S_Relay_AP";
+    public static final String baseRepeaterWifiSSID = "IMDT_WH";
     public static final boolean baseWifiIsRepeater = false;
-    public static final String base_socket_ip = "172.169.10.1";
+    public static final String base_socket_ip = "192.168.2.64";
     public static final int base_socket_port = 50001;
     public static final String base_video_account = "admin";
-    public static final String base_video_ip = "192.168.1.64";
+    public static final String base_video_ip = "192.168.2.64";
     public static final String base_video_password = "qwe123456";
     public static final int base_video_port = 8000;
     public static final boolean base_video_zimaliu = false;
@@ -40,6 +40,7 @@ public class Login_info {
     private static Login_info instance = null;
     public static boolean isAddKanban = false;
     public static boolean isPause = true;
+
     public static String local_kanban_path = "/peek2s_data/kanban/";
     public static String local_peek2s_path = "/peek2s_data/";
     public static String local_picture_path = "/peek2s_data/capture/";
