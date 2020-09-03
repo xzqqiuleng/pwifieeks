@@ -92,7 +92,7 @@ public class MyIntentService extends IntentService {
                         C1140n.m5266a("connectWifi: connect ssid :" + str);
                         if (i2 >= 3) {
                             C1140n.m5266a("connectWifi: remove Config: " + str);
-                            zVar.mo4684a(str);
+//                            zVar.mo4684a(str);
                             i = 0;
                         } else {
                             i = i2;
@@ -117,13 +117,13 @@ public class MyIntentService extends IntentService {
     private boolean m5360a(C1159z zVar, String str, String str2) {
         return C1116aa.m5198a(zVar, str, str2);
     }
-
+    @Override
     public void onCreate() {
         super.onCreate();
         this.f3139a = new Random().nextInt();
         C1140n.m5266a("onCreate: " + this.f3139a);
     }
-
+    @Override
     public void onDestroy() {
         super.onDestroy();
         this.f3140b = true;
@@ -131,6 +131,7 @@ public class MyIntentService extends IntentService {
     }
 
     /* access modifiers changed from: protected */
+    @Override
     public void onHandleIntent(Intent intent) {
         if (intent != null && intent.getAction().equals("example.bmw.wifiservice.MyIntentService.wifiConnect")) {
             String stringExtra = intent.getStringExtra("example.bmw.wifiservice.MyIntentService.wifiConnect_params_ssid");
@@ -142,7 +143,7 @@ public class MyIntentService extends IntentService {
             }
         }
     }
-
+    @Override
     public void onStart(Intent intent, int i) {
         super.onStart(intent, i);
         C1140n.m5266a("onStart: " + this.f3139a);

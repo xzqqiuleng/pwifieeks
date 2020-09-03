@@ -1,5 +1,6 @@
 package com.peek.camera.view.p040ui;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -8,6 +9,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -17,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -83,6 +86,7 @@ import com.peek.camera.view.p039c.C1237b;
 import com.peek.camera.view.view.CompositeImageText;
 import com.peek.camera.view.view.Vertical_seekbar;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.apache.http.cookie.ClientCookie;
@@ -170,7 +174,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 
     /* renamed from: V */
     private Unbinder f3847V;
-
+   boolean isStart = false;
     /* renamed from: W */
     private BroadcastReceiver f3848W = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
@@ -180,7 +184,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                     double round = ((double) Math.round(1000000.0d * doubleExtra)) / 1000000.0d;
                     if (PreviewActivity.this.f3845T != null && PreviewActivity.this.f3862x) {
                         PreviewActivity.this.f3845T.mo4601a(round);
-                        PreviewActivity.this.f3845T.mo4618h();
+//                        PreviewActivity.this.f3845T.mo4618h();
                     }
                 } else {
                     doubleExtra = -1.0d;
@@ -221,7 +225,9 @@ public class PreviewActivity extends BaseActivity implements C1237b {
             if (intent.getBooleanExtra("isNotGetLocate", false)) {
                 PreviewActivity.this.m5970X();
             }
-            if (intent.getBooleanExtra("isReLoginHK", false)) {
+
+            if (isStart == false){
+                isStart = true;
                 if (PreviewActivity.this.surfaceView != null) {
                     PreviewActivity.this.surfaceView.post(new Runnable() {
                         public void run() {
@@ -240,7 +246,29 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                     });
                 }
                 PreviewActivity.this.f3857s.mo4544a();
+            }else {
+                if (intent.getBooleanExtra("isReLoginHK", false)) {
+                    if (PreviewActivity.this.surfaceView != null) {
+                        PreviewActivity.this.surfaceView.post(new Runnable() {
+                            public void run() {
+                                ViewGroup.LayoutParams layoutParams = PreviewActivity.this.surfaceView.getLayoutParams();
+                                int width = PreviewActivity.this.flSurfaceContainer.getWidth();
+                                int height = PreviewActivity.this.flSurfaceContainer.getHeight();
+                                if (!(width == 0 || height == 0)) {
+                                    layoutParams.width = width;
+                                    layoutParams.height = height;
+                                }
+                                PreviewActivity.this.surfaceView.setLayoutParams(layoutParams);
+                                if (PreviewActivity.this.f3858t.mo4569a()) {
+                                    PreviewActivity.this.f3858t.mo4568a((String) null, false, (String) null);
+                                }
+                            }
+                        });
+                    }
+                    PreviewActivity.this.f3857s.mo4544a();
+                }
             }
+
             if (intent.getBooleanExtra("isLogoutHK", false)) {
                 PreviewActivity.this.f3857s.mo4545b();
             }
@@ -1386,7 +1414,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 }
                 mo5207b((int) R.string.startRecordFalse);
                 if (this.f3845T != null) {
-                    this.f3845T.mo4618h();
+//                    this.f3845T.mo4618h();
                 }
                 this.f3826A = null;
                 this.f3827B = null;
@@ -1396,7 +1424,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                     this.f3849X = null;
                     this.f3859u = false;
                     if (this.f3845T != null) {
-                        this.f3845T.mo4618h();
+//                        this.f3845T.mo4618h();
                     }
                     if (this.f3832G) {
                         mo5206a(getString(R.string.record_kanban_stop));
@@ -1682,12 +1710,30 @@ public class PreviewActivity extends BaseActivity implements C1237b {
         }
     }
 
+    protected String[] needPermissions = {
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE,
+            BACK_LOCATION_PERMISSION
+    };
+    private static String BACK_LOCATION_PERMISSION = "android.permission.ACCESS_BACKGROUND_LOCATION";
 
 
-    /* access modifiers changed from: protected */
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getApplicationContext(),"没有权限,请手动开启定位权限",Toast.LENGTH_SHORT).show();
+            //申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义）
+            ActivityCompat.requestPermissions(this,needPermissions, 100);
+        }
+
         getWindow().setFlags(128,128);
         setContentView((int) R.layout.welcome);
         new Timer().schedule(new TimerTask() {
@@ -1722,6 +1768,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
     }
 
     /* access modifiers changed from: protected */
+    @Override
     public void onPause() {
         super.onPause();
         if (Login_info.getInstance().isYingJieMa() && this.f3857s != null) {
@@ -1730,11 +1777,13 @@ public class PreviewActivity extends BaseActivity implements C1237b {
     }
 
     /* access modifiers changed from: protected */
+    @Override
     public void onResume() {
         super.onResume();
     }
 
     /* access modifiers changed from: protected */
+    @Override
     public void onStop() {
         super.onStop();
     }
@@ -1830,7 +1879,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 this.f3845T = new C1110b(m_iLogID, m_iChanNum, this.f3846U);
             }
             this.f3845T.mo4602a(m_iLogID, m_iChanNum);
-            this.f3845T.mo4618h();
+//            this.f3845T.mo4618h();
             this.f3845T.mo4600a();
             BaseApplication.f2900c.execute(new Runnable() {
                 public void run() {

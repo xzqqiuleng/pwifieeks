@@ -48,13 +48,13 @@ public class C1141o {
     /* access modifiers changed from: private */
     /* renamed from: f */
     public void m5277f() {
-        if (Login_info.getInstance().isWifi_auto()) {
-            String str = Login_info.getInstance().isWifiIsRepeater() ? Login_info.baseRepeaterWifiSSID : Login_info.baseMainFrameWifiSSID;
-            if (this.f3105e != null && !this.f3105e.mo4690g().contains(str)) {
-                this.f3102b = false;
-                return;
-            }
-        }
+//        if (Login_info.getInstance().isWifi_auto()) {
+//            String str = Login_info.getInstance().isWifiIsRepeater() ? Login_info.baseRepeaterWifiSSID : Login_info.baseMainFrameWifiSSID;
+//            if (this.f3105e != null && !this.f3105e.mo4690g().contains(str)) {
+//                this.f3102b = false;
+//                return;
+//            }
+//        }
         int a = mo4663a(Login_info.getInstance().getVideo_ip());
         synchronized (C1141o.class) {
             this.f3102b = a == 0;

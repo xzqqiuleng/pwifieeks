@@ -1,4 +1,6 @@
 package com.peek.camera.p032a.p033a;
+import android.util.Log;
+
 import com.hikvision.netsdk.HCNetSDK;
 import com.hikvision.netsdk.NET_DVR_JPEGPARA;
 import com.peek.camera.BaseApplication;
@@ -165,6 +167,7 @@ public class C1084g implements C1102g {
             }
             str = str + "_" + i;
         }
+
         final String str2 = str + FileInfo.EXTEND_JPG;
         if (Login_info.getInstance().isYingJieMa()) {
             NET_DVR_JPEGPARA net_dvr_jpegpara = new NET_DVR_JPEGPARA();
@@ -190,6 +193,7 @@ public class C1084g implements C1102g {
             new Thread(new Runnable() {
                 public void run() {
                     try {
+
                         FileOutputStream fileOutputStream = new FileOutputStream(str2);
                         fileOutputStream.write(bArr, 0, mPInteger3.value);
                         fileOutputStream.close();

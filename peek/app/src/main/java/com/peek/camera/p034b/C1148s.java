@@ -1,5 +1,6 @@
 package com.peek.camera.p034b;
 
+import android.util.Log;
 import android.util.Xml;
 import com.hikvision.netsdk.NET_DVR_TIME;
 import com.peek.camera.model.CapturePicture;
@@ -9,10 +10,19 @@ import com.peek.camera.model.QueXianInfo;
 import com.peek.camera.model.RecordTaskInfo;
 import com.peek.camera.model.VideoInfo;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.util.ArrayList;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 import org.xmlpull.v1.XmlSerializer;
 
 import static java.net.Proxy.Type.HTTP;
@@ -556,9 +566,11 @@ public class C1148s {
             r1 = r0
             r0 = r10
             goto L_0x004e
-        */
+            */
+
+
         throw new UnsupportedOperationException("Method not decompiled: com.bmw.peek2.p034b.C1148s.m5292a(java.io.InputStream):java.util.List");
-    }
+  }
 
     /* renamed from: a */
     public static void m5293a(PipeDefectImage pipeDefectImage) {
@@ -634,7 +646,49 @@ public class C1148s {
             C1129g.m5227a(b);
         }
     }
+    public  static  VideoInfo getXmlVIdeo(String xml){
+        VideoInfo videoInfo = new VideoInfo();
+        try {
+            File path = new File(xml);
+            FileInputStream fis = new FileInputStream(path);
 
+            XmlPullParser parser = Xml.newPullParser();
+            parser.setInput(fis, "utf-8");
+
+            int eventType = parser.getEventType();
+
+
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                Log.w("fy","while-readxml");
+                String tagName = parser.getName();
+                switch (eventType) {
+                    case XmlPullParser.START_TAG:
+                        Log.w("fy","XmlPullParser.START_TAG");
+                            if (parser.getName().equals("DeviceModel")){
+                                videoInfo.setDeviceModel(parser.nextText());
+                            }else if (parser.getName().equals("InspectionStandard")){
+                                videoInfo.setInspectionStandard(parser.nextText());
+                            }else if (parser.getName().equals("VideoFilename")){
+                                videoInfo.setVideoFilename(parser.nextText());
+                            }else if (parser.getName().equals("CapturePictureDirectoryName")){
+                                videoInfo.setCapturePictureDirectoryName(parser.nextText());
+                            }
+
+                        break;
+                    case XmlPullParser.END_TAG:
+                        break;
+                    default:
+                        break;
+                }
+                eventType = parser.next();
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  videoInfo;
+    }
     /* renamed from: a */
     public static void m5294a(VideoInfo videoInfo) {
         if (videoInfo != null && !C1155v.m5330a(videoInfo.getVideoFilename())) {

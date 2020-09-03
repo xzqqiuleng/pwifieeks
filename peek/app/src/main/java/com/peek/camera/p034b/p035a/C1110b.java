@@ -71,7 +71,7 @@ public class C1110b {
                 public void run() {
                     C1110b.this.mo4600a();
                     boolean unused = C1110b.this.f3072n = false;
-                    C1110b.this.mo4618h();
+//                    C1110b.this.mo4618h();
                 }
             }).start();
         }
@@ -85,7 +85,7 @@ public class C1110b {
         this.f3060b = i;
         this.f3061c = i2;
         this.f3074p = handler;
-        mo4618h();
+//        mo4618h();
         new Thread(new Runnable() {
             public void run() {
                 C1110b.this.mo4600a();
@@ -143,7 +143,7 @@ public class C1110b {
             new Thread(new Runnable() {
                 public void run() {
                     C1107a.m5163a().mo4596a((OsdHkInfo) null, (OsdHkInfo) null, C1110b.this.f3060b, C1110b.this.f3061c);
-                    C1107a.m5163a().mo4597a(arrayList, C1110b.this.f3060b, C1110b.this.f3061c);
+//                    C1107a.m5163a().mo4597a(arrayList, C1110b.this.f3060b, C1110b.this.f3061c);
                     C1110b.this.f3074p.removeCallbacks(C1110b.this.f3073o);
                     C1140n.m5266a("start wait hide head!!!");
                     C1110b.this.f3074p.postDelayed(C1110b.this.f3073o, 9000);

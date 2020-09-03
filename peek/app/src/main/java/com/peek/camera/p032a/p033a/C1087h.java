@@ -164,7 +164,7 @@ public class C1087h implements C1103h {
                 this.f3035p.setVisibility(View.VISIBLE);
                 BaseApplication.f2900c.execute(new Runnable() {
                     public void run() {
-                        VideoInfo unused = C1087h.this.f3030k = C1148s.m5291a(absolutePath);
+                        VideoInfo unused = C1087h.this.f3030k = C1148s.getXmlVIdeo(absolutePath);
                         ArrayList<CapturePicture> capturePictures = C1087h.this.f3030k.getCapturePictures();
                         if (capturePictures == null || capturePictures.size() <= 0) {
                             C1087h.this.f3029j.post(new Runnable() {
