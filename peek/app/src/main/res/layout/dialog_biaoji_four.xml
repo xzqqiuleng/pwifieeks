@@ -22,6 +22,7 @@
             <com.peek.camera.view.view.EditSpinner
                 android:id="@+id/tiEdt_row1"
                 style="@style/seekBar_text"
+                android:maxLength="16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="top"
@@ -38,6 +39,7 @@
             android:textColorHint="@color/colorBase_dark">
 
             <com.peek.camera.view.view.EditSpinner
+                android:maxLength="16"
                 android:id="@+id/tiEdt_row2"
                 style="@style/seekBar_text"
                 android:layout_width="match_parent"
@@ -59,6 +61,7 @@
             android:textColorHint="@color/colorBase_dark">
 
             <com.peek.camera.view.view.EditSpinner
+                android:maxLength="16"
                 android:id="@+id/tiEdt_row3"
                 style="@style/seekBar_text"
                 android:layout_width="match_parent"
@@ -80,6 +83,7 @@
             android:textColorHint="@color/colorBase_dark">
 
             <com.peek.camera.view.view.EditSpinner
+                android:maxLength="16"
                 android:id="@+id/tiEdt_row4"
                 style="@style/seekBar_text"
                 android:layout_width="match_parent"

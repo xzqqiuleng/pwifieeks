@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/basicSettingContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/background"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+        <LinearLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+
+                android:textColor="@color/colorText"
+                android:textSize="16sp"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="视频分辨率"
+                />
+            <Spinner
+                android:id="@+id/sp1"
+                android:entries="@array/array_fbl"
+                android:background="@color/white"
+                android:layout_marginLeft="20dp"
+                android:layout_width="300dp"
+                android:layout_height="30dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="100dp"
+                android:textColor="@color/colorText"
+                android:textSize="16sp"
+
+                android:layout_height="wrap_content"
+                android:text="录制格式"
+                />
+            <Spinner
+                android:id="@+id/sp3"
+                android:entries="@array/array_bm"
+                android:background="@color/white"
+                android:layout_marginLeft="20dp"
+                android:layout_width="300dp"
+                android:layout_height="30dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="100dp"
+                android:textColor="@color/colorText"
+                android:textSize="16sp"
+
+                android:layout_height="wrap_content"
+                android:text="视频帧率"
+                />
+            <Spinner
+                android:id="@+id/sps2"
+                android:entries="@array/array_szl"
+                android:background="@color/white"
+                android:layout_marginLeft="20dp"
+                android:layout_width="300dp"
+                android:layout_height="30dp"/>
+        </LinearLayout>
+         <TextView
+             android:id="@+id/save_tv"
+             android:layout_marginTop="20dp"
+             android:layout_width="match_parent"
+             android:layout_height="30dp"
+             android:background="@color/colorText"
+             android:text="保存设置"
+             android:gravity="center"
+             />
+    </LinearLayout>
+</RelativeLayout>

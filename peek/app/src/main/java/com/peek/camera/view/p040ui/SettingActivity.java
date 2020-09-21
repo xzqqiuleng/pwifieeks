@@ -15,7 +15,10 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import com.peek.camera.MovieSetFragment;
 import com.peek.camera.R;
+import com.peek.camera.TXSetFragment;
 import com.peek.camera.p034b.C1104a;
 import com.peek.camera.p034b.C1130h;
 import com.peek.camera.view.fragments.AdvanceSetFragment;
@@ -47,9 +50,10 @@ public class SettingActivity extends BaseActivity {
     /* access modifiers changed from: private */
 
     /* renamed from: o */
-    public EnvironmentSetFragment f4045o;
+//    public EnvironmentSetFragment f4045o;
+    public MovieSetFragment f4045o;
     /* access modifiers changed from: private */
-
+    public TXSetFragment txSetFragment;
     /* renamed from: p */
     public AdvanceSetFragment f4046p;
     /* access modifiers changed from: private */
@@ -116,9 +120,19 @@ public class SettingActivity extends BaseActivity {
                         break;
                     case R.id.environment_settingRd:
                         if (SettingActivity.this.f4045o == null) {
-                            EnvironmentSetFragment unused2 = SettingActivity.this.f4045o = new EnvironmentSetFragment();
+//                            EnvironmentSetFragment unused2 = SettingActivity.this.f4045o = new EnvironmentSetFragment();
+                            MovieSetFragment unused2 = SettingActivity.this.f4045o = new MovieSetFragment();
                         }
                         a.replace((int) R.id.setting_fragment_contain, SettingActivity.this.f4045o);
+
+//                        a.hide(a2);
+                        break;
+                    case R.id.rb_set:
+
+                           TXSetFragment txSetFragment = new TXSetFragment();
+
+                        a.replace((int) R.id.setting_fragment_contain, txSetFragment);
+
 //                        a.hide(a2);
                         break;
                 }

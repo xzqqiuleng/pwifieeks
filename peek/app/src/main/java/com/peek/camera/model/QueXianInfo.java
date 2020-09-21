@@ -3,44 +3,44 @@ package com.peek.camera.model;
 import java.util.List;
 
 public class QueXianInfo {
-    private String code;
-    private int index;
-    private String name;
-    private List<QueXian_StyleInfo> styleList;
+    private String Code;
+    private int Index;
+    private String Name;
+    private List<QueXian_StyleInfo> Defect;
 
     public String getCode() {
-        return this.code;
+        return this.Code;
     }
 
     public int getIndex() {
-        return this.index;
+        return this.Index;
     }
 
     public String getName() {
-        return this.name;
+        return this.Name;
     }
 
-    public List<QueXian_StyleInfo> getStyleList() {
-        return this.styleList;
+    public List<QueXian_StyleInfo> getDefect() {
+        return this.Defect;
     }
 
     public void setCode(String str) {
-        this.code = str;
+        this.Code = str;
     }
 
     public void setIndex(int i) {
-        this.index = i;
+        this.Index = i;
     }
 
     public void setName(String str) {
-        this.name = str;
+        this.Name = str;
     }
 
-    public void setStyleList(List<QueXian_StyleInfo> list) {
-        this.styleList = list;
+    public void setDefect(List<QueXian_StyleInfo> list) {
+        this.Defect = list;
     }
 
     public String toString() {
-        return "QueXianInfo{, index=" + this.index + ", name='" + this.name + '\'' + ", code='" + this.code + '\'' + "styleList=" + this.styleList + '}';
+        return "QueXianInfo{, Index=" + this.Index + ", Name='" + this.Name + '\'' + ", Code='" + this.Code + '\'' + "Defect=" + this.Defect + '}';
     }
 }

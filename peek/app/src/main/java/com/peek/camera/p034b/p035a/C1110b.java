@@ -3,12 +3,16 @@ package com.peek.camera.p034b.p035a;
 import android.os.Handler;
 import android.text.TextUtils;
 
+import com.peek.camera.BaseApplication;
 import com.peek.camera.C1057a;
+import com.peek.camera.R;
 import com.peek.camera.model.OsdHkInfo;
 import com.peek.camera.p034b.C1140n;
 import com.peek.camera.p034b.p036b.C1122b;
+import com.peek.camera.p034b.p036b.C1123c;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -85,7 +89,7 @@ public class C1110b {
         this.f3060b = i;
         this.f3061c = i2;
         this.f3074p = handler;
-//        mo4618h();
+        mo4618h();
         new Thread(new Runnable() {
             public void run() {
                 C1110b.this.mo4600a();
@@ -224,272 +228,208 @@ public class C1110b {
     /* renamed from: h */
     /* Code decompiled incorrectly, please refer to instructions dump. */
     public void mo4618h() {
-        /*
-            r13 = this;
-            r12 = 32
-            r0 = 0
-            r10 = 0
-            r9 = 64
-            r8 = 1
-            boolean r1 = r13.f3072n
-            if (r1 == 0) goto L_0x000d
-        L_0x000c:
-            return
-        L_0x000d:
-            java.lang.String r1 = "showNormalTitle!"
-            com.bmw.peek2.p034b.C1140n.m5266a(r1)
-            java.util.ArrayList r3 = new java.util.ArrayList
-            r3.<init>()
-            r2 = r0
-            r1 = r0
-        L_0x0019:
-            r0 = 6
-            if (r2 >= r0) goto L_0x01e1
-            com.bmw.peek2.model.OsdHkInfo r4 = new com.bmw.peek2.model.OsdHkInfo
-            r4.<init>()
-            switch(r2) {
-                case 0: goto L_0x002f;
-                case 1: goto L_0x0070;
-                case 2: goto L_0x00b1;
-                case 3: goto L_0x00f5;
-                case 4: goto L_0x0139;
-                case 5: goto L_0x0157;
-                default: goto L_0x0024;
+
+        int v0;
+        int v12 = 0x20;
+        final double v10 = 0;
+        int v9 = 0x40;
+        if(!this.f3072n) {
+
+            final ArrayList v3 = new ArrayList();
+            int v2 = 0;
+            int v1;
+            for(v1 = 0; v2 < 6; v1 = v0) {
+                OsdHkInfo v4 = new OsdHkInfo();
+                switch(v2) {
+                    case 0: {
+                        v4.setOsdX(v9);
+                        v4.setOsdY((v1 + 1) * 0x20);
+                        if(BaseApplication.m4928b().getBoolean("KEY_IS_RECORDHEADER_ALWAYS_SHOW", true)) {
+                            if(this.m5173i(this.f3070l)) {
+                                v0 = v1;
+                                ++v2;
+                            }
+                            else {
+                                v4.setsString(this.f3070l);
+                                v4.setShowStr(1);
+                            }
+                        }
+                        else if(this.m5173i(this.f3066h)) {
+                            v0 = v1;
+                            ++v2;
+                        }
+                        else {
+                            v4.setsString(this.f3066h);
+                            v4.setShowStr(1);
+                        }
+
+                        v0 = v1 + 1;
+                        if(v4 == null) {
+                            ++v2;
+                        }
+                    }
+                    case 1: {
+                        v4.setOsdX(v9);
+                        v4.setOsdY((v1 + 1) * 0x20);
+                        if(BaseApplication.m4928b().getBoolean("KEY_IS_RECORDHEADER_ALWAYS_SHOW", true)) {
+                            if(this.m5173i(this.f3071m)) {
+                                v0 = v1;
+
+                            }
+                            else {
+                                v4.setsString(this.f3071m);
+                                v4.setShowStr(1);
+                            }
+                        }
+                        else if(this.m5173i(this.f3067i)) {
+                                 v0 = v1;
+                            ++v2;
+                        }
+                        else {
+                            v4.setsString(this.f3067i);
+                            v4.setShowStr(1);
+                        }
+
+                        v0 = v1 + 1;
+                        if(v4 == null) {
+                            ++v2;
+                        }
+                    }
+                    case 2: {
+                        v4.setOsdX(v9);
+                        v4.setOsdY((v1 + 1) * 0x20);
+                        if(BaseApplication.m4928b().getBoolean("KEY_IS_RECORDHEADER_ALWAYS_SHOW", true)) {
+                            if(this.m5173i(this.f3066h)) {
+                                v0 = v1;
+                                ++v2;
+                            }
+                            else {
+                                v4.setsString(this.f3066h);
+                                v4.setShowStr(1);
+                            }
+                        }
+                        else if(this.m5173i(this.f3068j)) {
+                            v0 = v1;
+                            ++v2;
+                        }
+                        else {
+                            v4.setsString(this.f3068j);
+                            v4.setShowStr(1);
+                        }
+
+                        v0 = v1 + 1;
+                        if(v4 == null) {
+                            ++v2;
+                        }
+                    }
+                    case 3: {
+                        v4.setOsdX(v9);
+                        v4.setOsdY((v1 + 1) * 0x20);
+                        if(BaseApplication.m4928b().getBoolean("KEY_IS_RECORDHEADER_ALWAYS_SHOW", true)) {
+                            if(this.m5173i(this.f3067i)) {
+                                v0 = v1;
+                                ++v2;
+                            }
+                            else {
+                                v4.setsString(this.f3067i);
+                                v4.setShowStr(1);
+                            }
+                        }
+                        else if(this.m5173i(this.f3069k)) {
+                            v0 = v1;
+                            ++v2;
+                        }
+                        else {
+                            v4.setsString(this.f3069k);
+                            v4.setShowStr(1);
+                        }
+
+                        v0 = v1 + 1;
+                        if(v4 == null) {
+                            ++v2;
+                        }
+                    }
+                    case 4: {
+                        if(this.m5173i(this.f3063e)) {
+                            v0 = v1;
+                            ++v2;
+                        }
+
+                        v4.setOsdX(v12);
+                        v4.setOsdY(0x200);
+                        v4.setsString(this.f3063e);
+                        v4.setShowStr(1);
+                        v0 = v1;
+                        if(v4 == null) {
+                            ++v2;
+                        }
+
+                        ((List)v3).add(v4);
+                        break;
+                    }
+                    case 5: {
+                        if(this.f3062d == null || (TextUtils.isEmpty(this.f3062d))) {
+                            this.f3062d = "00.00";
+                        }
+
+                        StringBuilder v0_1 = new StringBuilder();
+                        if(!this.f3062d.equals("00.00")) {
+                            v0_1.append(BaseApplication.m4925a().getString(R.string.capture_quexian_length)).append(this.f3062d).append("M ");
+                        }
+                        if(this.f3064f > v10 || this.f3065g > v10) {
+                            v0_1.append(BaseApplication.m4925a().getString(R.string.capture_quexian_length)).append(this.f3065g).append(",").append(this.f3064f);
+                        }
+
+                        String v0_2 = v0_1.toString();
+                        if(this.m5173i(v0_2)) {
+                            v0 = v1;
+                            ++v2;
+                        }
+
+                        v4.setsString(v0_2);
+                        v4.setOsdX(v12);
+                        v0 = 0x220;
+//                        if(C1107a.a()) {
+//                            v0 = 0x200;
+//                        }
+                        v0 = 0x200;
+                        v4.setOsdY(v0);
+                        v4.setShowStr(1);
+                        v0 = v1;
+                        if(v4 == null) {
+                            ++v2;
+                        }
+                    }
+                    default: {
+
+                        v0 = v1;
+                        if(v4 == null) {
+                            ++v2;
+                        }
+                    }
+                }
+
+
+                ++v2;
             }
-        L_0x0024:
-            r0 = r1
-        L_0x0025:
-            if (r4 == 0) goto L_0x002a
-            r3.add(r4)
-        L_0x002a:
-            int r1 = r2 + 1
-            r2 = r1
-            r1 = r0
-            goto L_0x0019
-        L_0x002f:
-            r4.setOsdX(r9)
-            int r0 = r1 * 1
-            int r0 = r0 + 1
-            int r0 = r0 * 32
-            r4.setOsdY(r0)
-            android.content.SharedPreferences r0 = com.bmw.peek2.BaseApplication.m4928b()
-            java.lang.String r5 = "KEY_IS_RECORDHEADER_ALWAYS_SHOW"
-            boolean r0 = r0.getBoolean(r5, r8)
-            if (r0 == 0) goto L_0x005d
-            java.lang.String r0 = r13.f3070l
-            boolean r0 = r13.m5173i(r0)
-            if (r0 == 0) goto L_0x0051
-            r0 = r1
-            goto L_0x002a
-        L_0x0051:
-            java.lang.String r0 = r13.f3070l
-            r4.setsString(r0)
-            r4.setShowStr(r8)
-        L_0x0059:
-            int r1 = r1 + 1
-            r0 = r1
-            goto L_0x0025
-        L_0x005d:
-            java.lang.String r0 = r13.f3066h
-            boolean r0 = r13.m5173i(r0)
-            if (r0 == 0) goto L_0x0067
-            r0 = r1
-            goto L_0x002a
-        L_0x0067:
-            java.lang.String r0 = r13.f3066h
-            r4.setsString(r0)
-            r4.setShowStr(r8)
-            goto L_0x0059
-        L_0x0070:
-            r4.setOsdX(r9)
-            int r0 = r1 * 1
-            int r0 = r0 + 1
-            int r0 = r0 * 32
-            r4.setOsdY(r0)
-            android.content.SharedPreferences r0 = com.bmw.peek2.BaseApplication.m4928b()
-            java.lang.String r5 = "KEY_IS_RECORDHEADER_ALWAYS_SHOW"
-            boolean r0 = r0.getBoolean(r5, r8)
-            if (r0 == 0) goto L_0x009e
-            java.lang.String r0 = r13.f3071m
-            boolean r0 = r13.m5173i(r0)
-            if (r0 == 0) goto L_0x0092
-            r0 = r1
-            goto L_0x002a
-        L_0x0092:
-            java.lang.String r0 = r13.f3071m
-            r4.setsString(r0)
-            r4.setShowStr(r8)
-        L_0x009a:
-            int r1 = r1 + 1
-            r0 = r1
-            goto L_0x0025
-        L_0x009e:
-            java.lang.String r0 = r13.f3067i
-            boolean r0 = r13.m5173i(r0)
-            if (r0 == 0) goto L_0x00a8
-            r0 = r1
-            goto L_0x002a
-        L_0x00a8:
-            java.lang.String r0 = r13.f3067i
-            r4.setsString(r0)
-            r4.setShowStr(r8)
-            goto L_0x009a
-        L_0x00b1:
-            r4.setOsdX(r9)
-            int r0 = r1 * 1
-            int r0 = r0 + 1
-            int r0 = r0 * 32
-            r4.setOsdY(r0)
-            android.content.SharedPreferences r0 = com.bmw.peek2.BaseApplication.m4928b()
-            java.lang.String r5 = "KEY_IS_RECORDHEADER_ALWAYS_SHOW"
-            boolean r0 = r0.getBoolean(r5, r8)
-            if (r0 == 0) goto L_0x00e1
-            java.lang.String r0 = r13.f3066h
-            boolean r0 = r13.m5173i(r0)
-            if (r0 == 0) goto L_0x00d4
-            r0 = r1
-            goto L_0x002a
-        L_0x00d4:
-            java.lang.String r0 = r13.f3066h
-            r4.setsString(r0)
-            r4.setShowStr(r8)
-        L_0x00dc:
-            int r1 = r1 + 1
-            r0 = r1
-            goto L_0x0025
-        L_0x00e1:
-            java.lang.String r0 = r13.f3068j
-            boolean r0 = r13.m5173i(r0)
-            if (r0 == 0) goto L_0x00ec
-            r0 = r1
-            goto L_0x002a
-        L_0x00ec:
-            java.lang.String r0 = r13.f3068j
-            r4.setsString(r0)
-            r4.setShowStr(r8)
-            goto L_0x00dc
-        L_0x00f5:
-            r4.setOsdX(r9)
-            int r0 = r1 * 1
-            int r0 = r0 + 1
-            int r0 = r0 * 32
-            r4.setOsdY(r0)
-            android.content.SharedPreferences r0 = com.bmw.peek2.BaseApplication.m4928b()
-            java.lang.String r5 = "KEY_IS_RECORDHEADER_ALWAYS_SHOW"
-            boolean r0 = r0.getBoolean(r5, r8)
-            if (r0 == 0) goto L_0x0125
-            java.lang.String r0 = r13.f3067i
-            boolean r0 = r13.m5173i(r0)
-            if (r0 == 0) goto L_0x0118
-            r0 = r1
-            goto L_0x002a
-        L_0x0118:
-            java.lang.String r0 = r13.f3067i
-            r4.setsString(r0)
-            r4.setShowStr(r8)
-        L_0x0120:
-            int r1 = r1 + 1
-            r0 = r1
-            goto L_0x0025
-        L_0x0125:
-            java.lang.String r0 = r13.f3069k
-            boolean r0 = r13.m5173i(r0)
-            if (r0 == 0) goto L_0x0130
-            r0 = r1
-            goto L_0x002a
-        L_0x0130:
-            java.lang.String r0 = r13.f3069k
-            r4.setsString(r0)
-            r4.setShowStr(r8)
-            goto L_0x0120
-        L_0x0139:
-            java.lang.String r0 = r13.f3063e
-            boolean r0 = r13.m5173i(r0)
-            if (r0 == 0) goto L_0x0144
-            r0 = r1
-            goto L_0x002a
-        L_0x0144:
-            r4.setOsdX(r12)
-            r0 = 512(0x200, float:7.175E-43)
-            r4.setOsdY(r0)
-            java.lang.String r0 = r13.f3063e
-            r4.setsString(r0)
-            r4.setShowStr(r8)
-            r0 = r1
-            goto L_0x0025
-        L_0x0157:
-            java.lang.String r0 = r13.f3062d
-            if (r0 == 0) goto L_0x0163
-            java.lang.String r0 = r13.f3062d
-            boolean r0 = android.text.TextUtils.isEmpty(r0)
-            if (r0 == 0) goto L_0x0167
-        L_0x0163:
-            java.lang.String r0 = "00.00"
-            r13.f3062d = r0
-        L_0x0167:
-            java.lang.StringBuilder r0 = new java.lang.StringBuilder
-            r0.<init>()
-            java.lang.String r5 = r13.f3062d
-            java.lang.String r6 = "00.00"
-            boolean r5 = r5.equals(r6)
-            if (r5 != 0) goto L_0x0190
-            com.bmw.peek2.BaseApplication r5 = com.bmw.peek2.BaseApplication.m4925a()
-            r6 = 2131493006(0x7f0c008e, float:1.860948E38)
-            java.lang.String r5 = r5.getString(r6)
-            java.lang.StringBuilder r5 = r0.append(r5)
-            java.lang.String r6 = r13.f3062d
-            java.lang.StringBuilder r5 = r5.append(r6)
-            java.lang.String r6 = "M "
-            r5.append(r6)
-        L_0x0190:
-            double r6 = r13.f3064f
-            int r5 = (r6 > r10 ? 1 : (r6 == r10 ? 0 : -1))
-            if (r5 > 0) goto L_0x019c
-            double r6 = r13.f3065g
-            int r5 = (r6 > r10 ? 1 : (r6 == r10 ? 0 : -1))
-            if (r5 <= 0) goto L_0x01bc
-        L_0x019c:
-            com.bmw.peek2.BaseApplication r5 = com.bmw.peek2.BaseApplication.m4925a()
-            r6 = 2131493068(0x7f0c00cc, float:1.8609606E38)
-            java.lang.String r5 = r5.getString(r6)
-            java.lang.StringBuilder r5 = r0.append(r5)
-            double r6 = r13.f3065g
-            java.lang.StringBuilder r5 = r5.append(r6)
-            java.lang.String r6 = ","
-            java.lang.StringBuilder r5 = r5.append(r6)
-            double r6 = r13.f3064f
-            r5.append(r6)
-        L_0x01bc:
-            java.lang.String r0 = r0.toString()
-            boolean r5 = r13.m5173i(r0)
-            if (r5 == 0) goto L_0x01c9
-            r0 = r1
-            goto L_0x002a
-        L_0x01c9:
-            r4.setsString(r0)
-            r4.setOsdX(r12)
-            r0 = 544(0x220, float:7.62E-43)
-            boolean r5 = com.bmw.peek2.C1057a.m4936a()
-            if (r5 == 0) goto L_0x01d9
-            r0 = 512(0x200, float:7.175E-43)
-        L_0x01d9:
-            r4.setOsdY(r0)
-            r4.setShowStr(r8)
-            goto L_0x0024
-        L_0x01e1:
-            java.util.concurrent.ExecutorService r0 = r13.f3059a
-            if (r0 == 0) goto L_0x000c
-            java.util.concurrent.ExecutorService r0 = r13.f3059a
-            boolean r0 = r0.isShutdown()
-            if (r0 != 0) goto L_0x000c
-            java.util.concurrent.ExecutorService r0 = r13.f3059a
-            com.bmw.peek2.b.a.b$4 r1 = new com.bmw.peek2.b.a.b$4
-            r2 = 5
-            r1.<init>(r2, r3)
-            r0.execute(r1)
-            goto L_0x000c
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.bmw.peek2.p034b.p035a.C1110b.mo4618h():void");
+
+            if(this.f3059a == null) {
+                return;
+            }
+
+            if(this.f3059a.isShutdown()) {
+                return;
+            }
+
+            this.f3059a.execute(new C1123c(5) {
+                public void run() {
+                    super.run();
+//                    com.bmw.peek2.b.a.a.a().a(this.a, b.a(this.b), b.b(this.b));
+
+                    C1107a.m5163a().mo4597a(v3,C1110b.this.f3060b, C1110b.this.f3061c);
+                }
+            });
+        }
     }
 
     /* renamed from: h */

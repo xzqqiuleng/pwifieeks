@@ -77,7 +77,7 @@
     <string name="basic_setting">系统设置</string>
     <string name="battery">主机电量</string>
     <string name="battery_system">终端电量</string>
-    <string name="biaoji">标记</string>
+    <string name="biaoji">标注</string>
     <string name="bottom_sheet_behavior">android.support.design.widget.BottomSheetBehavior</string>
     <string name="cameraSetting">摄像机参数设置</string>
     <string name="canMove">，且不支持移动！</string>
@@ -103,7 +103,7 @@
     <string name="capture_quexian_style">类型</string>
     <string name="capture_quexian_style_e">类型:</string>
     <string name="castIronPipe">铸铁管</string>
-    <string name="celiang">测距</string>
+    <string name="celiang">激光</string>
     <string name="change">修改</string>
     <string name="changeEmptyData">修改数据为空！</string>
     <string name="changingManufacturerName">正在修改生产商名称！</string>
@@ -147,7 +147,7 @@
     <string name="downloading">正在下载</string>
     <string name="edit">编辑</string>
     <string name="endOption">结束项</string>
-    <string name="environmentCount">环境统计</string>
+    <string name="environmentCount">视频设置</string>
     <string name="error_pass">密码错误！</string>
     <string name="example">示例</string>
     <string name="exitAppSure">确认退出程序？</string>
@@ -158,7 +158,7 @@
     <string name="fileSaveTo">1.文件存储位置固定为：</string>
     <string name="file_all_choose">全选</string>
     <string name="file_copy">拷贝</string>
-    <string name="firstConnectState">未连接</string>
+    <string name="firstConnectState">网络</string>
     <string name="flawDescribe">缺陷描述：</string>
     <string name="flowDown">顺流(SL)</string>
     <string name="focus">聚焦</string>
@@ -246,7 +246,7 @@
     <string name="pic_in_video">缺陷图片列表</string>
     <string name="pic_in_video_detail">缺陷详细信息</string>
     <string name="pic_quexian_count">${guandaohao}共有${count}个缺陷,详情如下：</string>
-    <string name="picture">图片</string>
+    <string name="picture">预览</string>
     <string name="pictureFangdou">图像防抖：</string>
     <string name="playSpeed">播放速度：</string>
     <string name="playVideoFalse">无法播放该视频</string>
@@ -260,14 +260,14 @@
     <string name="please_choose_ont_from_list_first">请先选中一个列表选项！</string>
     <string name="please_enter_deviceName">请输入产品名称:</string>
     <string name="please_enter_manufacturer_name">请输入生产商名称:</string>
-    <string name="power_switch">关闭</string>
+    <string name="power_switch">退出</string>
     <string name="preview">预览</string>
     <string name="quexianTitleRemindFirst">缺陷点:</string>
     <string name="quexianTitleRemindSecond">处 详情如下:</string>
     <string name="rain">雨水(Y)</string>
     <string name="rainAndWasterWater">雨污合流(H)</string>
     <string name="reTry">重试</string>
-    <string name="record">录像</string>
+    <string name="record">录制</string>
     <string name="recordRemind">录像提示</string>
     <string name="recordSetting">录像设置</string>
     <string name="record_can_pause">允许录像暂停</string>

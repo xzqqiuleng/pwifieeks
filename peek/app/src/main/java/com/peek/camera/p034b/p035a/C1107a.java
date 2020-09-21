@@ -5,7 +5,9 @@ import android.util.Log;
 import com.hikvision.netsdk.HCNetSDK;
 import com.hikvision.netsdk.NET_DVR_COMPRESSIONCFG_V30;
 import com.hikvision.netsdk.NET_DVR_COMPRESSION_INFO_V30;
+import com.hikvision.netsdk.NET_DVR_CONFIG;
 import com.hikvision.netsdk.NET_DVR_PICCFG_V30;
+import com.hikvision.netsdk.NET_DVR_SHOWSTRING_V30;
 import com.peek.camera.BaseApplication;
 import com.peek.camera.C1057a;
 import com.peek.camera.model.All_id_Info;
@@ -115,141 +117,61 @@ public class C1107a {
     /* JADX WARNING: Removed duplicated region for block: B:36:0x00b3 A[Catch:{ UnsupportedEncodingException -> 0x005f }] */
     /* renamed from: a */
     /* Code decompiled incorrectly, please refer to instructions dump. */
-    public void mo4597a(java.util.List<OsdHkInfo> r10, int r11, int r12) {
-        /*
-            r9 = this;
-            r8 = 44
-            r2 = 0
-            if (r10 != 0) goto L_0x0006
-        L_0x0005:
-            return
-        L_0x0006:
-            int r4 = r10.size()
-            com.hikvision.netsdk.NET_DVR_SHOWSTRING_V30 r5 = new com.hikvision.netsdk.NET_DVR_SHOWSTRING_V30
-            r5.<init>()
-            r3 = r2
-        L_0x0010:
-            r0 = 6
-            if (r3 >= r0) goto L_0x00c9
-            if (r4 == 0) goto L_0x004d
-            int r0 = r10.size()     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            if (r3 >= r0) goto L_0x004d
-            java.lang.Object r0 = r10.get(r3)     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            com.bmw.peek2.model.OsdHkInfo r0 = (com.bmw.peek2.model.OsdHkInfo) r0     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            java.lang.String r0 = r0.getsString()     // Catch:{ UnsupportedEncodingException -> 0x005f }
-        L_0x0025:
-            if (r0 == 0) goto L_0x0050
-            int r1 = r0.length()     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            if (r1 <= 0) goto L_0x0050
-            java.lang.String r1 = "gb2312"
-            byte[] r0 = r0.getBytes(r1)     // Catch:{ UnsupportedEncodingException -> 0x005f }
-        L_0x0033:
-            r1 = r2
-        L_0x0034:
-            com.hikvision.netsdk.NET_DVR_SHOWSTRINGINFO[] r6 = r5.struStringInfo     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r6 = r6[r3]     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            byte[] r6 = r6.sString     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            int r6 = r6.length     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            if (r1 >= r6) goto L_0x0067
-            int r6 = r0.length     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            if (r1 >= r6) goto L_0x0055
-            com.hikvision.netsdk.NET_DVR_SHOWSTRINGINFO[] r6 = r5.struStringInfo     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r6 = r6[r3]     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            byte[] r6 = r6.sString     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            byte r7 = r0[r1]     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r6[r1] = r7     // Catch:{ UnsupportedEncodingException -> 0x005f }
-        L_0x004a:
-            int r1 = r1 + 1
-            goto L_0x0034
-        L_0x004d:
-            java.lang.String r0 = ""
-            goto L_0x0025
-        L_0x0050:
-            r0 = 44
-            byte[] r0 = new byte[r0]     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            goto L_0x0033
-        L_0x0055:
-            com.hikvision.netsdk.NET_DVR_SHOWSTRINGINFO[] r6 = r5.struStringInfo     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r6 = r6[r3]     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            byte[] r6 = r6.sString     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r7 = 0
-            r6[r1] = r7     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            goto L_0x004a
-        L_0x005f:
-            r0 = move-exception
-            r0.printStackTrace()
-        L_0x0063:
-            int r0 = r3 + 1
-            r3 = r0
-            goto L_0x0010
-        L_0x0067:
-            int r1 = r0.length     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            if (r1 > r8) goto L_0x00aa
-            com.hikvision.netsdk.NET_DVR_SHOWSTRINGINFO[] r1 = r5.struStringInfo     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r1 = r1[r3]     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            int r0 = r0.length     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r1.wStringSize = r0     // Catch:{ UnsupportedEncodingException -> 0x005f }
-        L_0x0071:
-            if (r4 == 0) goto L_0x00b3
-            int r0 = r10.size()     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            if (r3 >= r0) goto L_0x00b3
-            com.hikvision.netsdk.NET_DVR_SHOWSTRINGINFO[] r0 = r5.struStringInfo     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r1 = r0[r3]     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            java.lang.Object r0 = r10.get(r3)     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            com.bmw.peek2.model.OsdHkInfo r0 = (com.bmw.peek2.model.OsdHkInfo) r0     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            int r0 = r0.getOsdX()     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r1.wShowStringTopLeftX = r0     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            com.hikvision.netsdk.NET_DVR_SHOWSTRINGINFO[] r0 = r5.struStringInfo     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r1 = r0[r3]     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            java.lang.Object r0 = r10.get(r3)     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            com.bmw.peek2.model.OsdHkInfo r0 = (com.bmw.peek2.model.OsdHkInfo) r0     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            int r0 = r0.getOsdY()     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r1.wShowStringTopLeftY = r0     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            com.hikvision.netsdk.NET_DVR_SHOWSTRINGINFO[] r0 = r5.struStringInfo     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r1 = r0[r3]     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            java.lang.Object r0 = r10.get(r3)     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            com.bmw.peek2.model.OsdHkInfo r0 = (com.bmw.peek2.model.OsdHkInfo) r0     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            int r0 = r0.getShowStr()     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r1.wShowString = r0     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            goto L_0x0063
-        L_0x00aa:
-            com.hikvision.netsdk.NET_DVR_SHOWSTRINGINFO[] r0 = r5.struStringInfo     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r0 = r0[r3]     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r1 = 44
-            r0.wStringSize = r1     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            goto L_0x0071
-        L_0x00b3:
-            com.hikvision.netsdk.NET_DVR_SHOWSTRINGINFO[] r0 = r5.struStringInfo     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r0 = r0[r3]     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r1 = 0
-            r0.wShowStringTopLeftX = r1     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            com.hikvision.netsdk.NET_DVR_SHOWSTRINGINFO[] r0 = r5.struStringInfo     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r0 = r0[r3]     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r1 = 0
-            r0.wShowStringTopLeftY = r1     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            com.hikvision.netsdk.NET_DVR_SHOWSTRINGINFO[] r0 = r5.struStringInfo     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r0 = r0[r3]     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            r1 = 0
-            r0.wShowString = r1     // Catch:{ UnsupportedEncodingException -> 0x005f }
-            goto L_0x0063
-        L_0x00c9:
-            com.hikvision.netsdk.HCNetSDK r0 = com.hikvision.netsdk.HCNetSDK.getInstance()
-            com.hikvision.netsdk.HCNetSDK.getInstance()
-            r1 = 1031(0x407, float:1.445E-42)
-            boolean r0 = r0.NET_DVR_SetDVRConfig(r11, r1, r12, r5)
-            if (r0 != 0) goto L_0x0005
-            java.lang.StringBuilder r0 = new java.lang.StringBuilder
-            r0.<init>()
-            java.lang.String r1 = "字符叠加添加版头：NET_DVR_GET_SHOWSTRING_V30 faild!  err: "
-            java.lang.StringBuilder r0 = r0.append(r1)
-            com.hikvision.netsdk.HCNetSDK r1 = com.hikvision.netsdk.HCNetSDK.getInstance()
-            int r1 = r1.NET_DVR_GetLastError()
-            java.lang.StringBuilder r0 = r0.append(r1)
-            java.lang.String r0 = r0.toString()
-            com.bmw.peek2.p034b.C1140n.m5269b(r0)
-            goto L_0x0005
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.bmw.peek2.p034b.p035a.C1107a.mo4597a(java.util.List, int, int):void");
+    public void mo4597a(java.util.List<OsdHkInfo> arg10, int r11, int r12) {
+        String v0_1;
+        int v8 = 44;
+        if(arg10 != null) {
+            int v4 = arg10.size();
+            NET_DVR_SHOWSTRING_V30 v5 = new NET_DVR_SHOWSTRING_V30();
+            int v3;
+            for(v3 = 0; v3 < 6; ++v3) {
+                if(v4 != 0) {
+                    try {
+                        if(v3 < arg10.size()) {
+                            v0_1 = arg10.get(v3).getsString();
+                        }
+                        else {
+                            label_35:
+                            v0_1 = "";
+                        }
+
+                        byte[] v0_2 = v0_1 == null || v0_1.length() <= 0 ? new byte[44] : v0_1.getBytes("gb2312");
+                        int v1;
+                        for(v1 = 0; v1 < v5.struStringInfo[v3].sString.length; ++v1) {
+                            v5.struStringInfo[v3].sString[v1] = v1 < v0_2.length ? v0_2[v1] : 0;
+                        }
+
+                        v5.struStringInfo[v3].wStringSize = v0_2.length <= v8 ? v0_2.length : 44;
+                        if(v4 != 0 && v3 < arg10.size()) {
+                            v5.struStringInfo[v3].wShowStringTopLeftX = arg10.get(v3).getOsdX();
+                            v5.struStringInfo[v3].wShowStringTopLeftY = arg10.get(v3).getOsdY();
+                            v5.struStringInfo[v3].wShowString = arg10.get(v3).getShowStr();
+                            continue;
+                        }
+
+                        v5.struStringInfo[v3].wShowStringTopLeftX = 0;
+                        v5.struStringInfo[v3].wShowStringTopLeftY = 0;
+                        v5.struStringInfo[v3].wShowString = 0;
+                    }
+                    catch(UnsupportedEncodingException v0) {
+                        v0.printStackTrace();
+                    }
+                }
+                else {
+                    v0_1 = "";
+                }
+
+
+            }
+
+            HCNetSDK v0_3 = HCNetSDK.getInstance();
+            HCNetSDK.getInstance();
+            if(v0_3.NET_DVR_SetDVRConfig(r11, 0x407, r12, ((NET_DVR_CONFIG)v5))) {
+                return;
+            }
+
+            C1140n.m5269b("字符叠加添加版头：NET_DVR_GET_SHOWSTRING_V30 faild!  err: " + HCNetSDK.getInstance().NET_DVR_GetLastError());
+        }
     }
 
     /* renamed from: b */

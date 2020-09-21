@@ -1,15 +1,19 @@
 package com.peek.camera.view.p040ui;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -17,9 +21,14 @@ import android.net.NetworkRequest;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.os.PersistableBundle;
+import android.os.StrictMode;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -38,14 +47,21 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
 import butterknife.Unbinder;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+
 import com.hikvision.netsdk.HCNetSDK;
+import com.hikvision.netsdk.NET_DVR_COMPRESSIONCFG_V30;
+import com.hikvision.netsdk.NET_DVR_PICCFG_V30;
 import com.hikvision.netsdk.NET_DVR_TIME;
 import com.peek.camera.BaseApplication;
 import com.peek.camera.C1057a;
+import com.peek.camera.IpSetActivity;
 import com.peek.camera.R;
 import com.peek.camera.model.All_id_Info;
 import com.peek.camera.model.CapturePicture;
 import com.peek.camera.model.Login_info;
+import com.peek.camera.model.OsdHkInfo;
 import com.peek.camera.model.RecordTaskInfo;
 import com.peek.camera.model.VideoInfo;
 import com.peek.camera.p032a.C1058a;
@@ -74,6 +90,8 @@ import com.peek.camera.p034b.C1159z;
 import com.peek.camera.p034b.p035a.C1107a;
 import com.peek.camera.p034b.p035a.C1110b;
 import com.peek.camera.service.MyServiceGetPlaceName;
+import com.peek.camera.tcp.NettyClientBootstrap;
+import com.peek.camera.tcp.NettyClientConnectionThread;
 import com.peek.camera.view.fragments.C1329a;
 import com.peek.camera.view.fragments.DialogBiaojiMutiFragment;
 import com.peek.camera.view.fragments.DialogEdtNormalFragment;
@@ -86,6 +104,8 @@ import com.peek.camera.view.p039c.C1237b;
 import com.peek.camera.view.view.CompositeImageText;
 import com.peek.camera.view.view.Vertical_seekbar;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -175,6 +195,107 @@ public class PreviewActivity extends BaseActivity implements C1237b {
     /* renamed from: V */
     private Unbinder f3847V;
    boolean isStart = false;
+
+
+
+    private Handler msgHandler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+//            Toast.makeText(PreviewActivity.this, (String)msg.obj, Toast.LENGTH_SHORT).show();
+
+            switch (msg.what){
+                case 0: //连接成功
+
+                  int  len = NettyClientBootstrap.FRAME_LEN_TANTOU;
+                    byte[]data =  NettyClientBootstrap.TANTOU;
+
+                    try {
+                        ByteBuf buf = Unpooled.buffer(len);
+                        buf.writeBytes(data);
+                        NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                    int len1 = NettyClientBootstrap.FRAME_LEN_CMD;
+                    byte[] data1 = NettyClientBootstrap.ZHONGJI;
+
+                    try {
+                        ByteBuf buf = Unpooled.buffer(len1);
+                        buf.writeBytes(data1);
+                        NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                    break;
+                case 1: //连接失败/重连失败
+                    Toast.makeText(PreviewActivity.this,"IP连接失败，请检查设置! ",Toast.LENGTH_SHORT).show();
+                    break;
+                case 2: //重连中
+
+                    break;
+                case 3: //收到测距结果
+                    String distance = (String)msg.obj;
+
+
+
+                    diastanceTs= new OsdHkInfo();
+                    diastanceTs.setOsdX(40);
+                    diastanceTs.setOsdY(140);
+                    diastanceTs.setsString("距离： "+distance);
+                    diastanceTs.setShowStr(1);
+                    setPicCfg();
+                    break;
+
+                case 4: //收到探头电量
+                    int f = (int) msg.obj;
+
+                    battery_device.setBackgroundResource(C1104a.m5160a((int) f));
+                    battery_device.setText(((int) f) + "%");
+                    if (f <= 10.0f) {
+                        battery_device.setTextColor(getResources().getColor(R.color.imageRed));
+                        battery_device_title.setTextColor(getResources().getColor(R.color.imageRed));
+                        return;
+                    }
+                    battery_device.setTextColor(getResources().getColor(R.color.white));
+                    battery_device_title.setTextColor(getResources().getColor(R.color.colorText));
+                    break;
+                case 5: //收到中继电量
+                    int zjf = (int) msg.obj;
+
+                    zj_device.setBackgroundResource(C1104a.m5160a((int) zjf));
+                    zj_device.setText(((int) zjf) + "%");
+                    if (zjf <= 10.0f) {
+                        zj_device.setTextColor(getResources().getColor(R.color.imageRed));
+                        zj_tv.setTextColor(getResources().getColor(R.color.imageRed));
+                        return;
+                    }
+                    zj_device.setTextColor(getResources().getColor(R.color.white));
+                    zj_tv.setTextColor(getResources().getColor(R.color.colorText));
+                    break;
+            }
+        }
+    };
+
+    void tcpConnect(){
+//        String IP = "192.168.1.3";
+//        int port = 2756;
+
+        String IP = BaseApplication.m4928b().getString("TCP_IP","");
+        int port = BaseApplication.m4928b().getInt("TCP_PORT",-1);
+       if(TextUtils.isEmpty(IP) || port == -1){
+           Toast.makeText(this,"请先前去配置IP地址",Toast.LENGTH_SHORT).show();
+       }else {
+           NettyClientConnectionThread connection = new NettyClientConnectionThread(BaseApplication.m4925a(), IP, port, msgHandler);
+           connection.start();
+
+       }
+
+
+    }
+
+
+
     /* renamed from: W */
     private BroadcastReceiver f3848W = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
@@ -184,7 +305,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                     double round = ((double) Math.round(1000000.0d * doubleExtra)) / 1000000.0d;
                     if (PreviewActivity.this.f3845T != null && PreviewActivity.this.f3862x) {
                         PreviewActivity.this.f3845T.mo4601a(round);
-//                        PreviewActivity.this.f3845T.mo4618h();
+                        PreviewActivity.this.f3845T.mo4618h();
                     }
                 } else {
                     doubleExtra = -1.0d;
@@ -309,6 +430,12 @@ public class PreviewActivity extends BaseActivity implements C1237b {
     TextView battery_device;
     @BindView(R.id.tv_battery_device_title)
     TextView battery_device_title;
+
+    @BindView(R.id.zj_device)
+    TextView zj_device;
+    @BindView(R.id.zj_tv)
+    TextView zj_tv;
+
     @BindView(R.id.tv_battery_terminal)
     TextView battery_terminal;
     @BindView(R.id.tv_battery_terminal_title)
@@ -329,6 +456,8 @@ public class PreviewActivity extends BaseActivity implements C1237b {
     CompositeImageText locateComposite;
     @BindView(R.id.preview_moveAngel)
     CompositeImageText moveAngle;
+    @BindView(R.id.lights_switch)
+    ImageView lights_switch;
     /* access modifiers changed from: private */
 
     /* renamed from: o */
@@ -600,23 +729,41 @@ public class PreviewActivity extends BaseActivity implements C1237b {
             }
 
             public void onStopTrackingTouch(SeekBar seekBar) {
+                if(f3861w && f3854p) {
+                    Toast.makeText(getBaseContext(), "除雾状态下，不支持远光亮度调节", Toast.LENGTH_SHORT).show();
+                   lightAdjust.setProgress(0);
+                    return;
+                }
                 int progress = seekBar.getProgress();
                 BaseActivity.m5794b("seekbar: onStopTrackingTouch: ");
                 if (PreviewActivity.this.f3854p) {
-                    int unused = PreviewActivity.this.f3855q = progress;
+                   PreviewActivity.this.f3855q = progress;
                     PreviewActivity.this.f3853o.mo4502b(PreviewActivity.this.f3855q);
                 } else {
-                    int unused2 = PreviewActivity.this.f3856r = progress;
+                PreviewActivity.this.f3856r = progress;
                     PreviewActivity.this.f3853o.mo4498a(PreviewActivity.this.f3856r);
                 }
-                if (progress != 0) {
-                    return;
-                }
+
                 if (PreviewActivity.this.f3854p) {
                     PreviewActivity.this.f3853o.mo4510i();
                 } else {
                     PreviewActivity.this.f3853o.mo4509h();
                 }
+                if(f3861w){
+                    Toast.makeText(getBaseContext(), "除雾状态下，不支持远光/近光调节" +
+                            "", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
+                    ByteBuf buf = Unpooled.buffer(NettyClientBootstrap.FRAME_LEN_LIGHT);
+                buf.writeBytes(NettyClientBootstrap.getLightData(f3856r, f3855q, f3861w));
+                    try {
+                        NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+
             }
         });
     }
@@ -670,6 +817,129 @@ public class PreviewActivity extends BaseActivity implements C1237b {
         this.f3853o.mo4503b(true);
         startActivityForResult(intent, 0);
     }
+    OsdHkInfo fpsOsd;
+    boolean isGetConfig = false;
+    public  void getConfig(){
+     final Handler chandler = new Handler();
+        chandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(!isGetConfig){
+                    initFps();
+                }else {
+                    chandler.removeCallbacksAndMessages(null);
+                }
+            }
+        },3000);
+
+
+    }
+    private  void initFps(){
+        int   frameRate = -1;
+        int m_iLogID2 = All_id_Info.getInstance().getM_iLogID();
+        NET_DVR_COMPRESSIONCFG_V30 CompressionCfg = new NET_DVR_COMPRESSIONCFG_V30();
+        if (!HCNetSDK.getInstance().NET_DVR_GetDVRConfig(m_iLogID2, HCNetSDK.NET_DVR_GET_COMPRESSCFG_V30, All_id_Info.getInstance().getM_iChanNum(), CompressionCfg))
+        {
+            System.out.println("get CompressionCfg failed!" + "err: " + HCNetSDK.getInstance().NET_DVR_GetLastError());
+        }else
+        {
+
+
+            frameRate  = CompressionCfg.struNormHighRecordPara.dwVideoFrameRate;
+              isGetConfig = true;
+            System.out.println("get CompressionCfg succ! ");
+            //分辨率 16-VGA(640*480)， 19，1280*720   20，1280*960    27，1920*1080       30，2048*1536
+            System.out.println("分辨率: " + CompressionCfg.struNormHighRecordPara.byResolution);
+            //视频帧率0-全部， 1-1/16，2-1/8，3-1/4，4-1/2，5-1，6-2，7-4，8-6，9-8，10 -10 ，11 -12 ，12 -16 ，13 -20 ， 14 -15 ，15 -18 ，
+            //
+            //13 -20  16 －22 ，17 -25
+            System.out.println("视频帧数: " + CompressionCfg.struNormHighRecordPara.dwVideoFrameRate);
+            //视频编码类型： 1-标准 h264，10 -标准 h265
+            System.out.println("视频编码类型: " + CompressionCfg.struNormHighRecordPara.byVideoEncType);
+            //视频帧率0-全部， 1-1/16，2-1/8，3-1/4，4-1/2，5-1，6-2，7-4，8-6，9-8，10 -10 ，11 -12 ，12 -16 ，13 -20 ， 14 -15 ，15 -18 ，16 －22 ，17 -25
+            fpsOsd= new OsdHkInfo();
+            fpsOsd.setOsdX(600);
+            fpsOsd.setOsdY(40);
+
+            fpsOsd.setShowStr(1);
+            switch (frameRate){
+                case 1:
+                    fpsOsd.setsString("fps 1/16");
+                    setPicCfg();
+                    break;
+                case 2:
+                    fpsOsd.setsString("fps 1/8");
+                    setPicCfg();
+                    break;
+                case 3:
+                    fpsOsd.setsString("fps 1/4");
+                    setPicCfg();
+                    break;
+                case 4:
+                    fpsOsd.setsString("fps 1/2");
+                    setPicCfg();
+                    break;
+                case 5:
+                    fpsOsd.setsString("fps 1");
+                    setPicCfg();
+                    break;
+                case 6:
+                    fpsOsd.setsString("fps 2");
+                    setPicCfg();
+                    break;
+                case 7:
+                    fpsOsd.setsString("fps 4");
+                    setPicCfg();
+                    break;
+                case 8:
+                    fpsOsd.setsString("fps 6");
+                    setPicCfg();
+                    break;
+                case 9:
+                    fpsOsd.setsString("fps 8");
+                    setPicCfg();
+                    break;
+
+                case 10:
+                    fpsOsd.setsString("fps 10");
+                    setPicCfg();
+                    break;
+                case 11:
+                    fpsOsd.setsString("fps 12");
+                    setPicCfg();
+                    break;
+                case 12:
+                    fpsOsd.setsString("fps 16");
+                    setPicCfg();
+                    break;
+                case 13:
+                    fpsOsd.setsString("fps 20");
+                    setPicCfg();
+                    break;
+                case 14:
+                    fpsOsd.setsString("fps 15");
+                    setPicCfg();
+                case 15:
+                    fpsOsd.setsString("fps 18");
+                    setPicCfg();
+                case 16:
+                    fpsOsd.setsString("fps 22");
+                    setPicCfg();
+                    break;
+                case 17:
+                    fpsOsd.setsString("fps 25");
+                    setPicCfg();
+                    break;
+
+                default:
+
+                    break;
+            }
+
+        }
+
+
+    }
 
     /* renamed from: K */
     private void m5953K() {
@@ -679,12 +949,23 @@ public class PreviewActivity extends BaseActivity implements C1237b {
             this.rangingComposite.setImage(R.mipmap.ruler_gray);
             this.rangingComposite.setTextColor(R.color.white);
             this.f3853o.mo4499a((Boolean) false);
+
+
+            diastanceTs= null;
+            setPicCfg();
             return;
         }
         this.f3860v = true;
         this.rangingComposite.setImage(R.mipmap.ruler);
         this.rangingComposite.setTextColor(R.color.colorText);
         this.f3853o.mo4499a((Boolean) true);
+
+        diastanceTs= new OsdHkInfo();
+        diastanceTs.setOsdX(40);
+        diastanceTs.setOsdY(140);
+        diastanceTs.setsString("距离");
+        diastanceTs.setShowStr(1);
+        setPicCfg();
     }
 
     /* renamed from: L */
@@ -707,6 +988,27 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                     PreviewActivity.this.f3845T.mo4613e(str3);
                     PreviewActivity.this.f3845T.mo4615f(str4);
                     PreviewActivity.this.f3845T.mo4618h();
+
+                    try {
+                        warter.clear();
+                        OsdHkInfo osdHkInfo1= new OsdHkInfo();
+                        osdHkInfo1.setOsdX(40);
+                        osdHkInfo1.setOsdY(40);
+                        osdHkInfo1.setsString(str);
+                        osdHkInfo1.setShowStr(1);
+
+                        OsdHkInfo osdHkInfo2= new OsdHkInfo();
+                        osdHkInfo2.setOsdX(40);
+                        osdHkInfo2.setOsdY(70);
+                        osdHkInfo2.setsString(str2);
+                        osdHkInfo2.setShowStr(1);
+                        warter.add(osdHkInfo1);
+                        warter.add(osdHkInfo2);
+
+                        setPicCfg();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     return;
                 }
                 PreviewActivity.this.mo5206a(PreviewActivity.this.getString(R.string.addBiaojiFalse));
@@ -717,7 +1019,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 
     /* access modifiers changed from: private */
     /* renamed from: M */
-    public void m5957M() {
+    public void m5957M()  {
         m5794b("录像按钮！");
         if (!this.f3859u) {
             float floatValue = C1129g.m5239e().get(1).floatValue();
@@ -887,19 +1189,44 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 
     /* access modifiers changed from: private */
     /* renamed from: U */
+
+
     public void m5967U() {
         m5794b("除雾按钮！");
+
+
+        ByteBuf buf = Unpooled.buffer(NettyClientBootstrap.FRAME_LEN_LIGHT);
+        if(this.f3854p){
+
+            this.lightAdjust.setProgress(0);
+        }
+        buf.writeBytes(NettyClientBootstrap.getLightData(f3856r, f3855q, f3861w));
+        try {
+            NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
         if (this.f3861w) {
             this.f3861w = false;
             this.clearFogComposite.setImage(R.mipmap.chuwu_off);
             this.clearFogComposite.setTextColor(R.color.white);
             this.f3853o.mo4512k();
+
+            if(f3854p){
+                this.lightAdjust.setProgress(f3855q);
+
+            }
             return;
         }
         this.f3861w = true;
         this.clearFogComposite.setImage(R.mipmap.chuwu_on);
         this.clearFogComposite.setTextColor(R.color.colorText);
         this.f3853o.mo4511j();
+
+        if(f3854p){
+            this.lightAdjust.setProgress(0);
+
+        }
     }
 
     /* renamed from: V */
@@ -931,40 +1258,146 @@ public class PreviewActivity extends BaseActivity implements C1237b {
     /* renamed from: W */
     private void m5969W() {
         m5794b("灯光按钮！");
+        ByteBuf buf = Unpooled.buffer(NettyClientBootstrap.FRAME_LEN_LIGHT);
+        buf.writeBytes(NettyClientBootstrap.getLightData(f3856r, f3855q, f3861w));
+        try {
+            NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
         if (this.f3854p) {
             this.light_text.setText(getString(R.string.lowBeam));
             this.f3854p = false;
             this.lightAdjust.setProgress(this.f3856r);
-            return;
+
+            lights_switch.setImageResource(R.mipmap.jin_light);
+
+        }else {
+            this.light_text.setText(getString(R.string.highBeam));
+            this.f3854p = true;
+            this.lightAdjust.setProgress(this.f3855q);
+            lights_switch.setImageResource(R.mipmap.light);
         }
-        this.light_text.setText(getString(R.string.highBeam));
-        this.f3854p = true;
-        this.lightAdjust.setProgress(this.f3855q);
+
+        if(f3861w && f3854p){
+            Toast.makeText(getBaseContext(), "除雾状态下，不支持远光灯调节" +
+                    "", Toast.LENGTH_SHORT).show();
+            this.lightAdjust.setProgress(0);
+
+        }
+
     }
 
     /* access modifiers changed from: private */
     /* renamed from: X */
     public void m5970X() {
         m5794b("定位按钮！");
+
         if (this.f3862x) {
             this.f3862x = false;
             this.locateComposite.setImage(R.mipmap.locate_off);
             this.locateComposite.setTextColor(R.color.white);
-            this.f3864z.mo4489b();
-            if (this.f3845T != null) {
-                this.f3845T.mo4601a(0.0d);
-                this.f3845T.mo4606b(0.0d);
-                this.f3845T.mo4607b((String) null);
-                this.f3845T.mo4618h();
-                return;
-            }
+//            this.f3864z.mo4489b();
+//            if (this.f3845T != null) {
+//                this.f3845T.mo4601a(0.0d);
+//                this.f3845T.mo4606b(0.0d);
+//                this.f3845T.mo4607b((String) null);
+//                this.f3845T.mo4618h();
+//                return;
+//            }
+            placeAS= null;
+            setPicCfg();
             return;
         }
         this.f3862x = true;
         this.locateComposite.setImage(R.mipmap.locate_on);
         this.locateComposite.setTextColor(R.color.colorText);
-        this.f3864z.mo4488a();
+        if(isOPen()){
+            getLocationLL();
+        }else {
+            openGPS();
+
+        }
+//        this.f3864z.mo4488a();
+
+
     }
+
+    public   boolean isOPen() {
+        LocationManager locationManager
+                = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        // 通过GPS卫星定位，定位级别可以精确到街（通过24颗卫星定位，在室外和空旷的地方定位准确、速度快）
+        boolean gps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        // 通过WLAN或移动网络(3G/2G)确定的位置（也称作AGPS，辅助GPS定位。主要用于在室内或遮盖物（建筑群或茂密的深林等）密集的地方定位）
+
+        if (gps) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void openGPS() {
+        new AlertDialog.Builder(PreviewActivity.this)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setTitle("请先打开GPS位置信息")
+                .setMessage("开启定位")
+                .setNegativeButton(R.string.cancel,null)
+                .setPositiveButton(R.string.open, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivityForResult(intent,887);
+                        dialogInterface.dismiss();
+                    }
+                })
+                .show();
+    }
+    private void getLocationLL() {
+
+        Location location = getLastKnownLocation();
+        if (location != null) {
+
+            //日志
+            String locationStr = "纬度：" + location.getLatitude() + "\n"
+                    + "经度：" + location.getLongitude();
+
+
+
+            placeAS= new OsdHkInfo();
+            placeAS.setOsdX(40);
+            placeAS.setOsdY(180);
+            placeAS.setsString(locationStr);
+            placeAS.setShowStr(1);
+            setPicCfg();
+
+
+
+        } else {
+            Toast.makeText(this, "位置信息获取失败", Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    private Location getLastKnownLocation() {
+        //获取地理位置管理器
+        LocationManager mLocationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            @SuppressLint("MissingPermission") Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
+    }
+
 
     /* renamed from: a */
     private String m5976a(int i, boolean z) {
@@ -1414,7 +1847,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 }
                 mo5207b((int) R.string.startRecordFalse);
                 if (this.f3845T != null) {
-//                    this.f3845T.mo4618h();
+                    this.f3845T.mo4618h();
                 }
                 this.f3826A = null;
                 this.f3827B = null;
@@ -1424,7 +1857,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                     this.f3849X = null;
                     this.f3859u = false;
                     if (this.f3845T != null) {
-//                        this.f3845T.mo4618h();
+                        this.f3845T.mo4618h();
                     }
                     if (this.f3832G) {
                         mo5206a(getString(R.string.record_kanban_stop));
@@ -1654,6 +2087,37 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 return;
         }
     }
+    OsdHkInfo placeAS;
+    OsdHkInfo diastanceTs;
+    List<OsdHkInfo> warter = new ArrayList<>();
+    public void setPicCfg(){
+        new Thread(new Runnable() {
+            public void run() {
+                List<OsdHkInfo> allwarter = new ArrayList<>();
+                if (warter.size() >0){
+                    allwarter.addAll(warter);
+                }
+                if (placeAS != null){
+                    allwarter.add(placeAS);
+                }
+                if (diastanceTs != null){
+                    allwarter.add(diastanceTs);
+                }
+                if (fpsOsd != null){
+                    allwarter.add(fpsOsd);
+                }
+                if (allwarter.size() >0){
+                    C1131i.showWaterList(allwarter);
+                }
+
+
+
+//                C1131i.m5243a(waterMark, true);
+//
+//                C1131i.showWarter("", true);
+            }
+        }).start();
+    }
 
     @OnClick({R.id.Records, R.id.autoHorizontal, R.id.biaoji, R.id.lights_switch, R.id.preview_clearFog, R.id.preview_closeApp, R.id.preview_connectState, R.id.preview_locate, R.id.preview_picture, R.id.preview_setting, R.id.preview_video ,R.id.ranging, R.id.screenShot  })
     public void onClick(View view) {
@@ -1663,7 +2127,18 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 m5957M();
                 return;
             case R.id.autoHorizontal:
+                if(!f3860v){
+                    Toast.makeText(PreviewActivity.this,"请打开激光",Toast.LENGTH_SHORT).show();
+                }
                 this.f3853o.mo4514m();
+
+                ByteBuf buf = Unpooled.buffer(NettyClientBootstrap.FRAME_LEN_CMD);
+                buf.writeBytes(NettyClientBootstrap.DISTANCE);
+                try {
+                    NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                }
                 return;
             case R.id.biaoji:
                 m5955L();
@@ -1679,7 +2154,12 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 m5946G();
                 return;
             case R.id.preview_connectState:
-                new C1215d(this);
+//                new C1215d(this);
+//                Intent intent = new Intent(this, SettingActivity.class);
+                Intent intent = new Intent(this, IpSetActivity.class);
+                intent.putExtra("batteryNum", this.f3863y);
+                this.f3853o.mo4503b(true);
+                startActivityForResult(intent, 0);
                 return;
             case R.id.preview_locate:
                 m5970X();
@@ -1694,6 +2174,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 m5948H();
                 return;
             case R.id.ranging:
+
                 m5953K();
                 return;
             case R.id.screenShot:
@@ -1747,6 +2228,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
         }, 2000);
         C1139m.m5263a();
         C1139m.m5264a("app start!");
+        tcpConnect();
     }
 
     /* access modifiers changed from: protected */
@@ -1780,6 +2262,9 @@ public class PreviewActivity extends BaseActivity implements C1237b {
     @Override
     public void onResume() {
         super.onResume();
+        getConfig();
+        isGetConfig = false;
+
     }
 
     /* access modifiers changed from: protected */
@@ -1792,21 +2277,44 @@ public class PreviewActivity extends BaseActivity implements C1237b {
     public boolean onTouch(View view, MotionEvent motionEvent) {
         switch (view.getId()) {
             case R.id.moveDown:
+                int dlen = NettyClientBootstrap.FRAME_LEN_CMD;
+                byte[] ddata = null;
                 if (motionEvent.getAction() == 0) {
                     this.f3853o.mo4501b();
+                    ddata = NettyClientBootstrap.DOWN;
                 }
                 if (motionEvent.getAction() == 1) {
                     this.f3853o.mo4508g();
-                    break;
+                    ddata = NettyClientBootstrap.DOWN_RLS;
+
+                }
+                try {
+                    ByteBuf buf = Unpooled.buffer(dlen);
+                    buf.writeBytes(ddata);
+                    NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
+                }catch (Exception ex){
+                    ex.printStackTrace();
                 }
                 break;
             case R.id.moveUp:
+                int uplen = NettyClientBootstrap.FRAME_LEN_CMD;
+                byte[] updata = null;;
+
                 if (motionEvent.getAction() == 0) {
                     this.f3853o.mo4497a();
+                    updata = NettyClientBootstrap.UP;
                 }
                 if (motionEvent.getAction() == 1) {
                     this.f3853o.mo4508g();
-                    break;
+                    updata = NettyClientBootstrap.UP_RLS;
+                    
+                }
+                try {
+                    ByteBuf buf = Unpooled.buffer(uplen);
+                    buf.writeBytes(updata);
+                    NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
+                }catch (Exception ex){
+                    ex.printStackTrace();
                 }
                 break;
             case R.id.size_add:
@@ -1832,21 +2340,50 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 }
                 break;
             case R.id.zoom_add:
+
                 if (motionEvent.getAction() == 0) {
                     this.f3853o.mo4506e();
+
+
+                    int m_iLogID2 = All_id_Info.getInstance().getM_iLogID();
+                    if (!HCNetSDK.getInstance().NET_DVR_PTZControl_Other (m_iLogID2, All_id_Info.getInstance().getM_iChanNum(),11,0 ))
+                    {
+                        System.out.println("Set CompressionCfg failed!" + "err: " + HCNetSDK.getInstance().NET_DVR_GetLastError());
+                    }
                 }
                 if (motionEvent.getAction() == 1) {
                     this.f3853o.mo4508g();
+
+
+                    int m_iLogID2 = All_id_Info.getInstance().getM_iLogID();
+                    if (!HCNetSDK.getInstance().NET_DVR_PTZControl_Other (m_iLogID2, All_id_Info.getInstance().getM_iChanNum(),11,1 ))
+                    {
+                        System.out.println("Set CompressionCfg failed!" + "err: " + HCNetSDK.getInstance().NET_DVR_GetLastError());
+                    }
                     break;
                 }
                 break;
             case R.id.zoom_sub:
                 if (motionEvent.getAction() == 0) {
-                    this.f3853o.mo4507f();
+//                    this.f3853o.mo4507f();
+
+                    int m_iLogID2 = All_id_Info.getInstance().getM_iLogID();
+                    if (!HCNetSDK.getInstance().NET_DVR_PTZControl_Other (m_iLogID2, All_id_Info.getInstance().getM_iChanNum(),12,0 ))
+                    {
+                        System.out.println("Set CompressionCfg failed!" + "err: " + HCNetSDK.getInstance().NET_DVR_GetLastError());
+                    }
                 }
                 if (motionEvent.getAction() == 1) {
-                    this.f3853o.mo4508g();
+//                    this.f3853o.mo4508g();
+
+                    int m_iLogID2 = All_id_Info.getInstance().getM_iLogID();
+                    if (!HCNetSDK.getInstance().NET_DVR_PTZControl_Other (m_iLogID2, All_id_Info.getInstance().getM_iChanNum(),12,1 ))
+                    {
+                        System.out.println("Set CompressionCfg failed!" + "err: " + HCNetSDK.getInstance().NET_DVR_GetLastError());
+                    }
                     break;
+
+
                 }
                 break;
         }
@@ -1879,7 +2416,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 this.f3845T = new C1110b(m_iLogID, m_iChanNum, this.f3846U);
             }
             this.f3845T.mo4602a(m_iLogID, m_iChanNum);
-//            this.f3845T.mo4618h();
+            this.f3845T.mo4618h();
             this.f3845T.mo4600a();
             BaseApplication.f2900c.execute(new Runnable() {
                 public void run() {

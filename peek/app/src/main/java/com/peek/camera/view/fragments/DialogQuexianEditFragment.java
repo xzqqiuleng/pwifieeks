@@ -131,7 +131,8 @@ public class DialogQuexianEditFragment extends DialogFragment {
         this.f3557al = getActivity().getResources().getStringArray(R.array.que_xian_style);
         try {
             if (C1134k.m5256a()) {
-                this.f3564as = C1148s.m5292a(getActivity().getAssets().open("assets/DefectTypes.xml"));
+//                this.f3564as = C1148s.m5292a(getActivity().getAssets().open("assets/DefectTypes.xml"));
+                this.f3564as = C1148s.m5292a(null);
             } else {
                 this.f3564as = C1148s.m5292a(getActivity().getAssets().open("assets/DefectTypes_en.xml"));
             }
@@ -173,7 +174,7 @@ public class DialogQuexianEditFragment extends DialogFragment {
         this.mNameSp.setOnItemSelectedListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long j) {
                 int unused = DialogQuexianEditFragment.this.f3563ar = i;
-                DialogQuexianEditFragment.this.mNameSp.setText(((QueXianInfo) DialogQuexianEditFragment.this.f3564as.get(DialogQuexianEditFragment.this.f3558am)).getStyleList().get(i).getName());
+                DialogQuexianEditFragment.this.mNameSp.setText(((QueXianInfo) DialogQuexianEditFragment.this.f3564as.get(DialogQuexianEditFragment.this.f3558am)).getDefect().get(i).getName());
                 DialogQuexianEditFragment.this.m5744b(i);
                 DialogQuexianEditFragment.this.mGradeSp.setText(DialogQuexianEditFragment.this.getResources().getString(R.string.pleaseChoose));
                 DialogQuexianEditFragment.this.mNameSp.mo5379a();
@@ -182,9 +183,9 @@ public class DialogQuexianEditFragment extends DialogFragment {
         this.mGradeSp.setOnItemSelectedListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long j) {
                 int unused = DialogQuexianEditFragment.this.f3559an = i;
-                DialogQuexianEditFragment.this.mGradeSp.setText(((QueXianInfo) DialogQuexianEditFragment.this.f3564as.get(DialogQuexianEditFragment.this.f3558am)).getStyleList().get(DialogQuexianEditFragment.this.f3563ar).getGradeList().get(DialogQuexianEditFragment.this.f3559an).getLevel() + "");
+                DialogQuexianEditFragment.this.mGradeSp.setText(((QueXianInfo) DialogQuexianEditFragment.this.f3564as.get(DialogQuexianEditFragment.this.f3558am)).getDefect().get(DialogQuexianEditFragment.this.f3563ar).getDefectDescribe().get(DialogQuexianEditFragment.this.f3559an).getLevel() + "");
                 if (DialogQuexianEditFragment.this.f3558am != 0) {
-                    DialogQuexianEditFragment.this.mDetailEdt.setText(((QueXianInfo) DialogQuexianEditFragment.this.f3564as.get(DialogQuexianEditFragment.this.f3558am)).getStyleList().get(DialogQuexianEditFragment.this.f3563ar).getGradeList().get(DialogQuexianEditFragment.this.f3559an).getContent());
+                    DialogQuexianEditFragment.this.mDetailEdt.setText(((QueXianInfo) DialogQuexianEditFragment.this.f3564as.get(DialogQuexianEditFragment.this.f3558am)).getDefect().get(DialogQuexianEditFragment.this.f3563ar).getDefectDescribe().get(DialogQuexianEditFragment.this.f3559an).getContent());
                 }
                 DialogQuexianEditFragment.this.mGradeSp.mo5379a();
             }
@@ -201,16 +202,16 @@ public class DialogQuexianEditFragment extends DialogFragment {
             }
         }
         if (this.f3558am > 0) {
-            for (int i2 = 0; i2 < this.f3564as.get(this.f3558am).getStyleList().size(); i2++) {
-                if (this.f3564as.get(this.f3558am).getStyleList().get(i2).getName().equals(this.f3556ak.getDefectCode())) {
-                    this.mNameSp.setText(this.f3564as.get(this.f3558am).getStyleList().get(i2).getName());
+            for (int i2 = 0; i2 < this.f3564as.get(this.f3558am).getDefect().size(); i2++) {
+                if (this.f3564as.get(this.f3558am).getDefect().get(i2).getName().equals(this.f3556ak.getDefectCode())) {
+                    this.mNameSp.setText(this.f3564as.get(this.f3558am).getDefect().get(i2).getName());
                     this.f3563ar = i2;
                 }
             }
             if (this.f3563ar != -1) {
-                for (int i3 = 0; i3 < this.f3564as.get(this.f3558am).getStyleList().get(this.f3563ar).getGradeList().size(); i3++) {
-                    if (!TextUtils.isEmpty(this.f3556ak.getDefectLevel()) && this.f3564as.get(this.f3558am).getStyleList().get(this.f3563ar).getGradeList().get(i3).getLevel() == Integer.valueOf(this.f3556ak.getDefectLevel()).intValue()) {
-                        this.mGradeSp.setText(String.valueOf(this.f3564as.get(this.f3558am).getStyleList().get(this.f3563ar).getGradeList().get(i3).getLevel()));
+                for (int i3 = 0; i3 < this.f3564as.get(this.f3558am).getDefect().get(this.f3563ar).getDefectDescribe().size(); i3++) {
+                    if (!TextUtils.isEmpty(this.f3556ak.getDefectLevel()) && this.f3564as.get(this.f3558am).getDefect().get(this.f3563ar).getDefectDescribe().get(i3).getLevel() == Integer.valueOf(this.f3556ak.getDefectLevel()).intValue()) {
+                        this.mGradeSp.setText(String.valueOf(this.f3564as.get(this.f3558am).getDefect().get(this.f3563ar).getDefectDescribe().get(i3).getLevel()));
                         this.f3559an = i3;
                     }
                 }
@@ -225,13 +226,13 @@ public class DialogQuexianEditFragment extends DialogFragment {
                 this.mNameSp.setText(getResources().getString(R.string.pleaseChoose));
             }
             if (this.f3563ar > -1) {
-                this.mNameSp.setText(this.f3564as.get(this.f3558am).getStyleList().get(this.f3563ar).getName());
+                this.mNameSp.setText(this.f3564as.get(this.f3558am).getDefect().get(this.f3563ar).getName());
                 m5744b(this.f3563ar);
                 this.mGradeSp.setText(getResources().getString(R.string.pleaseChoose));
             }
             if (this.f3559an > -1) {
                 m5744b(this.f3559an);
-                this.mGradeSp.setText(String.valueOf(this.f3564as.get(this.f3558am).getStyleList().get(this.f3563ar).getGradeList().get(this.f3559an).getLevel()));
+                this.mGradeSp.setText(String.valueOf(this.f3564as.get(this.f3558am).getDefect().get(this.f3563ar).getDefectDescribe().get(this.f3559an).getLevel()));
             }
         }
     }
@@ -259,12 +260,12 @@ public class DialogQuexianEditFragment extends DialogFragment {
     /* renamed from: b */
     public void m5744b(int i) {
         if (this.f3558am != 0) {
-            String[] strArr = new String[this.f3564as.get(this.f3558am).getStyleList().get(i).getGradeList().size()];
+            String[] strArr = new String[this.f3564as.get(this.f3558am).getDefect().get(i).getDefectDescribe().size()];
             int i2 = 0;
             while (true) {
                 int i3 = i2;
                 if (i3 < strArr.length) {
-                    strArr[i3] = String.valueOf(this.f3564as.get(this.f3558am).getStyleList().get(i).getGradeList().get(i3).getLevel());
+                    strArr[i3] = String.valueOf(this.f3564as.get(this.f3558am).getDefect().get(i).getDefectDescribe().get(i3).getLevel());
                     i2 = i3 + 1;
                 } else {
                     this.f3561ap.mo5061a(strArr);
@@ -284,18 +285,18 @@ public class DialogQuexianEditFragment extends DialogFragment {
                 return;
             case 1:
                 m5755g(true);
-                String[] strArr = new String[this.f3564as.get(1).getStyleList().size()];
+                String[] strArr = new String[this.f3564as.get(1).getDefect().size()];
                 while (i2 < strArr.length) {
-                    strArr[i2] = this.f3564as.get(1).getStyleList().get(i2).getName();
+                    strArr[i2] = this.f3564as.get(1).getDefect().get(i2).getName();
                     i2++;
                 }
                 this.f3560ao.mo5061a(strArr);
                 return;
             case 2:
                 m5755g(true);
-                String[] strArr2 = new String[this.f3564as.get(2).getStyleList().size()];
+                String[] strArr2 = new String[this.f3564as.get(2).getDefect().size()];
                 while (i2 < strArr2.length) {
-                    strArr2[i2] = this.f3564as.get(2).getStyleList().get(i2).getName();
+                    strArr2[i2] = this.f3564as.get(2).getDefect().get(i2).getName();
                     i2++;
                 }
                 this.f3560ao.mo5061a(strArr2);
@@ -425,18 +426,18 @@ public class DialogQuexianEditFragment extends DialogFragment {
                                 break;
                             case 1:
                                 if (DialogQuexianEditFragment.this.f3563ar >= 0) {
-                                    pipeDefectDetail.setDefectCode(((QueXianInfo) DialogQuexianEditFragment.this.f3564as.get(DialogQuexianEditFragment.this.f3558am)).getStyleList().get(DialogQuexianEditFragment.this.f3563ar).getName());
+                                    pipeDefectDetail.setDefectCode(((QueXianInfo) DialogQuexianEditFragment.this.f3564as.get(DialogQuexianEditFragment.this.f3558am)).getDefect().get(DialogQuexianEditFragment.this.f3563ar).getName());
                                     if (DialogQuexianEditFragment.this.f3559an >= 0) {
-                                        pipeDefectDetail.setDefectLevel(String.valueOf(((QueXianInfo) DialogQuexianEditFragment.this.f3564as.get(DialogQuexianEditFragment.this.f3558am)).getStyleList().get(DialogQuexianEditFragment.this.f3563ar).getGradeList().get(DialogQuexianEditFragment.this.f3559an).getLevel()));
+                                        pipeDefectDetail.setDefectLevel(String.valueOf(((QueXianInfo) DialogQuexianEditFragment.this.f3564as.get(DialogQuexianEditFragment.this.f3558am)).getDefect().get(DialogQuexianEditFragment.this.f3563ar).getDefectDescribe().get(DialogQuexianEditFragment.this.f3559an).getLevel()));
                                         break;
                                     }
                                 }
                                 break;
                             case 2:
                                 if (DialogQuexianEditFragment.this.f3563ar >= 0) {
-                                    pipeDefectDetail.setDefectCode(((QueXianInfo) DialogQuexianEditFragment.this.f3564as.get(DialogQuexianEditFragment.this.f3558am)).getStyleList().get(DialogQuexianEditFragment.this.f3563ar).getName());
+                                    pipeDefectDetail.setDefectCode(((QueXianInfo) DialogQuexianEditFragment.this.f3564as.get(DialogQuexianEditFragment.this.f3558am)).getDefect().get(DialogQuexianEditFragment.this.f3563ar).getName());
                                     if (DialogQuexianEditFragment.this.f3559an >= 0) {
-                                        pipeDefectDetail.setDefectLevel(String.valueOf(((QueXianInfo) DialogQuexianEditFragment.this.f3564as.get(DialogQuexianEditFragment.this.f3558am)).getStyleList().get(DialogQuexianEditFragment.this.f3563ar).getGradeList().get(DialogQuexianEditFragment.this.f3559an).getLevel()));
+                                        pipeDefectDetail.setDefectLevel(String.valueOf(((QueXianInfo) DialogQuexianEditFragment.this.f3564as.get(DialogQuexianEditFragment.this.f3558am)).getDefect().get(DialogQuexianEditFragment.this.f3563ar).getDefectDescribe().get(DialogQuexianEditFragment.this.f3559an).getLevel()));
                                         break;
                                     }
                                 }

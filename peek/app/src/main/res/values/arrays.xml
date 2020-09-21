@@ -60,4 +60,24 @@
         <item>@string/wasterWater</item>
         <item>@string/rainAndWasterWater</item>
     </array>
+
+
+    <array name="array_fbl">
+
+        <item>1280 * 720p</item>
+        <item>1280 * 960</item>
+        <item>1920 * 1080p</item>
+        <item>2048 * 1536</item>
+    </array>
+
+    <array name="array_szl">
+        <item>20fps</item>
+        <item>22fps</item>
+        <item>25fps</item>
+    </array>
+
+    <array name="array_bm">
+        <item>h.264</item>
+        <item>h.265</item>
+    </array>
 </resources>

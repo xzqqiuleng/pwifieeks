@@ -150,7 +150,7 @@ public class BaseApplication extends Application {
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
         return resources;
     }
-
+    @Override
     public void onCreate() {
         super.onCreate();
         C1127e.m5218a(getApplicationContext());
@@ -158,5 +158,15 @@ public class BaseApplication extends Application {
         f2899b = f2898a.getResources();
         this.f2904g = new ArrayList();
         C1134k.m5255a((Context) m4925a(), m4928b().getInt(C1057a.f2931h, -1));
+//        Login_info.base_video_ip = m4928b().getString(Login_info.VIDEO_IP,"192.168.1.64");
+//        Login_info.base_video_account = m4928b().getString(Login_info.VIDEO_ACCOUNT,"admin");
+//        Login_info.base_video_password = m4928b().getString(Login_info.VIDEO_PASSWORD,"qwe123456");
+//        Login_info.baseMainFrameWifiSSID = m4928b().getString(Login_info.baseMainFrameWifiSSID,"NETGEAR89");
+//        Login_info.baseRepeaterWifiSSID = m4928b().getString(Login_info.baseRepeaterWifiSSID,"NETGEAR89");
+        Login_info.base_video_ip = m4928b().getString(Login_info.VIDEO_IP,"");
+        Login_info.base_video_account = m4928b().getString(Login_info.VIDEO_ACCOUNT,"");
+        Login_info.base_video_password = m4928b().getString(Login_info.VIDEO_PASSWORD,"");
+        Login_info.baseMainFrameWifiSSID = m4928b().getString(Login_info.baseMainFrameWifiSSID,"");
+        Login_info.baseRepeaterWifiSSID = m4928b().getString(Login_info.baseRepeaterWifiSSID,"");
     }
 }

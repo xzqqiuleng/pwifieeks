@@ -53,6 +53,7 @@
                 <action android:name="android.intent.action.ACTION_SHUTDOWN"/>
             </intent-filter>
         </receiver>
+        <activity android:name=".IpSetActivity" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:theme="@style/MyDialogStyleBottom" android:name=".view.p040ui.UpdateActivity" android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".view.p040ui.KanbanPreviewActivity" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".view.p040ui.ManufacturerLogoActivity" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation|screenSize"/>

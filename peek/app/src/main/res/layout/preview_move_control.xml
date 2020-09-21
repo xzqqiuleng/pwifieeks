@@ -11,13 +11,21 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/preview_move_container">
 
-        <FrameLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/bg_suspend"
             android:padding="5dp">
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="测距"
+                android:layout_gravity="center"
+                android:textColor="@color/colorText"
+                android:layout_marginBottom="10dp"
+                />
             <ImageView
                 android:id="@+id/autoHorizontal"
                 android:layout_width="@dimen/preview_autoHorizontal"
@@ -27,7 +35,7 @@
                 android:clickable="true"
                 android:padding="@dimen/preview_autoHorizontal_padding"
                 android:src="@mipmap/hozontal" />
-        </FrameLayout>
+        </LinearLayout>
     </FrameLayout>
 
     <LinearLayout
@@ -40,7 +48,13 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="5dp">
-
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="俯仰"
+           android:textColor="@color/colorText"
+           android:layout_marginBottom="10dp"
+           />
         <ImageView
             android:id="@+id/moveUp"
             android:layout_width="wrap_content"
@@ -50,6 +64,7 @@
             android:src="@mipmap/up" />
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/size_add"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/preview_moveImg_height"
@@ -58,6 +73,7 @@
             android:src="@mipmap/zoom_in" />
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/size_sub"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/preview_moveImg_height"
@@ -66,6 +82,7 @@
             android:src="@mipmap/zoom_out" />
 
         <ImageView
+            android:layout_marginTop="20dp"
             android:id="@+id/moveDown"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/preview_moveImg_height"

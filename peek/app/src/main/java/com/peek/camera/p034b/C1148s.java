@@ -2,11 +2,15 @@ package com.peek.camera.p034b;
 
 import android.util.Log;
 import android.util.Xml;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hikvision.netsdk.NET_DVR_TIME;
 import com.peek.camera.model.CapturePicture;
 import com.peek.camera.model.PipeDefectDetail;
 import com.peek.camera.model.PipeDefectImage;
 import com.peek.camera.model.QueXianInfo;
+import com.peek.camera.model.QueXian_StyleInfo;
 import com.peek.camera.model.RecordTaskInfo;
 import com.peek.camera.model.VideoInfo;
 
@@ -19,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -360,7 +365,380 @@ public class C1148s {
     /* JADX WARNING: Removed duplicated region for block: B:21:0x0054 A[SYNTHETIC, Splitter:B:21:0x0054] */
     /* renamed from: a */
     /* Code decompiled incorrectly, please refer to instructions dump. */
+
+      static String jsonStr= "[{\n" +
+            "\t\t\"Index\": \"0\",\n" +
+            "\t\t\"Name\": \"无缺陷\",\n" +
+            "\t\t\"Code\": \"WQX\"\n" +
+            "\t},\n" +
+            "\t{\n" +
+            "\t\t\"Index\": \"1\",\n" +
+            "\t\t\"Name\": \"结构性缺陷\",\n" +
+            "\t\t\"Code\": \"JGXQX\",\n" +
+            "\t\t\"Defect\": [{\n" +
+            "\t\t\t\t\"Index\": \"0\",\n" +
+            "\t\t\t\t\"Name\": \"破裂\",\n" +
+            "\t\t\t\t\"Code\": \"PL\",\n" +
+            "\t\t\t\t\"Define\": \"管道的外部压力超过自身的承受力致使管子发生破裂。其形式有纵向、环向和复合3种\",\n" +
+            "\t\t\t\t\"DefectDescribe\": [{\n" +
+            "\t\t\t\t\t\t\"Level\": \"1\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"裂痕--存在下列一个或多个情况：\\n          1) 在管壁上可见细裂痕；\\n          2) 在管壁上由细裂缝处冒出少量沉积物；\\n          3) 轻度剥落。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"2\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"裂口--破裂处已形成明显间隙，但管道的形状未受影响且破裂无脱落。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"3\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"破碎--管壁破裂或脱落出所剩碎片的环向覆盖范围不大于弧长60°。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"4\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"坍塌--存在下列一个或多个情况:\\n          1) 管道材料裂痕、裂口或破碎处边缘环向覆盖范围大于弧长60°；\\n          2) 管壁材料发生脱落的环向范围大于弧长60°。\"\n" +
+            "\t\t\t\t\t}\n" +
+            "\t\t\t\t]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"Index\": \"1\",\n" +
+            "\t\t\t\t\"Name\": \"变形\",\n" +
+            "\t\t\t\t\"Code\": \"BX\",\n" +
+            "\t\t\t\t\"Define\": \"管道受外力挤压造成形状变异\",\n" +
+            "\t\t\t\t\"DefectDescribe\": [{\n" +
+            "\t\t\t\t\t\t\"Level\": \"1\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"变形不大于管道直径的5%。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"2\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"变形为管道直径的5%~15%。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"3\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"变形为管道直径的15%~25%\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"4\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"变形大于管道直径的25%。\"\n" +
+            "\t\t\t\t\t}\n" +
+            "\t\t\t\t]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"Index\": \"2\",\n" +
+            "\t\t\t\t\"Name\": \"腐蚀\",\n" +
+            "\t\t\t\t\"Code\": \"FS\",\n" +
+            "\t\t\t\t\"Define\": \"管道内壁受侵蚀而流失或剥落，出现麻面或露出钢筋\",\n" +
+            "\t\t\t\t\"DefectDescribe\": [{\n" +
+            "\t\t\t\t\t\t\"Level\": \"1\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"轻度腐蚀--表面轻微剥落，管壁出现凹凸面。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"2\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"中度腐蚀--表面剥落显露粗骨料或钢筋。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"3\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"重度腐蚀--粗骨料或钢筋完全显露。\"\n" +
+            "\t\t\t\t\t}\n" +
+            "\t\t\t\t]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"Index\": \"3\",\n" +
+            "\t\t\t\t\"Name\": \"错口\",\n" +
+            "\t\t\t\t\"Code\": \"CK\",\n" +
+            "\t\t\t\t\"Define\": \"同一接口的两个管口产生横向偏差， 未处于管道的正确位置\",\n" +
+            "\t\t\t\t\"DefectDescribe\": [{\n" +
+            "\t\t\t\t\t\t\"Level\": \"1\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"轻度错口--相接的两个管口偏差不大于管壁厚度的1/2。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"2\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"中度错口--相接的两个管口偏差为管壁厚度的1/2~1之间。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"3\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"重度错口--相接的两个管口偏差为管壁厚度的1~2倍。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"4\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"严重错口--相接的两个管口偏差为管壁厚度的2倍以上。\"\n" +
+            "\t\t\t\t\t}\n" +
+            "\t\t\t\t]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"Index\": \"4\",\n" +
+            "\t\t\t\t\"Name\": \"起伏\",\n" +
+            "\t\t\t\t\"Code\": \"QF\",\n" +
+            "\t\t\t\t\"Define\": \"接口位置低处形成洼水\",\n" +
+            "\t\t\t\t\"DefectDescribe\": [{\n" +
+            "\t\t\t\t\t\t\"Level\": \"1\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"起伏高/管径 ≤ 20%。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"2\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"20% < 起伏高/管径 ≤ 35%。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"3\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"35% < 起伏高/管径 ≤ 50%。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"4\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"起伏高/管径 > 50%。\"\n" +
+            "\t\t\t\t\t}\n" +
+            "\t\t\t\t]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"Index\": \"5\",\n" +
+            "\t\t\t\t\"Name\": \"脱节\",\n" +
+            "\t\t\t\t\"Code\": \"TJ\",\n" +
+            "\t\t\t\t\"Define\": \"两根管道的端部未充分接合或接口脱离\",\n" +
+            "\t\t\t\t\"DefectDescribe\": [{\n" +
+            "\t\t\t\t\t\t\"Level\": \"1\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"轻度脱节--管道端部有少量泥土挤入。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"2\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"中度脱节--脱节距离不大于20mm。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"3\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"重度脱节--脱节距离为20mm~50mm。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"4\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"严重脱节--脱节距离为50mm以上。\"\n" +
+            "\t\t\t\t\t}\n" +
+            "\t\t\t\t]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"Index\": \"6\",\n" +
+            "\t\t\t\t\"Name\": \"接口材料脱落\",\n" +
+            "\t\t\t\t\"Code\": \"TL\",\n" +
+            "\t\t\t\t\"Define\": \"橡胶圈、沥青、水泥等类似的接口材料进入管道\",\n" +
+            "\t\t\t\t\"DefectDescribe\": [{\n" +
+            "\t\t\t\t\t\t\"Level\": \"1\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"接口材料在管道内水平方向中心线上部可见。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"2\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"接口材料在管道内水平方向中心线下部可见。\"\n" +
+            "\t\t\t\t\t}\n" +
+            "\t\t\t\t]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"Index\": \"7\",\n" +
+            "\t\t\t\t\"Name\": \"支管暗接\",\n" +
+            "\t\t\t\t\"Code\": \"AJ\",\n" +
+            "\t\t\t\t\"Define\": \"支管未通过检查井直接侧向接入主管\",\n" +
+            "\t\t\t\t\"DefectDescribe\": [{\n" +
+            "\t\t\t\t\t\t\"Level\": \"1\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"支管进入主管内的长度不大于主管直径10%。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"2\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"支管进入主管内的长度在主管直径的10%~20%之间。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"3\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"支管进入主管内的长度大于主管直径20%。\"\n" +
+            "\t\t\t\t\t}\n" +
+            "\t\t\t\t]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"Index\": \"8\",\n" +
+            "\t\t\t\t\"Name\": \"异物穿入\",\n" +
+            "\t\t\t\t\"Code\": \"CR\",\n" +
+            "\t\t\t\t\"Define\": \"非管道系统附属设施的物体穿透管壁进入管内\",\n" +
+            "\t\t\t\t\"DefectDescribe\": [{\n" +
+            "\t\t\t\t\t\t\"Level\": \"1\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"异物在管道内且占用过水断面面积不大于10%。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"2\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"异物在管道内且占用过水断面面积为10%~30%。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"3\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"\\n          异物在管道内且占用过水断面面积大于30%。\\n        \"\n" +
+            "\t\t\t\t\t}\n" +
+            "\t\t\t\t]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"Index\": \"9\",\n" +
+            "\t\t\t\t\"Name\": \"渗漏\",\n" +
+            "\t\t\t\t\"Code\": \"SL\",\n" +
+            "\t\t\t\t\"Define\": \"管外的水流入管道\",\n" +
+            "\t\t\t\t\"DefectDescribe\": [{\n" +
+            "\t\t\t\t\t\t\"Level\": \"1\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"滴漏--水持续从缺陷点滴出。沿管壁流动。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"2\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"线漏--水持续从缺陷点流出，并脱离管壁流动。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"3\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"涌漏--水从缺陷点涌出，涌漏水面的面积不大于管道断面的1/3。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"4\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"喷漏--水从缺陷点大量涌出或喷出，涌漏水面的面积大于管道断面的1/3。\"\n" +
+            "\t\t\t\t\t}\n" +
+            "\t\t\t\t]\n" +
+            "\t\t\t}\n" +
+            "\t\t]\n" +
+            "\t},\n" +
+            "\t{\n" +
+            "\t\t\"Index\": \"2\",\n" +
+            "\t\t\"Name\": \"功能性缺陷\",\n" +
+            "\t\t\"Code\": \"GNXQX\",\n" +
+            "\t\t\"Defect\": [{\n" +
+            "\t\t\t\t\"Index\": \"0\",\n" +
+            "\t\t\t\t\"Name\": \"沉积\",\n" +
+            "\t\t\t\t\"Code\": \"CJ\",\n" +
+            "\t\t\t\t\"Define\": \"杂质在管道底部沉淀淤积\",\n" +
+            "\t\t\t\t\"DefectDescribe\": [{\n" +
+            "\t\t\t\t\t\t\"Level\": \"1\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"沉积物厚度为管径的20%~30%。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"2\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"沉积物厚度在管径的30%~40%之间。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"3\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"沉积物厚度在管径的40%~50%之间。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"4\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"沉积物厚度大于管径的50%。\"\n" +
+            "\t\t\t\t\t}\n" +
+            "\t\t\t\t]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"Index\": \"1\",\n" +
+            "\t\t\t\t\"Name\": \"结垢\",\n" +
+            "\t\t\t\t\"Code\": \"JG\",\n" +
+            "\t\t\t\t\"Define\": \"管道内壁上的附着物\",\n" +
+            "\t\t\t\t\"DefectDescribe\": [{\n" +
+            "\t\t\t\t\t\t\"Level\": \"1\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"硬质结垢造成的过水断面损失不大于15%；软质结垢造成的过水断面损失在15%~25%之间。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"2\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"硬质结垢造成的过水断面损失在15%~25%之间；软质结垢造成的过水断面损失在25%~50%之间。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"3\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"硬质结垢造成的过水断面损失在25%~50%之间；软质结垢造成的过水断面损失在50%~80%之间。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"4\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"硬质结垢造成的过水断面损失大于50%；软质结垢造成的过水断面损失大于80%。\"\n" +
+            "\t\t\t\t\t}\n" +
+            "\t\t\t\t]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"Index\": \"2\",\n" +
+            "\t\t\t\t\"Name\": \"障碍物\",\n" +
+            "\t\t\t\t\"Code\": \"ZW\",\n" +
+            "\t\t\t\t\"Define\": \"管道内影响过流的阻挡物\",\n" +
+            "\t\t\t\t\"DefectDescribe\": [{\n" +
+            "\t\t\t\t\t\t\"Level\": \"1\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"过水断面损失不大于15%。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"2\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"过水断面损失在15%~25%之间。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"3\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"过水断面损失在25%~50%之间。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"4\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"过水断面损失在50%。\"\n" +
+            "\t\t\t\t\t}\n" +
+            "\t\t\t\t]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"Index\": \"3\",\n" +
+            "\t\t\t\t\"Name\": \"残墙、坝根\",\n" +
+            "\t\t\t\t\"Code\": \"CQ\",\n" +
+            "\t\t\t\t\"Define\": \"管道闭水试验时砌筑的临时砖墙封堵，试验后未拆除或拆除不彻底的遗留物\",\n" +
+            "\t\t\t\t\"DefectDescribe\": [{\n" +
+            "\t\t\t\t\t\t\"Level\": \"1\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"过水断面损失不大于15%。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"2\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"过水断面损失在15%~25%之间。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"3\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"过水断面损失在25%~50%之间。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"4\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"过水断面损失在50%。\"\n" +
+            "\t\t\t\t\t}\n" +
+            "\t\t\t\t]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"Index\": \"4\",\n" +
+            "\t\t\t\t\"Name\": \"树根\",\n" +
+            "\t\t\t\t\"Code\": \"SG\",\n" +
+            "\t\t\t\t\"Define\": \"单根树根或是树根群自然生长进入管道\",\n" +
+            "\t\t\t\t\"DefectDescribe\": [{\n" +
+            "\t\t\t\t\t\t\"Level\": \"1\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"过水断面损失不大于15%。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"2\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"过水断面损失在15%~25%之间。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"3\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"过水断面损失在25%~50%之间。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"4\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"过水断面损失在50%。\"\n" +
+            "\t\t\t\t\t}\n" +
+            "\t\t\t\t]\n" +
+            "\t\t\t},\n" +
+            "\t\t\t{\n" +
+            "\t\t\t\t\"Index\": \"5\",\n" +
+            "\t\t\t\t\"Name\": \"浮渣\",\n" +
+            "\t\t\t\t\"Code\": \"FZ\",\n" +
+            "\t\t\t\t\"Define\": \"管道内水面上的漂浮物（测记录表，不参与计算）\",\n" +
+            "\t\t\t\t\"DefectDescribe\": [{\n" +
+            "\t\t\t\t\t\t\"Level\": \"1\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"零星的漂浮物，漂浮物占水面面积不大于30%。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"2\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"过水断面损失在15%~25%之间。\"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"3\",\n" +
+            "\t\t\t\t\t\t\"Content\": \"过水断面损失在25%~50%之间。 \"\n" +
+            "\t\t\t\t\t},\n" +
+            "\t\t\t\t\t{\n" +
+            "\t\t\t\t\t\t\"Level\": \"4\",\n" +
+            "\t\t\t\t\t\t\"Content\": \" 过水断面损失在50%。\"\n" +
+            "\t\t\t\t\t}\n" +
+            "\t\t\t\t]\n" +
+            "\t\t\t}\n" +
+            "\t\t]\n" +
+            "\t}\n" +
+            "]";
     public static java.util.List<QueXianInfo> m5292a(java.io.InputStream r11) {
+        Gson gson1=new Gson();
+        List<QueXianInfo> list= gson1.fromJson(jsonStr, new TypeToken<List<QueXianInfo>>() {}.getType());
+
+        return  list;
+
+
         /*
             r0 = 0
             if (r11 != 0) goto L_0x0004
@@ -522,7 +900,7 @@ public class C1148s {
             java.lang.String r9 = r8.getName()     // Catch:{ XmlPullParserException -> 0x004d, FileNotFoundException -> 0x0077, IOException -> 0x0089 }
             boolean r2 = r2.equals(r9)     // Catch:{ XmlPullParserException -> 0x004d, FileNotFoundException -> 0x0077, IOException -> 0x0089 }
             if (r2 == 0) goto L_0x0153
-            r5.setStyleList(r7)     // Catch:{ XmlPullParserException -> 0x004d, FileNotFoundException -> 0x0077, IOException -> 0x0089 }
+            r5.setDefect(r7)     // Catch:{ XmlPullParserException -> 0x004d, FileNotFoundException -> 0x0077, IOException -> 0x0089 }
             r1.add(r5)     // Catch:{ XmlPullParserException -> 0x004d, FileNotFoundException -> 0x0077, IOException -> 0x0089 }
             r5 = r0
             r7 = r0
@@ -540,7 +918,7 @@ public class C1148s {
             java.lang.String r9 = r8.getName()     // Catch:{ XmlPullParserException -> 0x004d, FileNotFoundException -> 0x0077, IOException -> 0x0089 }
             boolean r2 = r2.equals(r9)     // Catch:{ XmlPullParserException -> 0x004d, FileNotFoundException -> 0x0077, IOException -> 0x0089 }
             if (r2 == 0) goto L_0x001e
-            r4.setGradeList(r6)     // Catch:{ XmlPullParserException -> 0x004d, FileNotFoundException -> 0x0077, IOException -> 0x0089 }
+            r4.setDefectDescribe(r6)     // Catch:{ XmlPullParserException -> 0x004d, FileNotFoundException -> 0x0077, IOException -> 0x0089 }
             r7.add(r4)     // Catch:{ XmlPullParserException -> 0x004d, FileNotFoundException -> 0x0077, IOException -> 0x0089 }
             r4 = r0
             r6 = r0
@@ -569,7 +947,7 @@ public class C1148s {
             */
 
 
-        throw new UnsupportedOperationException("Method not decompiled: com.bmw.peek2.p034b.C1148s.m5292a(java.io.InputStream):java.util.List");
+//        throw new UnsupportedOperationException("Method not decompiled: com.bmw.peek2.p034b.C1148s.m5292a(java.io.InputStream):java.util.List");
   }
 
     /* renamed from: a */

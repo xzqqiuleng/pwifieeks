@@ -2,7 +2,9 @@ package com.peek.camera.p034b;
 
 import com.hikvision.netsdk.HCNetSDK;
 import com.hikvision.netsdk.NET_DVR_CAMERAPARAMCFG_EX;
+import com.hikvision.netsdk.NET_DVR_CONFIG;
 import com.hikvision.netsdk.NET_DVR_PICCFG_V30;
+import com.hikvision.netsdk.NET_DVR_SHOWSTRING_V30;
 import com.hikvision.netsdk.NET_DVR_TIME;
 import com.hikvision.netsdk.NET_DVR_WDR;
 import com.peek.camera.BaseApplication;
@@ -11,6 +13,7 @@ import com.peek.camera.jna.HCNetSDKByJNA;
 import com.peek.camera.jna.HCNetSDKJNAInstance;
 import com.peek.camera.model.All_id_Info;
 import com.peek.camera.model.Login_info;
+import com.peek.camera.model.OsdHkInfo;
 import com.sun.jna.ptr.IntByReference;
 import java.io.UnsupportedEncodingException;
 
@@ -80,6 +83,111 @@ public class C1131i {
         }
     }
 
+
+    public static void showWaterList(java.util.List<OsdHkInfo> arg10) {
+        String v0_1;
+        int v8 = 44;
+        if(arg10 != null) {
+            int v4 = arg10.size();
+            NET_DVR_SHOWSTRING_V30 v5 = new NET_DVR_SHOWSTRING_V30();
+            HCNetSDK instance = HCNetSDK.getInstance();
+            int m_iLogID = All_id_Info.getInstance().getM_iLogID();
+            HCNetSDK.getInstance();
+            instance.NET_DVR_GetDVRConfig(m_iLogID, 1030, All_id_Info.getInstance().getM_iChanNum(), v5);
+            int v3;
+            for(v3 = 0; v3 < 6; ++v3) {
+                if(v4 != 0) {
+                    try {
+                        if(v3 < arg10.size()) {
+                            v0_1 = arg10.get(v3).getsString();
+                        }
+                        else {
+
+                            v0_1 = "";
+                        }
+
+                        byte[] v0_2 = v0_1 == null || v0_1.length() <= 0 ? new byte[44] : v0_1.getBytes("gb2312");
+                        int v1;
+                        for(v1 = 0; v1 < v5.struStringInfo[v3].sString.length; ++v1) {
+                            v5.struStringInfo[v3].sString[v1] = v1 < v0_2.length ? v0_2[v1] : 0;
+                        }
+
+                        v5.struStringInfo[v3].wStringSize = v0_2.length <= v8 ? v0_2.length : 44;
+                        if(v4 != 0 && v3 < arg10.size()) {
+                            v5.struStringInfo[v3].wShowStringTopLeftX = arg10.get(v3).getOsdX();
+                            v5.struStringInfo[v3].wShowStringTopLeftY = arg10.get(v3).getOsdY();
+                            v5.struStringInfo[v3].wShowString = arg10.get(v3).getShowStr();
+                            continue;
+                        }
+
+                        v5.struStringInfo[v3].wShowStringTopLeftX = 0;
+                        v5.struStringInfo[v3].wShowStringTopLeftY = 0;
+                        v5.struStringInfo[v3].wShowString = 0;
+                    }
+                    catch(UnsupportedEncodingException v0) {
+                        v0.printStackTrace();
+                    }
+                }
+                else {
+                    v0_1 = "";
+                }
+
+
+            }
+            int m_iLogID2 = All_id_Info.getInstance().getM_iLogID();
+            HCNetSDK v0_3 = HCNetSDK.getInstance();
+            HCNetSDK.getInstance();
+            if(v0_3.NET_DVR_SetDVRConfig(m_iLogID2, 1031, All_id_Info.getInstance().getM_iChanNum(), v5)) {
+                return;
+            }
+
+            C1140n.m5269b("字符叠加添加版头：NET_DVR_GET_SHOWSTRING_V30 faild!  err: " + HCNetSDK.getInstance().NET_DVR_GetLastError());
+        }
+    }
+    public static void showWarter(String str, boolean z) {
+        if (All_id_Info.getInstance().getM_iLogID() >= 0 && !Login_info.getInstance().isBanTouShow()) {
+            NET_DVR_PICCFG_V30 net_dvr_piccfg_v30 = new NET_DVR_PICCFG_V30();
+            HCNetSDK instance = HCNetSDK.getInstance();
+            int m_iLogID = All_id_Info.getInstance().getM_iLogID();
+            HCNetSDK.getInstance();
+            instance.NET_DVR_GetDVRConfig(m_iLogID, 1002, All_id_Info.getInstance().getM_iChanNum(), net_dvr_piccfg_v30);
+            byte[] bArr = null;
+            try {
+                bArr = str.getBytes("gb2312");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            if (bArr != null) {
+                for (int i = 0; i < net_dvr_piccfg_v30.sChanName.length; i++) {
+                    if (i < bArr.length) {
+                        net_dvr_piccfg_v30.sChanName[i] = bArr[i];
+                    } else {
+                        net_dvr_piccfg_v30.sChanName[i] = 0;
+                    }
+                }
+                net_dvr_piccfg_v30.dwShowChanName = 1;
+                net_dvr_piccfg_v30.wShowNameTopLeftX = 32;
+                net_dvr_piccfg_v30.wShowNameTopLeftY = 514;
+                boolean z2 = BaseApplication.m4928b().getBoolean("KEY_OSD_IS_SHOW_TIME_ON_DEVICE", false);
+                if (!z) {
+                    net_dvr_piccfg_v30.dwShowOsd = 0;
+                } else if (z2) {
+                    net_dvr_piccfg_v30.dwShowOsd = 0;
+                } else {
+                    net_dvr_piccfg_v30.dwShowOsd = 1;
+                }
+                net_dvr_piccfg_v30.byFontSize = 1;
+                net_dvr_piccfg_v30.wOSDTopLeftX = 512;
+                net_dvr_piccfg_v30.wOSDTopLeftY = 544;
+            }
+            HCNetSDK instance2 = HCNetSDK.getInstance();
+            int m_iLogID2 = All_id_Info.getInstance().getM_iLogID();
+            HCNetSDK.getInstance();
+            if (!instance2.NET_DVR_SetDVRConfig(m_iLogID2, 1003, All_id_Info.getInstance().getM_iChanNum(), net_dvr_piccfg_v30)) {
+                C1140n.m5270b("字符叠加标记：e= ", HCNetSDK.getInstance().NET_DVR_GetLastError());
+            }
+        }
+    }
     /* renamed from: a */
     public static boolean m5244a(int i, int i2, int i3, int i4, int i5, int i6) {
         if (All_id_Info.getInstance().getM_iLogID() < 0) {

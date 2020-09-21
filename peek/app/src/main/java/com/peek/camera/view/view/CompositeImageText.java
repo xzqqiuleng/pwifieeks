@@ -107,10 +107,10 @@ public class CompositeImageText extends FrameLayout {
         this.f4097i = 0;
         this.f4095g = 0;
         this.f4096h = 0;
-        this.f4099k = 20;
-        this.f4100l = 20;
+        this.f4099k = 60;
+        this.f4100l = 60;
 //        this.f4101m = obtainStyledAttributes.getResourceId(1, R.mipmap.ic_launcher);
-        this.f4102n = 12;
+        this.f4102n = 16;
         this.f4103o = obtainStyledAttributes.getColor(R.styleable.CompositeImageText_textColor, -256);
         this.f4104p = obtainStyledAttributes.getString(R.styleable.CompositeImageText_textString);
         this.f4101m = obtainStyledAttributes.getResourceId(R.styleable.CompositeImageText_imgImage, R.mipmap.ic_launcher);

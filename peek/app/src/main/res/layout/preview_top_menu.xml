@@ -81,6 +81,7 @@
         style="@style/style_top_menu_main"
         android:layout_width="wrap_content"
         android:clickable="false"
+        android:visibility="gone"
         ns20:imgImage="@mipmap/angle"
         ns21:textString="@string/angle" />
 
@@ -94,8 +95,7 @@
             android:id="@+id/preview_connectState"
             style="@style/style_top_menu_main"
             android:layout_width="wrap_content"
-            ns22:imgImage="@mipmap/disconnect"
-            ns23:textColor="@color/red"
+            ns22:imgImage="@mipmap/connect"
             ns24:textString="@string/firstConnectState" />
 
         <FrameLayout
