@@ -3,6 +3,7 @@ import android.util.Log;
 
 import com.hikvision.netsdk.HCNetSDK;
 import com.hikvision.netsdk.NET_DVR_JPEGPARA;
+import com.hikvision.netsdk.RealPlayCallBack;
 import com.peek.camera.BaseApplication;
 import com.peek.camera.R;
 import com.peek.camera.jna.SystemTransformByJNA;
@@ -122,9 +123,11 @@ public class C1084g implements C1102g {
     /* renamed from: d */
     private void m5076d() {
         Login_info.isPause = true;
-        int SYSTRANS_Stop = SystemTransformJNAInstance.getInstance().SYSTRANS_Stop(SystemTransformByJNA.handle.getValue());
-        int SYSTRANS_Release = SystemTransformJNAInstance.getInstance().SYSTRANS_Release(SystemTransformByJNA.handle.getValue());
-        if (SYSTRANS_Stop == 0 && SYSTRANS_Release == 0) {
+        int NET_DVR_RealPlay_V40 = BaseApplication.m4928b().getInt("NET_DVR_RealPlay_V40",0);
+     boolean SYSTRANS_Stop=   HCNetSDK.getInstance().NET_DVR_StopSaveRealData (NET_DVR_RealPlay_V40);
+//        int SYSTRANS_Stop = SystemTransformJNAInstance.getInstance().SYSTRANS_Stop(SystemTransformByJNA.handle.getValue());
+//        int SYSTRANS_Release = SystemTransformJNAInstance.getInstance().SYSTRANS_Release(SystemTransformByJNA.handle.getValue());
+        if (SYSTRANS_Stop) {
             m5073a(true);
         } else {
             m5073a(false);
@@ -134,11 +137,14 @@ public class C1084g implements C1102g {
 
     /* renamed from: d */
     private void m5077d(String str) {
-        if (SystemTransformJNAInstance.getInstance().SYSTRANS_Create(SystemTransformByJNA.handle, this.f3011c) != 0) {
-            m5078e();
-        } else if (SystemTransformJNAInstance.getInstance().SYSTRANS_Start(SystemTransformByJNA.handle.getValue(), (String) null, str) != 0) {
-            m5078e();
-        }
+//        int NET_DVR_RealPlay_V40 = HCNetSDK.getInstance().NET_DVR_RealPlay_V40(m_iLogID, net_dvr_previewinfo, (RealPlayCallBack) null);
+        int NET_DVR_RealPlay_V40 = BaseApplication.m4928b().getInt("NET_DVR_RealPlay_V40",0);
+        HCNetSDK.getInstance().NET_DVR_SaveRealData(NET_DVR_RealPlay_V40,str);
+//        if (SystemTransformJNAInstance.getInstance().SYSTRANS_Create(SystemTransformByJNA.handle, this.f3011c) != 0) {
+//            m5078e();
+//        } else if (SystemTransformJNAInstance.getInstance().SYSTRANS_Start(SystemTransformByJNA.handle.getValue(), (String) null, str) != 0) {
+//            m5078e();
+//        }
     }
 
     /* renamed from: e */
@@ -209,6 +215,12 @@ public class C1084g implements C1102g {
 
     /* renamed from: a */
     public void mo4568a(String str, boolean z, String str2) {
+        String endM ;
+        if (BaseApplication.m4928b().getInt("avi_mp4",0) == 0){
+            endM = ".avi";
+        }else {
+            endM = ".mp4";
+        }
         String str3;
         int i = 0;
         this.f3012d = z;
@@ -235,22 +247,22 @@ public class C1084g implements C1102g {
                         str3 = d;
                     }
                     sb.append(str3);
-                    sb.append(".avi");
+                    sb.append(endM);
                     this.f3013e = sb.toString();
                     m5077d(sb.toString());
                     Login_info.isAddKanban = true;
                     m5074b((String) null);
                     return;
                 }
-                File file2 = new File(str + ".avi");
+                File file2 = new File(str + endM);
                 if (file2.exists()) {
                     while (file2.exists()) {
                         i++;
-                        file2 = new File(str + "_" + i + ".avi");
+                        file2 = new File(str + "_" + i + endM);
                     }
                     str = str + "_" + i;
                 }
-                String str4 = str + ".avi";
+                String str4 = str + endM;
                 this.f3013e = str4;
                 m5072a(str4, str2);
             } else if (this.f3009a != null) {
@@ -271,8 +283,10 @@ public class C1084g implements C1102g {
 
     /* renamed from: b */
     public void mo4570b() {
-        SystemTransformJNAInstance.getInstance().SYSTRANS_Stop(SystemTransformByJNA.handle.getValue());
-        SystemTransformJNAInstance.getInstance().SYSTRANS_Release(SystemTransformByJNA.handle.getValue());
+        int NET_DVR_RealPlay_V40 = BaseApplication.m4928b().getInt("NET_DVR_RealPlay_V40",0);
+        HCNetSDK.getInstance().NET_DVR_StopSaveRealData (NET_DVR_RealPlay_V40);
+//        SystemTransformJNAInstance.getInstance().SYSTRANS_Stop(SystemTransformByJNA.handle.getValue());
+//        SystemTransformJNAInstance.getInstance().SYSTRANS_Release(SystemTransformByJNA.handle.getValue());
         if (this.f3010b) {
             C1140n.m5268a("海康：抓拍：视图退出，停止录像", "");
             mo4568a((String) null, this.f3012d, (String) null);

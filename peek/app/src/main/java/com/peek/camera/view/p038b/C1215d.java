@@ -10,8 +10,11 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
+import com.peek.camera.BaseApplication;
 import com.peek.camera.R;
+import com.peek.camera.WIFIAutoConnectionService;
 import com.peek.camera.model.Login_info;
 import com.peek.camera.p034b.C1116aa;
 import com.peek.camera.p034b.C1141o;
@@ -63,8 +66,8 @@ public class C1215d {
         /* renamed from: a */
         void mo5083a();
     }
-
-    public C1215d(Context context) {
+    boolean isCanCon;
+    public C1215d(final Context context) {
         this.f3318h = context;
         this.f3319i = new C1159z(context);
         this.f3311a = new AlertDialog.Builder(context).create();
@@ -90,17 +93,63 @@ public class C1215d {
         } else {
             this.f3315e.setVisibility(4);
         }
-        m5576c();
-        m5569a();
+//        m5576c();
+//        m5569a();
+         isCanCon = false;
+        f3315e.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                 switch (checkedId){
+                     case R.id.rb_connect_mainFrame:
+                         if (BaseApplication.m4928b().getString("VIDEO_IP1","").equals("")){
+                             Toast.makeText(context,"你还没有进行中继网路设置",Toast.LENGTH_SHORT).show();
+                         }else {
+                             isCanCon = true;
+                         }
+                         break;
+
+                     case R.id.rb_connect_repeater:
+                         if (BaseApplication.m4928b().getString("VIDEO_IP2","").equals("")){
+                             Toast.makeText(context,"你还没有进行主机网路设置",Toast.LENGTH_SHORT).show();
+                         }else {
+                             isCanCon = true;
+                         }
+                         break;
+                 }
+            }
+        });
         this.f3311a.setOnDismissListener(new DialogInterface.OnDismissListener() {
             public void onDismiss(DialogInterface dialogInterface) {
-                boolean unused = C1215d.this.f3314d = true;
-                ImageView unused2 = C1215d.this.f3312b = null;
-                ImageView unused3 = C1215d.this.f3313c = null;
-                AlertDialog unused4 = C1215d.this.f3311a = null;
-                if (C1215d.this.f3320j != null) {
-                    C1215d.this.f3320j.mo5083a();
-                }
+              boolean checked1 =  f3316f.isChecked();
+              boolean checked2 =  f3317g.isChecked();
+
+              int type = BaseApplication.m4928b().getInt("TCP_PORT1",0);
+              if (type == 0 && checked2){
+                  BaseApplication.m4928b().edit().putString(Login_info.VIDEO_IP,BaseApplication.m4928b().getString("VIDEO_IP1","")).commit();
+                  BaseApplication.m4928b().edit().putString(Login_info.VIDEO_ACCOUNT,BaseApplication.m4928b().getString("VIDEO_ACCOUNT1","")).commit();
+                  BaseApplication.m4928b().edit().putString(Login_info.VIDEO_PASSWORD,BaseApplication.m4928b().getString("VIDEO_PASSWORD1","")).commit();
+                  BaseApplication.m4928b().edit().putString(Login_info.baseMainFrameWifiSSID,BaseApplication.m4928b().getString("baseMainFrameWifiSSID1","")).commit();
+                  BaseApplication.m4928b().edit().putString(Login_info.baseRepeaterWifiSSID,BaseApplication.m4928b().getString("baseMainFrameWifiSSID1","")).commit();
+                  BaseApplication.m4928b().edit().putString("TCP_IP",BaseApplication.m4928b().getString("TCP_IP1","")).commit();
+
+                  BaseApplication.m4928b().edit().putInt("TCP_PORT",BaseApplication.m4928b().getInt("TCP_PORT1",-1)).commit();
+                  BaseApplication.m4928b().edit().putString("WIFIPD",BaseApplication.m4928b().getString("WIFIPD1","")).commit();
+                  WIFIAutoConnectionService.start(context,BaseApplication.m4928b().getString("baseMainFrameWifiSSID1",""),BaseApplication.m4928b().getString("WIFIPD1",""));
+              }else  if(type == 1 && checked1){
+                  BaseApplication.m4928b().edit().putString(Login_info.VIDEO_IP,BaseApplication.m4928b().getString("VIDEO_IP2","")).commit();
+                  BaseApplication.m4928b().edit().putString(Login_info.VIDEO_ACCOUNT,BaseApplication.m4928b().getString("VIDEO_ACCOUNT2","")).commit();
+                  BaseApplication.m4928b().edit().putString(Login_info.VIDEO_PASSWORD,BaseApplication.m4928b().getString("VIDEO_PASSWORD2","")).commit();
+                  BaseApplication.m4928b().edit().putString(Login_info.baseMainFrameWifiSSID,BaseApplication.m4928b().getString("baseMainFrameWifiSSID2","")).commit();
+                  BaseApplication.m4928b().edit().putString(Login_info.baseRepeaterWifiSSID,BaseApplication.m4928b().getString("baseMainFrameWifiSSID2","")).commit();
+                  BaseApplication.m4928b().edit().putString("TCP_IP",BaseApplication.m4928b().getString("TCP_IP2","")).commit();
+
+                  BaseApplication.m4928b().edit().putInt("TCP_PORT",BaseApplication.m4928b().getInt("TCP_PORT2",-1)).commit();
+                  BaseApplication.m4928b().edit().putString("WIFIPD",BaseApplication.m4928b().getString("WIFIPD2","")).commit();
+                  WIFIAutoConnectionService.start(context,BaseApplication.m4928b().getString("baseMainFrameWifiSSID2",""),BaseApplication.m4928b().getString("WIFIPD2",""));
+              }
+
+
+
             }
         });
         m5578d();

@@ -51,7 +51,7 @@
        <TextView
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text="俯仰"
+           android:text="俯仰控制"
            android:textColor="@color/colorText"
            android:layout_marginBottom="10dp"
            />

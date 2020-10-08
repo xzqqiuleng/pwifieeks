@@ -1,5 +1,4 @@
 package com.peek.camera.view.p040ui;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -13,20 +12,20 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkRequest;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.PersistableBundle;
-import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -37,8 +36,13 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,6 +62,8 @@ import com.peek.camera.BaseApplication;
 import com.peek.camera.C1057a;
 import com.peek.camera.IpSetActivity;
 import com.peek.camera.R;
+import com.peek.camera.WIFIAutoConnectionService;
+import com.peek.camera.WIFIConnectionManager;
 import com.peek.camera.model.All_id_Info;
 import com.peek.camera.model.CapturePicture;
 import com.peek.camera.model.Login_info;
@@ -104,9 +110,12 @@ import com.peek.camera.view.p039c.C1237b;
 import com.peek.camera.view.view.CompositeImageText;
 import com.peek.camera.view.view.Vertical_seekbar;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 import org.apache.http.cookie.ClientCookie;
@@ -196,6 +205,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
     private Unbinder f3847V;
    boolean isStart = false;
 
+ boolean ipConnect = false;
 
 
     private Handler msgHandler = new Handler(){
@@ -206,8 +216,8 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 
             switch (msg.what){
                 case 0: //连接成功
-
-                  int  len = NettyClientBootstrap.FRAME_LEN_TANTOU;
+                    ipConnect = true;
+                    int  len = NettyClientBootstrap.FRAME_LEN_TANTOU;
                     byte[]data =  NettyClientBootstrap.TANTOU;
 
                     try {
@@ -229,6 +239,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                     }
                     break;
                 case 1: //连接失败/重连失败
+                    ipConnect = false;
                     Toast.makeText(PreviewActivity.this,"IP连接失败，请检查设置! ",Toast.LENGTH_SHORT).show();
                     break;
                 case 2: //重连中
@@ -241,7 +252,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 
                     diastanceTs= new OsdHkInfo();
                     diastanceTs.setOsdX(40);
-                    diastanceTs.setOsdY(140);
+                    diastanceTs.setOsdY(544);
                     diastanceTs.setsString("距离： "+distance);
                     diastanceTs.setShowStr(1);
                     setPicCfg();
@@ -276,8 +287,60 @@ public class PreviewActivity extends BaseActivity implements C1237b {
             }
         }
     };
+    private Timer mTimer;
+    void getBattery(){
+        mTimer = new Timer();
+        TimerTask timerTask = new TimerTask(){
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(ipConnect){
+                            int  len = NettyClientBootstrap.FRAME_LEN_TANTOU;
+                            byte[]data =  NettyClientBootstrap.TANTOU;
+
+                            try {
+                                ByteBuf buf = Unpooled.buffer(len);
+                                buf.writeBytes(data);
+                                NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
+                            }catch (Exception ex){
+                                ex.printStackTrace();
+                            }
+                            int len1 = NettyClientBootstrap.FRAME_LEN_CMD;
+                            byte[] data1 = NettyClientBootstrap.ZHONGJI;
+
+                            try {
+                                ByteBuf buf = Unpooled.buffer(len1);
+                                buf.writeBytes(data1);
+                                NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
+                            }catch (Exception ex){
+                                ex.printStackTrace();
+                            }
+                        }
+                    }
+                });
+            }
+        };
+        mTimer.schedule(timerTask,60000);
+    }
+
+    NettyClientConnectionThread connection;
+
+
+    void onDisconnectClick(){
+        if(connection != null && ipConnect){
+            try {
+                System.out.println("断开连接");
+                connection.stopConnection();
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+        }
+    }
 
     void tcpConnect(){
+        onDisconnectClick();
 //        String IP = "192.168.1.3";
 //        int port = 2756;
 
@@ -286,7 +349,11 @@ public class PreviewActivity extends BaseActivity implements C1237b {
        if(TextUtils.isEmpty(IP) || port == -1){
            Toast.makeText(this,"请先前去配置IP地址",Toast.LENGTH_SHORT).show();
        }else {
-           NettyClientConnectionThread connection = new NettyClientConnectionThread(BaseApplication.m4925a(), IP, port, msgHandler);
+           if(connection != null){
+               msgHandler.removeCallbacks(connection);
+
+           }
+           connection = new NettyClientConnectionThread(BaseApplication.m4925a(), IP, port, msgHandler);
            connection.start();
 
        }
@@ -294,7 +361,13 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 
     }
 
-
+   void appConstant(){
+       Calendar cd = Calendar.getInstance();
+       int year = cd.get(Calendar.YEAR);
+       if(year == 2021){
+           System.exit(0);
+       }
+   }
 
     /* renamed from: W */
     private BroadcastReceiver f3848W = new BroadcastReceiver() {
@@ -458,6 +531,8 @@ public class PreviewActivity extends BaseActivity implements C1237b {
     CompositeImageText moveAngle;
     @BindView(R.id.lights_switch)
     ImageView lights_switch;
+    @BindView(R.id.ll_zj)
+    LinearLayout ll_zj;
     /* access modifiers changed from: private */
 
     /* renamed from: o */
@@ -691,7 +766,10 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 
     /* renamed from: D */
     private void m5939D() {
-        this.f3858t.mo4570b();
+        if(f3858t != null){
+            this.f3858t.mo4570b();
+        }
+
         if (this.f3829D != null) {
             this.f3829D.cancel();
         }
@@ -703,7 +781,12 @@ public class PreviewActivity extends BaseActivity implements C1237b {
         if (this.f3864z != null) {
             this.f3864z.mo4490c();
         }
-        unregisterReceiver(this.f3848W);
+        try {
+            unregisterReceiver(this.f3848W);
+        }catch (Exception e){
+
+        }
+
         this.f3637n.cancel();
         this.f3853o.mo4513l();
         this.f3853o = null;
@@ -749,11 +832,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 } else {
                     PreviewActivity.this.f3853o.mo4509h();
                 }
-                if(f3861w){
-                    Toast.makeText(getBaseContext(), "除雾状态下，不支持远光/近光调节" +
-                            "", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+
 
 
                     ByteBuf buf = Unpooled.buffer(NettyClientBootstrap.FRAME_LEN_LIGHT);
@@ -862,6 +941,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
             fpsOsd.setOsdY(40);
 
             fpsOsd.setShowStr(1);
+
             switch (frameRate){
                 case 1:
                     fpsOsd.setsString("fps 1/16");
@@ -962,7 +1042,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 
         diastanceTs= new OsdHkInfo();
         diastanceTs.setOsdX(40);
-        diastanceTs.setOsdY(140);
+        diastanceTs.setOsdY(544);
         diastanceTs.setsString("距离");
         diastanceTs.setShowStr(1);
         setPicCfg();
@@ -993,13 +1073,13 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                         warter.clear();
                         OsdHkInfo osdHkInfo1= new OsdHkInfo();
                         osdHkInfo1.setOsdX(40);
-                        osdHkInfo1.setOsdY(40);
+                        osdHkInfo1.setOsdY(120);
                         osdHkInfo1.setsString(str);
                         osdHkInfo1.setShowStr(1);
 
                         OsdHkInfo osdHkInfo2= new OsdHkInfo();
                         osdHkInfo2.setOsdX(40);
-                        osdHkInfo2.setOsdY(70);
+                        osdHkInfo2.setOsdY(140);
                         osdHkInfo2.setsString(str2);
                         osdHkInfo2.setShowStr(1);
                         warter.add(osdHkInfo1);
@@ -1195,17 +1275,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
         m5794b("除雾按钮！");
 
 
-        ByteBuf buf = Unpooled.buffer(NettyClientBootstrap.FRAME_LEN_LIGHT);
-        if(this.f3854p){
 
-            this.lightAdjust.setProgress(0);
-        }
-        buf.writeBytes(NettyClientBootstrap.getLightData(f3856r, f3855q, f3861w));
-        try {
-            NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
         if (this.f3861w) {
             this.f3861w = false;
             this.clearFogComposite.setImage(R.mipmap.chuwu_off);
@@ -1216,16 +1286,33 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 this.lightAdjust.setProgress(f3855q);
 
             }
-            return;
+
+        }else {
+            this.f3861w = true;
+            this.clearFogComposite.setImage(R.mipmap.chuwu_on);
+            this.clearFogComposite.setTextColor(R.color.colorText);
+            this.f3853o.mo4511j();
         }
-        this.f3861w = true;
-        this.clearFogComposite.setImage(R.mipmap.chuwu_on);
-        this.clearFogComposite.setTextColor(R.color.colorText);
-        this.f3853o.mo4511j();
 
-        if(f3854p){
-            this.lightAdjust.setProgress(0);
 
+        ByteBuf buf = Unpooled.buffer(NettyClientBootstrap.FRAME_LEN_LIGHT);
+        buf.writeBytes(NettyClientBootstrap.getLightData(f3856r, f3855q, f3861w));
+        try {
+            NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ByteBuf buf = Unpooled.buffer(NettyClientBootstrap.FRAME_LEN_LIGHT);
+                    buf.writeBytes(NettyClientBootstrap.getLightData(f3856r, f3855q, f3861w));
+                    try {
+                        NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            },1000);
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
     }
 
@@ -1308,6 +1395,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 //            }
             placeAS= null;
             setPicCfg();
+
             return;
         }
         this.f3862x = true;
@@ -1354,49 +1442,101 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 })
                 .show();
     }
+    @SuppressLint("MissingPermission")
     private void getLocationLL() {
 
-        Location location = getLastKnownLocation();
-        if (location != null) {
-
-            //日志
-            String locationStr = "纬度：" + location.getLatitude() + "\n"
-                    + "经度：" + location.getLongitude();
-
-
-
-            placeAS= new OsdHkInfo();
-            placeAS.setOsdX(40);
-            placeAS.setOsdY(180);
-            placeAS.setsString(locationStr);
-            placeAS.setShowStr(1);
-            setPicCfg();
-
-
-
-        } else {
-            Toast.makeText(this, "位置信息获取失败", Toast.LENGTH_SHORT).show();
-
-        }
-    }
-
-    private Location getLastKnownLocation() {
-        //获取地理位置管理器
         LocationManager mLocationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
-        List<String> providers = mLocationManager.getProviders(true);
-        Location bestLocation = null;
-        for (String provider : providers) {
-            @SuppressLint("MissingPermission") Location l = mLocationManager.getLastKnownLocation(provider);
-            if (l == null) {
-                continue;
-            }
-            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
-                // Found best last known location: %s", l);
-                bestLocation = l;
-            }
+
+        if (mLocationManager != null) {
+            mLocationManager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER, 5000, 10, listener);
+            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 0, listener);
+        }else {
+            Toast.makeText(PreviewActivity.this,"位置错误",Toast.LENGTH_SHORT).show();
         }
-        return bestLocation;
+
     }
+    LocationListener  listener = new LocationListener(){
+
+
+        @Override
+        public void onLocationChanged(Location location) {
+            if (location != null) {
+
+                //日志
+                String locationStr = "纬度：" + location.getLatitude() + "\n"
+                        + "经度：" + location.getLongitude();
+
+
+                if(placeAS == null){
+                    placeAS= new OsdHkInfo();
+                    placeAS.setOsdX(40);
+                    placeAS.setOsdY(240);
+                    placeAS.setsString(locationStr);
+                    placeAS.setShowStr(1);
+                    setPicCfg();
+                }
+
+
+
+
+
+            } else {
+                Toast.makeText(PreviewActivity.this, "位置信息获取失败", Toast.LENGTH_SHORT).show();
+
+            }
+            /*------- To get city name from coordinates -------- */
+//            String cityName = null;
+//            Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
+//            List<Address> addresses;
+//            try {
+//                addresses = gcd.getFromLocation(location.getLatitude(),
+//                        location.getLongitude(), 1);
+//                if (addresses.size() > 0) {
+//                    System.out.println(addresses.get(0).getLocality());
+//                    cityName = addresses.get(0).getLocality();
+//                }
+//            }
+//            catch (IOException e) {
+//                e.printStackTrace();
+//            }
+
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
+
+
+//    private void getLastKnownLocation() {
+//        //获取地理位置管理器
+//        LocationManager mLocationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+//        List<String> providers = mLocationManager.getProviders(true);
+//        Location bestLocation = null;
+//        for (String provider : providers) {
+//            @SuppressLint("MissingPermission") Location l = mLocationManager.getLastKnownLocation(provider);
+//            if (l == null) {
+//                continue;
+//            }
+//            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+//                // Found best last known location: %s", l);
+//                bestLocation = l;
+//            }
+//        }
+//        return bestLocation;
+//    }
 
 
     /* renamed from: a */
@@ -1562,18 +1702,18 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 sb6.append(recordTaskInfo.getTask_diameter()).append("mm");
             }
             StringBuilder sb7 = new StringBuilder();
-            if (!C1155v.m5330a(recordTaskInfo.getTask_computer())) {
-                if (Login_info.getInstance().isShowFirstName()) {
-                    sb7.append(getResources().getString(R.string.record_task_computer_e));
-                }
-                sb7.append(recordTaskInfo.getTask_computer()).append(" ");
-            }
-            if (!C1155v.m5330a(recordTaskInfo.getTask_people())) {
-                if (Login_info.getInstance().isShowFirstName()) {
-                    sb7.append(getResources().getString(R.string.record_task_people_e));
-                }
-                sb7.append(recordTaskInfo.getTask_people());
-            }
+//            if (!C1155v.m5330a(recordTaskInfo.getTask_computer())) {
+//                if (Login_info.getInstance().isShowFirstName()) {
+//                    sb7.append(getResources().getString(R.string.record_task_computer_e));
+//                }
+//                sb7.append(recordTaskInfo.getTask_computer()).append(" ");
+//            }
+//            if (!C1155v.m5330a(recordTaskInfo.getTask_people())) {
+//                if (Login_info.getInstance().isShowFirstName()) {
+//                    sb7.append(getResources().getString(R.string.record_task_people_e));
+//                }
+//                sb7.append(recordTaskInfo.getTask_people());
+//            }
             String[] strArr = {sb.toString(), sb2.toString(), sb4.toString(), sb5.toString(), sb6.toString(), sb7.toString()};
             String[] strArr2 = new String[6];
             for (String str : strArr) {
@@ -1612,10 +1752,35 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 this.f3845T.mo4617g(sb8.toString());
                 this.f3845T.mo4619h(sb9.toString());
                 this.f3845T.mo4604a(strArr2);
+
+
+                if (!C1155v.m5330a(recordTaskInfo.getTask_place())) {
+                    sb7.append(recordTaskInfo.getTask_place()).append(" ");
+                }
+                if (!C1155v.m5330a(recordTaskInfo.getTask_people())) {
+                    sb7.append(recordTaskInfo.getTask_people());
+                }
+
+
+                recordOsd= new OsdHkInfo();
+                recordOsd.setOsdX(40);
+                recordOsd.setOsdY(18);
+
+                recordOsd.setShowStr(1);
+                recordOsd.setsString(sb8.toString()+sb9.toString());
+
+                recordOsd1= new OsdHkInfo();
+                recordOsd1.setOsdX(40);
+                recordOsd1.setOsdY(50);
+
+                recordOsd1.setShowStr(1);
+                recordOsd1.setsString(sb7.toString());
+                setPicCfg();
             }
         }
     }
-
+   OsdHkInfo recordOsd;
+   OsdHkInfo recordOsd1;
     /* access modifiers changed from: private */
     /* renamed from: a */
     public void m5984a(final String str, final boolean z) {
@@ -1721,6 +1886,8 @@ public class PreviewActivity extends BaseActivity implements C1237b {
         m6017u();
         m5942E();
         m6026z();
+
+
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int i = displayMetrics.widthPixels;
         int i2 = displayMetrics.heightPixels;
@@ -1733,6 +1900,15 @@ public class PreviewActivity extends BaseActivity implements C1237b {
         m5795c(" isSmall = " + z + " is400 = " + z2 + " language = " + C1134k.m5256a());
         C1139m.m5264a("displayMetrics width = " + i + "  height = " + i2 + "  density = " + displayMetrics.density);
         C1139m.m5264a(" isSmall = " + z + " is400 = " + z2 + " language = " + C1134k.m5256a());
+
+
+
+
+        if(BaseApplication.m4928b().getInt("MODEL",0) == 1){
+             ll_zj.setVisibility(View.GONE);
+        }else {
+            ll_zj.setVisibility(View.VISIBLE);
+        }
     }
 
     /* access modifiers changed from: private */
@@ -1853,6 +2029,9 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 this.f3827B = null;
                 return;
             case 1:
+                recordOsd = null;
+                recordOsd1 = null;
+                setPicCfg();
                 if (z) {
                     this.f3849X = null;
                     this.f3859u = false;
@@ -2106,6 +2285,12 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 if (fpsOsd != null){
                     allwarter.add(fpsOsd);
                 }
+                if(recordOsd != null){
+                    allwarter.add(recordOsd);
+                }
+                if(recordOsd1 != null){
+                    allwarter.add(recordOsd1);
+                }
                 if (allwarter.size() >0){
                     C1131i.showWaterList(allwarter);
                 }
@@ -2119,7 +2304,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
         }).start();
     }
 
-    @OnClick({R.id.Records, R.id.autoHorizontal, R.id.biaoji, R.id.lights_switch, R.id.preview_clearFog, R.id.preview_closeApp, R.id.preview_connectState, R.id.preview_locate, R.id.preview_picture, R.id.preview_setting, R.id.preview_video ,R.id.ranging, R.id.screenShot  })
+    @OnClick({R.id.Records, R.id.autoHorizontal, R.id.biaoji, R.id.lights_switch, R.id.preview_clearFog, R.id.preview_closeApp, R.id.preview_connectState, R.id.preview_locate, R.id.preview_picture, R.id.preview_setting, R.id.preview_video ,R.id.ranging, R.id.screenShot ,R.id.preview_moveAngel })
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.Records:
@@ -2129,6 +2314,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
             case R.id.autoHorizontal:
                 if(!f3860v){
                     Toast.makeText(PreviewActivity.this,"请打开激光",Toast.LENGTH_SHORT).show();
+                     return;
                 }
                 this.f3853o.mo4514m();
 
@@ -2161,6 +2347,11 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 this.f3853o.mo4503b(true);
                 startActivityForResult(intent, 0);
                 return;
+            case R.id.preview_moveAngel:
+//                new C1215d(this);
+//
+                showSetConncet(this);
+                break;
             case R.id.preview_locate:
                 m5970X();
                 return;
@@ -2190,6 +2381,213 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 return;
         }
     }
+    boolean isCheck =false;
+    boolean isCanCon;
+    public void showSetConncet(final Context context) {
+
+        android.app.AlertDialog f3311a = new android.app.AlertDialog.Builder(context).create();
+        Window window = f3311a.getWindow();
+        window.setWindowAnimations(R.style.dialog_anim);
+        f3311a.show();
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((WindowManager) context.getSystemService("window")).getDefaultDisplay().getMetrics(displayMetrics);
+        WindowManager.LayoutParams attributes =  f3311a.getWindow().getAttributes();
+        attributes.width = (int) (((double) displayMetrics.widthPixels) * 0.5d);
+        window.setAttributes(attributes);
+        window.setBackgroundDrawableResource(17170445);
+        window.setGravity(17);
+        window.setContentView(R.layout.dialog_connect_state);
+        ImageView f3312b = (ImageView) window.findViewById(R.id.connect_video_connect);
+        final ImageView f3313c = (ImageView) window.findViewById(R.id.connect_control_connect);
+        final RadioGroup f3315e = (RadioGroup) window.findViewById(R.id.radioGroup_dialog_connectStatic);
+        final RadioButton f3316f = (RadioButton) window.findViewById(R.id.rb_connect_mainFrame);
+        final RadioButton f3317g = (RadioButton) window.findViewById(R.id.rb_connect_repeater);
+        new C1159z(context);
+
+        if (ipConnect){
+            f3313c.setImageResource(R.mipmap.connect);
+        }else {
+            f3313c.setImageResource(R.mipmap.disconnect);
+        }
+        if ( All_id_Info.getInstance().getM_iLogID() >= 0){
+            f3312b.setImageResource(R.mipmap.connect);
+        }else {
+            f3312b.setImageResource(R.mipmap.disconnect);
+        }
+
+//        if (Login_info.getInstance().isWifi_auto()) {
+//            .f3315e.setVisibility(0);
+//        } else {
+//            this.f3315e.setVisibility(4);
+//        }
+//        m5576c();
+//        m5569a();
+        isCanCon = false;
+        f3315e.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.rb_connect_mainFrame:
+                        if (BaseApplication.m4928b().getString("VIDEO_IP1","").equals("")){
+                            Toast.makeText(context,"你还没有进行中继网路设置",Toast.LENGTH_SHORT).show();
+                        }else {
+                            isCanCon = true;
+                        }
+                        break;
+
+                    case R.id.rb_connect_repeater:
+                        if (BaseApplication.m4928b().getString("VIDEO_IP2","").equals("")){
+                            Toast.makeText(context,"你还没有进行主机网路设置",Toast.LENGTH_SHORT).show();
+                        }else {
+                            isCanCon = true;
+                        }
+                        break;
+                }
+            }
+        });
+        if (BaseApplication.m4928b().getInt("MODEL",0) == 0) {
+            f3315e.check(R.id.rb_connect_repeater);
+        } else if(BaseApplication.m4928b().getInt("MODEL",0) == 1){
+            f3315e.check(R.id.rb_connect_mainFrame);
+        }
+        f3311a.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            public void onDismiss(DialogInterface dialogInterface) {
+                boolean checked2 =  f3316f.isChecked();
+                boolean checked1 =  f3317g.isChecked();
+
+                int type = BaseApplication.m4928b().getInt("MODEL",0);
+                if (type == 0 && checked2){
+                    BaseApplication.m4928b().edit().putString(Login_info.VIDEO_IP,BaseApplication.m4928b().getString("VIDEO_IP2","")).commit();
+                    BaseApplication.m4928b().edit().putString(Login_info.VIDEO_ACCOUNT,BaseApplication.m4928b().getString("VIDEO_ACCOUNT2","")).commit();
+                    BaseApplication.m4928b().edit().putString(Login_info.VIDEO_PASSWORD,BaseApplication.m4928b().getString("VIDEO_PASSWORD2","")).commit();
+                    BaseApplication.m4928b().edit().putString(Login_info.baseMainFrameWifiSSID,BaseApplication.m4928b().getString("baseMainFrameWifiSSID2","")).commit();
+                    BaseApplication.m4928b().edit().putString(Login_info.baseRepeaterWifiSSID,BaseApplication.m4928b().getString("baseMainFrameWifiSSID2","")).commit();
+                    BaseApplication.m4928b().edit().putString("TCP_IP",BaseApplication.m4928b().getString("TCP_IP2","")).commit();
+
+                    BaseApplication.m4928b().edit().putInt("TCP_PORT",BaseApplication.m4928b().getInt("TCP_PORT2",-1)).commit();
+                    BaseApplication.m4928b().edit().putString("WIFIPD",BaseApplication.m4928b().getString("WIFIPD2","")).commit();
+
+
+
+                    Login_info.base_video_ip = BaseApplication. m4928b().getString(Login_info.VIDEO_IP,"");
+                    Login_info.base_video_account =  BaseApplication.m4928b().getString(Login_info.VIDEO_ACCOUNT,"");
+                    Login_info.base_video_password =  BaseApplication.m4928b().getString(Login_info.VIDEO_PASSWORD,"");
+                    Login_info.baseMainFrameWifiSSID =  BaseApplication.m4928b().getString(Login_info.baseMainFrameWifiSSID,"");
+                    Login_info.baseRepeaterWifiSSID = BaseApplication. m4928b().getString(Login_info.baseRepeaterWifiSSID,"");
+                    Login_info.getInstance().initLoginInfo(PreviewActivity.this);
+                    PreviewActivity.this.f3857s.mo4545b();
+                    C1073d.hK_State = false;
+                    ipConnect = false;
+
+                    WIFIAutoConnectionService.start(context,BaseApplication.m4928b().getString("baseMainFrameWifiSSID2",""),BaseApplication.m4928b().getString("WIFIPD2",""));
+                    BaseApplication.m4928b().edit().putInt("MODEL",1).commit();
+
+                    isCheck = true;
+
+                    ll_zj.setVisibility(View.GONE);
+                }else  if(type == 1 && checked1){
+                    ll_zj.setVisibility(View.VISIBLE);
+
+                    BaseApplication.m4928b().edit().putInt("MODEL",0).commit();
+                    BaseApplication.m4928b().edit().putString(Login_info.VIDEO_IP,BaseApplication.m4928b().getString("VIDEO_IP1","")).commit();
+                    BaseApplication.m4928b().edit().putString(Login_info.VIDEO_ACCOUNT,BaseApplication.m4928b().getString("VIDEO_ACCOUNT1","")).commit();
+                    BaseApplication.m4928b().edit().putString(Login_info.VIDEO_PASSWORD,BaseApplication.m4928b().getString("VIDEO_PASSWORD1","")).commit();
+                    BaseApplication.m4928b().edit().putString(Login_info.baseMainFrameWifiSSID,BaseApplication.m4928b().getString("baseMainFrameWifiSSID1","")).commit();
+                    BaseApplication.m4928b().edit().putString(Login_info.baseRepeaterWifiSSID,BaseApplication.m4928b().getString("baseMainFrameWifiSSID1","")).commit();
+                    BaseApplication.m4928b().edit().putString("TCP_IP",BaseApplication.m4928b().getString("TCP_IP1","")).commit();
+
+                    BaseApplication.m4928b().edit().putInt("TCP_PORT",BaseApplication.m4928b().getInt("TCP_PORT1",-1)).commit();
+                    BaseApplication.m4928b().edit().putString("WIFIPD",BaseApplication.m4928b().getString("WIFIPD1","")).commit();
+
+
+
+                    Login_info.base_video_ip =  BaseApplication.m4928b().getString(Login_info.VIDEO_IP,"");
+                    Login_info.base_video_account =  BaseApplication.m4928b().getString(Login_info.VIDEO_ACCOUNT,"");
+                    Login_info.base_video_password =  BaseApplication.m4928b().getString(Login_info.VIDEO_PASSWORD,"");
+                    Login_info.baseMainFrameWifiSSID =  BaseApplication.m4928b().getString(Login_info.baseMainFrameWifiSSID,"");
+                    Login_info.baseRepeaterWifiSSID =  BaseApplication.m4928b().getString(Login_info.baseRepeaterWifiSSID,"");
+
+
+                    Login_info.getInstance().initLoginInfo(PreviewActivity.this);
+                    PreviewActivity.this.f3857s.mo4545b();
+                    C1073d.hK_State = false;
+                    ipConnect = false;
+
+                    WIFIAutoConnectionService.start(context,BaseApplication.m4928b().getString("baseMainFrameWifiSSID1",""),BaseApplication.m4928b().getString("WIFIPD1",""));
+
+                    isCheck = true;
+
+
+
+                }
+
+
+
+            }
+        });
+
+    }
+ BroadcastReceiver WIFIStateReceiver = new BroadcastReceiver() {
+     List<ScanResult> scanResults;
+     @Override
+     public void onReceive(Context context, Intent intent) {
+
+         if(isCheck){
+             if (!intent.getAction().equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
+                 return;
+             }
+             scanResults =  WIFIConnectionManager.getInstance(PreviewActivity.this).getWifiManager().getScanResults();
+             for (int i = 0 ; i < scanResults.size();i++) {
+                 Log.e("fxp","scanResults:----"+(scanResults.get(i)).SSID);
+             }
+
+             String ssid = BaseApplication.m4928b().getString(Login_info.baseMainFrameWifiSSID,"");
+             String pwd = BaseApplication.m4928b().getString("WIFIPD","");
+             if (!WIFIConnectionManager.getInstance(PreviewActivity.this).isConnected(ssid)) {
+                 WIFIConnectionManager.getInstance(PreviewActivity.this).connect(ssid, pwd);
+             } else {
+                 Log.e("fxp","成功连接到wifi ：" + ssid);
+
+                     mo5120r();
+
+                     isCheck = false;
+                     new Handler().postDelayed(new Runnable() {
+                         @Override
+                         public void run() {
+                             m5933A();
+                             f3857s = new C1073d(getApplicationContext(), PreviewActivity.this, surfaceView);
+                             m5935B();
+
+                             if (PreviewActivity.this.surfaceView != null) {
+                                 PreviewActivity.this.surfaceView.post(new Runnable() {
+                                     public void run() {
+                                         ViewGroup.LayoutParams layoutParams = PreviewActivity.this.surfaceView.getLayoutParams();
+                                         int width = PreviewActivity.this.flSurfaceContainer.getWidth();
+                                         int height = PreviewActivity.this.flSurfaceContainer.getHeight();
+                                         if (!(width == 0 || height == 0)) {
+                                             layoutParams.width = width;
+                                             layoutParams.height = height;
+                                         }
+                                         PreviewActivity.this.surfaceView.setLayoutParams(layoutParams);
+                                         if (PreviewActivity.this.f3858t.mo4569a()) {
+                                             PreviewActivity.this.f3858t.mo4568a((String) null, false, (String) null);
+                                         }
+                                     }
+                                 });
+                             }
+                             PreviewActivity.this.f3857s.mo4544a();
+                             tcpConnect();
+                         }
+                     },3000);
+
+
+
+             }
+         }
+
+     }
+ };
+
 
     protected String[] needPermissions = {
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -2197,6 +2595,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.WRITE_SETTINGS,
             BACK_LOCATION_PERMISSION
     };
     private static String BACK_LOCATION_PERMISSION = "android.permission.ACCESS_BACKGROUND_LOCATION";
@@ -2229,6 +2628,17 @@ public class PreviewActivity extends BaseActivity implements C1237b {
         C1139m.m5263a();
         C1139m.m5264a("app start!");
         tcpConnect();
+        getBattery();
+
+        // 1. 实例化BroadcastReceiver子类 &  IntentFilter
+        // 2. 设置接收广播的类型
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
+        filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        filter.addAction(WifiManager.SUPPLICANT_STATE_CHANGED_ACTION);
+        registerReceiver(WIFIStateReceiver, filter);
+        appConstant();
     }
 
     /* access modifiers changed from: protected */

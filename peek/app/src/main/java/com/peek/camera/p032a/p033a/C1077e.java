@@ -250,6 +250,7 @@ public class C1077e implements C1099d {
             }
             net_dvr_previewinfo.bBlocked = 1;
             int NET_DVR_RealPlay_V40 = HCNetSDK.getInstance().NET_DVR_RealPlay_V40(m_iLogID, net_dvr_previewinfo, (RealPlayCallBack) null);
+            BaseApplication.m4928b().edit().putInt("NET_DVR_RealPlay_V40",NET_DVR_RealPlay_V40).commit();
             if (NET_DVR_RealPlay_V40 < 0) {
                 C1140n.m5269b("海康：PreviewPresentImpl: NET_DVR_RealPlay is failed!Err:" + HCNetSDK.getInstance().NET_DVR_GetLastError());
                 this.f2998n.mo4548a();

@@ -21,7 +21,6 @@ import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
 import io.netty.util.concurrent.EventExecutorGroup;
-
 public class NettyClientBootstrap {
     private static int port;
     private static String host;
@@ -175,6 +174,12 @@ public class NettyClientBootstrap {
             data[18] = (byte) 0x01;  //远光打开
             data[19] = (byte) 0x00;
             data[20] = (byte) 0x00;  //除雾关闭
+
+            //远光灯灯光0档
+            if(bright_yuan == 0){
+                data[17] = (byte) 0x00;
+                data[18] = (byte) 0x00;  //远光关闭
+            }
         }
         //处于除雾状态，近光灯仍可调节，远光灯关闭
         if(bFog){
@@ -186,6 +191,7 @@ public class NettyClientBootstrap {
             data[19] = (byte) 0x00;
             data[20] = (byte) 0x01;  //除雾打开
         }
+
 
         int crc16 = CRC16_MODBUS(data, 21);
         data[21] = (byte)(crc16 & 0x00FF);
@@ -291,6 +297,11 @@ public class NettyClientBootstrap {
             msgHandler.sendMessage(message);
         }
 
+    }
+
+    public void stop(){
+        socketChannel.pipeline().removeFirst();
+        socketChannel.close();
     }
 
     public static int CRC16_MODBUS(byte[] buffer, int length) {

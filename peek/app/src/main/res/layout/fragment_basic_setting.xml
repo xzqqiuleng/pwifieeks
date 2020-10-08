@@ -55,6 +55,7 @@
             android:text="@string/jiXin_time" />
 
         <TextView
+            android:visibility="gone"
             style="@style/textSet"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -75,6 +76,7 @@
             android:text="@string/systemInfo" />
 
         <TextView
+            android:visibility="gone"
             style="@style/textSet"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -135,6 +137,7 @@
         </FrameLayout>
 
         <FrameLayout
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -156,6 +159,7 @@
         </FrameLayout>
 
         <FrameLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -198,6 +202,7 @@
         </FrameLayout>
 
         <FrameLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">

@@ -38,10 +38,10 @@ public class IpSetActivity extends Activity {
         tabs.addTab(tabs.newTab().setText("主机网络设置"));
 
 
-        et1.setText( BaseApplication.m4928b().getString("VIDEO_IP2",""));
-        et2.setText(BaseApplication.m4928b().getString("VIDEO_ACCOUNT2",""));
-        et3.setText( BaseApplication.m4928b().getString("VIDEO_PASSWORD2",""));
-        et4.setText( BaseApplication.m4928b().getString("baseMainFrameWifiSSID2",""));
+        et1.setText( BaseApplication.m4928b().getString("VIDEO_IP1",""));
+        et2.setText(BaseApplication.m4928b().getString("VIDEO_ACCOUNT1",""));
+        et3.setText( BaseApplication.m4928b().getString("VIDEO_PASSWORD1",""));
+        et4.setText( BaseApplication.m4928b().getString("baseMainFrameWifiSSID1",""));
         et5.setText( BaseApplication.m4928b().getString("TCP_IP1",""));
         et7.setText( BaseApplication.m4928b().getString("WIFIPD1",""));
         if (BaseApplication.m4928b().getInt("TCP_PORT1",-1) == -1){
@@ -107,9 +107,9 @@ public class IpSetActivity extends Activity {
         con_br.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                int port=0;
                 if(posiTion == 0){
-                    int port=0;
+
                     try {
                         port = Integer.parseInt(et6.getText().toString());
                         if (et1.getText().toString().trim().length() < 3 ||et2.getText().toString().trim().length() < 3||et3.getText().toString().trim().length() < 3 ||et4.getText().toString().trim().length() < 3 || et5.getText().toString().trim().length()<3||et7.getText().toString().trim().length()<1){
@@ -117,15 +117,6 @@ public class IpSetActivity extends Activity {
                             return;
                         }
 
-                        BaseApplication.m4928b().edit().putString(Login_info.VIDEO_IP,et1.getText().toString()).commit();
-                        BaseApplication.m4928b().edit().putString(Login_info.VIDEO_ACCOUNT,et2.getText().toString()).commit();
-                        BaseApplication.m4928b().edit().putString(Login_info.VIDEO_PASSWORD,et3.getText().toString()).commit();
-                        BaseApplication.m4928b().edit().putString(Login_info.baseMainFrameWifiSSID,et4.getText().toString()).commit();
-                        BaseApplication.m4928b().edit().putString(Login_info.baseRepeaterWifiSSID,et4.getText().toString()).commit();
-                        BaseApplication.m4928b().edit().putString("TCP_IP",et5.getText().toString()).commit();
-
-                        BaseApplication.m4928b().edit().putInt("TCP_PORT",port).commit();
-                        BaseApplication.m4928b().edit().putString("WIFIPD1",et7.getText().toString()).commit();
 
 
 
@@ -143,23 +134,13 @@ public class IpSetActivity extends Activity {
                         Toast.makeText(IpSetActivity.this,"请输入正确端口号",Toast.LENGTH_SHORT).show();
                     }
                 }else {
-                    int port=0;
+
                     try {
                         port = Integer.parseInt(et6.getText().toString());
                         if (et1.getText().toString().trim().length() < 3 ||et2.getText().toString().trim().length() < 3||et3.getText().toString().trim().length() < 3 ||et4.getText().toString().trim().length() < 3 || et5.getText().toString().trim().length()<3||et7.getText().toString().trim().length()<1){
                             Toast.makeText(IpSetActivity.this,"配置失败，请检查填写的数据！",Toast.LENGTH_SHORT).show();
                             return;
                         }
-
-                        BaseApplication.m4928b().edit().putString(Login_info.VIDEO_IP,et1.getText().toString()).commit();
-                        BaseApplication.m4928b().edit().putString(Login_info.VIDEO_ACCOUNT,et2.getText().toString()).commit();
-                        BaseApplication.m4928b().edit().putString(Login_info.VIDEO_PASSWORD,et3.getText().toString()).commit();
-                        BaseApplication.m4928b().edit().putString(Login_info.baseMainFrameWifiSSID,et4.getText().toString()).commit();
-                        BaseApplication.m4928b().edit().putString(Login_info.baseRepeaterWifiSSID,et4.getText().toString()).commit();
-                        BaseApplication.m4928b().edit().putString("TCP_IP",et5.getText().toString()).commit();
-
-                        BaseApplication.m4928b().edit().putInt("TCP_PORT",port).commit();
-
 
 
 
@@ -172,12 +153,27 @@ public class IpSetActivity extends Activity {
 
                         BaseApplication.m4928b().edit().putInt("TCP_PORT2",port).commit();
                         BaseApplication.m4928b().edit().putString("WIFIPD2",et7.getText().toString()).commit();
+
+
+
                         Toast.makeText(IpSetActivity.this,"配置保存成功！",Toast.LENGTH_SHORT).show();
                     }catch (Exception e){
                         Toast.makeText(IpSetActivity.this,"请输入正确端口号",Toast.LENGTH_SHORT).show();
                     }
                 }
 
+                if (BaseApplication.m4928b().getInt("MODEL",0) == posiTion) {
+                    BaseApplication.m4928b().edit().putString(Login_info.VIDEO_IP,et1.getText().toString()).commit();
+                    BaseApplication.m4928b().edit().putString(Login_info.VIDEO_ACCOUNT,et2.getText().toString()).commit();
+                    BaseApplication.m4928b().edit().putString(Login_info.VIDEO_PASSWORD,et3.getText().toString()).commit();
+                    BaseApplication.m4928b().edit().putString(Login_info.baseMainFrameWifiSSID,et4.getText().toString()).commit();
+                    BaseApplication.m4928b().edit().putString(Login_info.baseRepeaterWifiSSID,et4.getText().toString()).commit();
+                    BaseApplication.m4928b().edit().putString("TCP_IP",et5.getText().toString()).commit();
+
+                    BaseApplication.m4928b().edit().putInt("TCP_PORT",port).commit();
+                    BaseApplication.m4928b().edit().putString("WIFIPD",et7.getText().toString()).commit();
+
+                }
 
 
             }

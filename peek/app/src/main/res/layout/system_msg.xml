@@ -52,7 +52,7 @@
         android:layout_alignBaseline="@+id/xinghao_text"
         android:layout_alignRight="@+id/xinghao_text"
         android:layout_marginRight="20dp"
-        android:text="PEEK2S" />
+        android:text="@string/app_name" />
 
     <TextView
         android:id="@+id/banbenhao"

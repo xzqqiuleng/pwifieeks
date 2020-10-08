@@ -1720,4 +1720,5 @@ public interface HCNetSDKByJNA extends Library {
     boolean NET_DVR_StopRemoteConfig(int i);
 
     int NET_DVR_StopSaveRealData_V30(int i);
+    int NET_DVR_StopSaveRealData(int lRealHandle);
 }

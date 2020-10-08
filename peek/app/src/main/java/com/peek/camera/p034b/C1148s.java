@@ -1207,226 +1207,74 @@ public class C1148s {
         }
     }
 
-    /* JADX WARNING: Can't fix incorrect switch cases order */
-    /* JADX WARNING: Code restructure failed: missing block: B:10:0x0020, code lost:
-        r0 = r1;
-        r1 = r4.next();
-     */
-    /* JADX WARNING: Code restructure failed: missing block: B:60:0x0137, code lost:
-        r0 = move-exception;
-     */
-    /* JADX WARNING: Code restructure failed: missing block: B:61:0x0138, code lost:
-        r6 = r0;
-        r0 = r1;
-        r1 = r6;
-     */
-    /* JADX WARNING: Code restructure failed: missing block: B:63:0x013e, code lost:
-        r0 = move-exception;
-     */
-    /* JADX WARNING: Code restructure failed: missing block: B:64:0x013f, code lost:
-        r6 = r0;
-        r0 = r1;
-        r1 = r6;
-     */
-    /* JADX WARNING: Code restructure failed: missing block: B:68:0x014a, code lost:
-        r0 = move-exception;
-     */
-    /* JADX WARNING: Code restructure failed: missing block: B:69:0x014b, code lost:
-        r6 = r0;
-        r0 = r1;
-        r1 = r6;
-     */
-    /* JADX WARNING: Code restructure failed: missing block: B:7:0x001c, code lost:
-        r1 = r0;
-     */
-    /* renamed from: b */
-    /* Code decompiled incorrectly, please refer to instructions dump. */
+
     public static PipeDefectImage m5295b(String r7) {
-        /*
-            r2 = 0
-            org.xmlpull.v1.XmlPullParser r4 = android.util.Xml.newPullParser()
-            java.io.FileInputStream r0 = new java.io.FileInputStream     // Catch:{ FileNotFoundException -> 0x0145, XmlPullParserException -> 0x0127, IOException -> 0x012f }
-            r0.<init>(r7)     // Catch:{ FileNotFoundException -> 0x0145, XmlPullParserException -> 0x0127, IOException -> 0x012f }
-            java.lang.String r1 = "utf-8"
-            r4.setInput(r0, r1)     // Catch:{ FileNotFoundException -> 0x0145, XmlPullParserException -> 0x0127, IOException -> 0x012f }
-            int r0 = r4.getEventType()     // Catch:{ FileNotFoundException -> 0x0145, XmlPullParserException -> 0x0127, IOException -> 0x012f }
-            r1 = r0
-            r3 = r2
-            r0 = r2
-        L_0x0016:
-            r5 = 1
-            if (r1 == r5) goto L_0x003b
-            switch(r1) {
-                case 2: goto L_0x0025;
-                case 3: goto L_0x0112;
-                default: goto L_0x001c;
+        PipeDefectImage videoInfo = new PipeDefectImage();
+        PipeDefectDetail pipeDefectDetail = null;
+        ArrayList<PipeDefectDetail> pipeDefectDetails = new ArrayList<>();
+        try {
+            File path = new File(r7);
+            FileInputStream fis = new FileInputStream(path);
+
+            XmlPullParser parser = Xml.newPullParser();
+            parser.setInput(fis, "utf-8");
+
+            int eventType = parser.getEventType();
+
+
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                Log.w("fy","while-readxml");
+                String tagName = parser.getName();
+                switch (eventType) {
+                    case XmlPullParser.START_TAG:
+                        Log.w("fy","XmlPullParser.START_TAG");
+                            if (parser.getName().equals("PipeSection")){
+                                videoInfo.setPipeSection(parser.nextText());
+                            }else if (parser.getName().equals("Filename")){
+                                videoInfo.setFilename(parser.nextText());
+                            }else if (parser.getName().equals("Defect")){
+                                pipeDefectDetail = new PipeDefectDetail();
+                            }else if (parser.getName().equals("Distance")){
+                                pipeDefectDetail.setDistance(parser.nextText());
+
+                        }else if (parser.getName().equals("ClockExpression")){
+                                pipeDefectDetail.setClockExpression(parser.nextText());
+                            }else if (parser.getName().equals("DefectCode")){
+                                pipeDefectDetail.setDefectCode(parser.nextText());
+                            }else if (parser.getName().equals("DefectDescription")){
+                                pipeDefectDetail.setDefectDescription(parser.nextText());
+                            }else if (parser.getName().equals("DefectLength")){
+                                pipeDefectDetail.setDefectLength(parser.nextText());
+                            }else if (parser.getName().equals("DefectLevel")){
+                                pipeDefectDetail.setDefectLevel(parser.nextText());
+                            }else if (parser.getName().equals("DefectType")){
+                                pipeDefectDetail.setDefectType(parser.nextText());
+                            }
+
+                        break;
+                    case XmlPullParser.END_TAG:
+                        if (parser.getName().equals("Defect")){
+                            if(pipeDefectDetail != null){
+                                pipeDefectDetails.add(pipeDefectDetail);
+                            }
+
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                eventType = parser.next();
             }
-        L_0x001c:
-            r1 = r0
-        L_0x001d:
-            int r0 = r4.next()     // Catch:{ FileNotFoundException -> 0x014a, XmlPullParserException -> 0x013e, IOException -> 0x0137 }
-            r6 = r0
-            r0 = r1
-            r1 = r6
-            goto L_0x0016
-        L_0x0025:
-            java.lang.String r1 = r4.getName()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            java.lang.String r5 = "PipeDefectImage"
-            boolean r1 = r1.equals(r5)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            if (r1 == 0) goto L_0x003c
-            com.bmw.peek2.model.PipeDefectImage r1 = new com.bmw.peek2.model.PipeDefectImage     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r1.<init>()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            goto L_0x001d
-        L_0x0037:
-            r1 = move-exception
-        L_0x0038:
-            r1.printStackTrace()
-        L_0x003b:
-            return r0
-        L_0x003c:
-            java.lang.String r1 = r4.getName()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            java.lang.String r5 = "PipeSection"
-            boolean r1 = r1.equals(r5)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            if (r1 == 0) goto L_0x0051
-            java.lang.String r1 = r4.nextText()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r0.setPipeSection(r1)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r1 = r0
-            goto L_0x001d
-        L_0x0051:
-            java.lang.String r1 = r4.getName()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            java.lang.String r5 = "Defect"
-            boolean r1 = r1.equals(r5)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            if (r1 == 0) goto L_0x0064
-            com.bmw.peek2.model.PipeDefectDetail r3 = new com.bmw.peek2.model.PipeDefectDetail     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r3.<init>()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r1 = r0
-            goto L_0x001d
-        L_0x0064:
-            java.lang.String r1 = r4.getName()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            java.lang.String r5 = "Distance"
-            boolean r1 = r1.equals(r5)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            if (r1 == 0) goto L_0x0079
-            java.lang.String r1 = r4.nextText()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r3.setDistance(r1)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r1 = r0
-            goto L_0x001d
-        L_0x0079:
-            java.lang.String r1 = r4.getName()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            java.lang.String r5 = "DefectType"
-            boolean r1 = r1.equals(r5)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            if (r1 == 0) goto L_0x008e
-            java.lang.String r1 = r4.nextText()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r3.setDefectType(r1)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r1 = r0
-            goto L_0x001d
-        L_0x008e:
-            java.lang.String r1 = r4.getName()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            java.lang.String r5 = "DefectCode"
-            boolean r1 = r1.equals(r5)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            if (r1 == 0) goto L_0x00a4
-            java.lang.String r1 = r4.nextText()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r3.setDefectCode(r1)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r1 = r0
-            goto L_0x001d
-        L_0x00a4:
-            java.lang.String r1 = r4.getName()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            java.lang.String r5 = "DefectLevel"
-            boolean r1 = r1.equals(r5)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            if (r1 == 0) goto L_0x00ba
-            java.lang.String r1 = r4.nextText()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r3.setDefectLevel(r1)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r1 = r0
-            goto L_0x001d
-        L_0x00ba:
-            java.lang.String r1 = r4.getName()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            java.lang.String r5 = "ClockExpression"
-            boolean r1 = r1.equals(r5)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            if (r1 == 0) goto L_0x00d0
-            java.lang.String r1 = r4.nextText()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r3.setClockExpression(r1)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r1 = r0
-            goto L_0x001d
-        L_0x00d0:
-            java.lang.String r1 = r4.getName()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            java.lang.String r5 = "DefectLength"
-            boolean r1 = r1.equals(r5)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            if (r1 == 0) goto L_0x00e6
-            java.lang.String r1 = r4.nextText()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r3.setDefectLength(r1)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r1 = r0
-            goto L_0x001d
-        L_0x00e6:
-            java.lang.String r1 = r4.getName()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            java.lang.String r5 = "DefectDescription"
-            boolean r1 = r1.equals(r5)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            if (r1 == 0) goto L_0x00fc
-            java.lang.String r1 = r4.nextText()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r3.setDefectDescription(r1)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r1 = r0
-            goto L_0x001d
-        L_0x00fc:
-            java.lang.String r1 = r4.getName()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            java.lang.String r5 = "Filename"
-            boolean r1 = r1.equals(r5)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            if (r1 == 0) goto L_0x001c
-            java.lang.String r1 = r4.nextText()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r0.setFilename(r1)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r1 = r0
-            goto L_0x001d
-        L_0x0112:
-            java.lang.String r1 = r4.getName()     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            java.lang.String r5 = "Defect"
-            boolean r1 = r1.equals(r5)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            if (r1 == 0) goto L_0x001c
-            if (r0 == 0) goto L_0x001c
-            r0.addDefectDetail(r3)     // Catch:{ FileNotFoundException -> 0x0037, XmlPullParserException -> 0x0143, IOException -> 0x013c }
-            r3 = r2
-            r1 = r0
-            goto L_0x001d
-        L_0x0127:
-            r0 = move-exception
-            r1 = r0
-            r0 = r2
-        L_0x012a:
-            r1.printStackTrace()
-            goto L_0x003b
-        L_0x012f:
-            r0 = move-exception
-            r1 = r0
-            r0 = r2
-        L_0x0132:
-            r1.printStackTrace()
-            goto L_0x003b
-        L_0x0137:
-            r0 = move-exception
-            r6 = r0
-            r0 = r1
-            r1 = r6
-            goto L_0x0132
-        L_0x013c:
-            r1 = move-exception
-            goto L_0x0132
-        L_0x013e:
-            r0 = move-exception
-            r6 = r0
-            r0 = r1
-            r1 = r6
-            goto L_0x012a
-        L_0x0143:
-            r1 = move-exception
-            goto L_0x012a
-        L_0x0145:
-            r0 = move-exception
-            r1 = r0
-            r0 = r2
-            goto L_0x0038
-        L_0x014a:
-            r0 = move-exception
-            r6 = r0
-            r0 = r1
-            r1 = r6
-            goto L_0x0038
-        */
-        throw new UnsupportedOperationException("Method not decompiled: com.bmw.peek2.p034b.C1148s.m5295b(java.lang.String):com.bmw.peek2.model.PipeDefectImage");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        videoInfo.setPipeDefectDetails(pipeDefectDetails);
+        return  videoInfo;
+
+
+
     }
 }

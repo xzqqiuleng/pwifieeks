@@ -105,6 +105,7 @@ public class TXSetFragment extends Fragment {
             @Override
             public void onClick(View v) {
                  setConfig();
+                Toast.makeText(getContext(),"配置保存成功！",Toast.LENGTH_SHORT).show();
             }
         });
         getConfig();

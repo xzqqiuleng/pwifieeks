@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,11 @@ public class MovieSetFragment extends Fragment {
     Spinner sp2;
     Spinner sp3;
     TextView save_tv;
+    RadioGroup rg;
+    RadioButton rb1;
+    RadioButton rb2;
+    int type = 0;
+    NET_DVR_COMPRESSIONCFG_V30 CompressionCfg;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -34,8 +41,25 @@ public class MovieSetFragment extends Fragment {
         sp2= (Spinner) view.findViewById(R.id.sps2);
         sp3 = (Spinner) view.findViewById(R.id.sp3);
         save_tv = (TextView) view.findViewById(R.id.save_tv);
+        rg = (RadioGroup) view.findViewById(R.id.rg);
+        rb1 = (RadioButton) view.findViewById(R.id.rb1);
+        rb2 = (RadioButton) view.findViewById(R.id.rb2);
 
-
+         if (BaseApplication.m4928b().getInt("avi_mp4",0) == 0){
+             rg.check(R.id.rb1);
+         }else {
+             rg.check(R.id.rb2);
+         }
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                 if (checkedId == R.id.rb1){
+                     type = 0;
+                 }else {
+                     type = 1;
+                 }
+            }
+        });
         sp1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -106,6 +130,9 @@ public class MovieSetFragment extends Fragment {
             @Override
             public void onClick(View v) {
                  setConfig();
+                BaseApplication.m4928b().edit().putInt("avi_mp4",type).commit();
+
+                Toast.makeText(getContext(),"配置保存成功！",Toast.LENGTH_SHORT).show();
             }
         });
         getConfig();
@@ -114,7 +141,7 @@ public class MovieSetFragment extends Fragment {
     }
     public  void getConfig(){
         int m_iLogID2 = All_id_Info.getInstance().getM_iLogID();
-        NET_DVR_COMPRESSIONCFG_V30 CompressionCfg = new NET_DVR_COMPRESSIONCFG_V30();
+         CompressionCfg = new NET_DVR_COMPRESSIONCFG_V30();
         if (!HCNetSDK.getInstance().NET_DVR_GetDVRConfig(m_iLogID2, HCNetSDK.NET_DVR_GET_COMPRESSCFG_V30, All_id_Info.getInstance().getM_iChanNum(), CompressionCfg))
         {
             System.out.println("get CompressionCfg failed!" + "err: " + HCNetSDK.getInstance().NET_DVR_GetLastError());
@@ -186,10 +213,26 @@ public class MovieSetFragment extends Fragment {
    int  frameRate;
    byte  encType;
     public  void setConfig(){
-        NET_DVR_COMPRESSIONCFG_V30 CompressionCfg = new NET_DVR_COMPRESSIONCFG_V30();
 
-        CompressionCfg.struNormHighRecordPara.byVideoEncType = encType;
+//        CompressionCfg.struNetPara.byVideoEncType = encType;
         CompressionCfg.struNormHighRecordPara.dwVideoFrameRate = frameRate;
+//        CompressionCfg.struNetPara.byResolution = reSolution;
+        int m_iLogID2 = All_id_Info.getInstance().getM_iLogID();
+        if (!HCNetSDK.getInstance().NET_DVR_SetDVRConfig(m_iLogID2, HCNetSDK.NET_DVR_SET_COMPRESSCFG_V30, All_id_Info.getInstance().getM_iChanNum(), CompressionCfg))
+        {
+            System.out.println("Set CompressionCfg failed!" + "err: " + HCNetSDK.getInstance().NET_DVR_GetLastError());
+
+        }else
+        {  Toast.makeText(getContext(),"配置修改成功",Toast.LENGTH_SHORT).show();
+            System.out.println("Set CompressionCfg succ!" );
+        }
+        setSolution();
+    }
+
+    public  void setSolution(){
+
+//        CompressionCfg.struNetPara.byVideoEncType = encType;
+
         CompressionCfg.struNormHighRecordPara.byResolution = reSolution;
         int m_iLogID2 = All_id_Info.getInstance().getM_iLogID();
         if (!HCNetSDK.getInstance().NET_DVR_SetDVRConfig(m_iLogID2, HCNetSDK.NET_DVR_SET_COMPRESSCFG_V30, All_id_Info.getInstance().getM_iChanNum(), CompressionCfg))

@@ -13,22 +13,25 @@
         android:orientation="horizontal">
 
         <com.peek.camera.view.view.CompositeImageText xmlns:ns1="http://schemas.android.com/apk/res-auto"
-            xmlns:ns2="http://schemas.android.com/apk/res-auto"
+            xmlns:ns21="http://schemas.android.com/apk/res-auto"
             android:id="@+id/Records"
+            ns21:textColor="@color/colorText"
             style="@style/style_top_menu_main"
-            ns1:imgImage="@mipmap/record"
-            ns2:textString="@string/record" />
+            ns21:imgImage="@mipmap/record"
+            ns21:textString="@string/record" />
 
         <com.peek.camera.view.view.CompositeImageText xmlns:ns3="http://schemas.android.com/apk/res-auto"
-            xmlns:ns4="http://schemas.android.com/apk/res-auto"
+            xmlns:ns33="http://schemas.android.com/apk/res-auto"
             android:id="@+id/screenShot"
+            ns33:textColor="@color/colorText"
             style="@style/style_top_menu_main"
-            ns3:imgImage="@mipmap/shot"
-            ns4:textString="@string/capture" />
+            ns33:imgImage="@mipmap/shot"
+            ns33:textString="@string/capture" />
 
         <com.peek.camera.view.view.CompositeImageText xmlns:ns5="http://schemas.android.com/apk/res-auto"
             xmlns:ns6="http://schemas.android.com/apk/res-auto"
             android:id="@+id/biaoji"
+            ns5:textColor="@color/colorText"
             style="@style/style_top_menu_main"
             ns5:imgImage="@mipmap/pencil"
             ns6:textString="@string/biaoji" />
@@ -47,6 +50,7 @@
             android:id="@+id/preview_video"
             style="@style/style_top_menu_main"
             ns10:imgImage="@mipmap/playback1"
+            ns10:textColor="@color/colorText"
             ns11:textString="@string/backVideo" />
 
         <com.peek.camera.view.view.CompositeImageText xmlns:ns12="http://schemas.android.com/apk/res-auto"
@@ -54,6 +58,7 @@
             android:id="@+id/preview_picture"
             style="@style/style_top_menu_main"
             ns12:imgImage="@mipmap/picfile"
+            ns12:textColor="@color/colorText"
             ns13:textString="@string/picture" />
 
         <com.peek.camera.view.view.CompositeImageText xmlns:ns14="http://schemas.android.com/apk/res-auto"
@@ -65,14 +70,7 @@
             ns15:textColor="@color/white"
             ns16:textString="@string/chuWu" />
 
-        <com.peek.camera.view.view.CompositeImageText xmlns:ns17="http://schemas.android.com/apk/res-auto"
-            xmlns:ns18="http://schemas.android.com/apk/res-auto"
-            xmlns:ns19="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/preview_locate"
-            style="@style/style_top_menu_main"
-            ns17:imgImage="@mipmap/locate_off"
-            ns18:textColor="@color/white"
-            ns19:textString="@string/locate" />
+
     </LinearLayout>
 
     <com.peek.camera.view.view.CompositeImageText xmlns:ns20="http://schemas.android.com/apk/res-auto"
@@ -81,10 +79,17 @@
         style="@style/style_top_menu_main"
         android:layout_width="wrap_content"
         android:clickable="false"
-        android:visibility="gone"
-        ns20:imgImage="@mipmap/angle"
-        ns21:textString="@string/angle" />
-
+        ns20:textColor="@color/colorText"
+        ns20:imgImage="@mipmap/connect"
+        ns21:textString="连接" />
+    <com.peek.camera.view.view.CompositeImageText xmlns:ns17="http://schemas.android.com/apk/res-auto"
+        xmlns:ns18="http://schemas.android.com/apk/res-auto"
+        xmlns:ns19="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/preview_locate"
+        style="@style/style_top_menu_main"
+        ns17:imgImage="@mipmap/locate_off"
+        ns18:textColor="@color/white"
+        ns19:textString="@string/locate" />
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
@@ -95,7 +100,8 @@
             android:id="@+id/preview_connectState"
             style="@style/style_top_menu_main"
             android:layout_width="wrap_content"
-            ns22:imgImage="@mipmap/connect"
+            ns22:textColor="@color/colorText"
+            ns22:imgImage="@mipmap/w_set"
             ns24:textString="@string/firstConnectState" />
 
         <FrameLayout
@@ -118,6 +124,7 @@
         xmlns:ns26="http://schemas.android.com/apk/res-auto"
         android:id="@+id/preview_setting"
         style="@style/style_top_menu_main"
+        ns25:textColor="@color/colorText"
         ns25:imgImage="@mipmap/setting"
         ns26:textString="@string/setting" />
 

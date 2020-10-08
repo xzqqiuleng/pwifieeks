@@ -62,7 +62,15 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="5dp">
+        <TextView
 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="灯光控制"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/preview_lightControl_textsize" />
         <ImageView
             android:id="@+id/lights_switch"
             android:layout_width="match_parent"
@@ -70,7 +78,7 @@
             android:background="@drawable/img_btn_bg"
             android:paddingLeft="@dimen/preview_lightImg_lfLength_padding"
             android:paddingRight="@dimen/preview_lightImg_lfLength_padding"
-            android:src="@mipmap/light" />
+            android:src="@mipmap/jin_light" />
 
         <TextView
             android:id="@+id/lights_show"

@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <permission android:name="android.permission.WRITE_MEDIA_STORAGE"/>
     <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
@@ -31,9 +30,9 @@
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon_hc"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/icon_hc"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".view.p040ui.PreviewActivity" android:screenOrientation="landscape" android:configChanges="keyboardHidden|orientation|screenSize">
@@ -60,6 +59,7 @@
         <service android:name=".service.MyIntentService" android:exported="false"/>
         <service android:name=".service.MyServiceGetGPS" android:enabled="true" android:exported="true" android:process=":musicservice"/>
         <service android:name=".service.MyServiceGetPlaceName" android:enabled="true" android:exported="true" android:process=":musicservice"/>
+        <service android:name=".WIFIAutoConnectionService"/>
 
     </application>
 

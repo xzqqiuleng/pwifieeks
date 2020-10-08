@@ -32,7 +32,7 @@ public class Login_info {
     public static final String base_socket_ip = "192.168.1.64";
     public static final int base_socket_port = 50001;
     public static  String base_video_account = "admin";
-    public static  String base_video_ip = "192.168.1.64";
+    public static  String base_video_ip = "192.168.1.34";
     public static  String base_video_password = "qwe123456";
     public static final int base_video_port = 8000;
     public static final boolean base_video_zimaliu = false;
@@ -89,7 +89,7 @@ public class Login_info {
         this.socket_port = this.sharedPreferences.getInt(SOCKET_PORT, base_socket_port);
         this.wifi_SSID = this.sharedPreferences.getString(WIFI_SSID, baseRepeaterWifiSSID);
         this.wifi_Password = this.sharedPreferences.getString(WIFI_PASSWORD, "bmwpeek2shost");
-        this.wifi_auto = this.sharedPreferences.getBoolean(WIFI_AUTO, true);
+        this.wifi_auto = this.sharedPreferences.getBoolean(WIFI_AUTO, false);
         this.video_zimaliu = this.sharedPreferences.getBoolean(VIDEO_ZIMALIU, false);
         this.wifiIsRepeater = this.sharedPreferences.getBoolean(WIFI_IS_REPEATER, false);
         this.isYingJieMa = this.sharedPreferences.getBoolean(YINGJIEMA, false);

@@ -49,7 +49,7 @@ public class C1073d implements C1098c {
 
     /* renamed from: h */
     private C1159z f2979h;
-
+    public  static  boolean hK_State = false;
     public C1073d(final Context context, C1237b bVar, final SurfaceView surfaceView) {
         this.f2973b = bVar;
         this.f2979h = new C1159z(context);
@@ -62,6 +62,7 @@ public class C1073d implements C1098c {
                 if (surfaceView != null && !surfaceView.isShown() && Player.getInstance().getLastError(All_id_Info.getInstance().getM_iPort()) == 0) {
                     surfaceView.post(new Runnable() {
                         public void run() {
+                            hK_State = true;
                             surfaceView.setVisibility(View.VISIBLE);
                             C1141o.m5272a().mo4665b();
                             C1140n.m5266a("justNetConnect after preview false!");

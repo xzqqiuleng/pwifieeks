@@ -16,6 +16,7 @@
         <item name="android:windowBackground">@android:color/white</item>
     </style>
     <style name="activity_pic_show_list">
+        <item name="android:textColor">@color/colorText</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">wrap_content</item>
@@ -125,6 +126,7 @@
         <item name="android:textColor">@color/colorText</item>
     </style>
     <style name="style_top_menu_main">
+        <item name="android:textColor">@color/colorText</item>
         <item name="android:background">@drawable/img_btn_bg</item>
         <item name="android:padding">5dp</item>
         <item name="android:clickable">true</item>

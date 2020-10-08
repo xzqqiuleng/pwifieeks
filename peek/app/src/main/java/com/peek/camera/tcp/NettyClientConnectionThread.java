@@ -13,7 +13,7 @@ public class NettyClientConnectionThread extends Thread {
     private int port;
     private String host;
 
-    public NettyClientConnectionThread(Context context, String host, int port, Handler handler) {
+    public NettyClientConnectionThread(Context context,  String host,  int port, Handler handler) {
         this.context = context;
         this.host = host;
         this.port = port;
@@ -39,5 +39,9 @@ public class NettyClientConnectionThread extends Thread {
     private void startConnection() throws Exception {
         NettyClientBootstrap.Init(port, host, handler);
 
+    }
+
+    public void stopConnection() throws Exception {
+        NettyClientBootstrap.getInstance().stop();
     }
 }

@@ -3,6 +3,8 @@ package com.peek.camera.view.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -62,14 +64,38 @@ public class BasicSetFragment extends Fragment {
                 if (progress >= 40) {
                     i = progress;
                 }
-                Settings.System.putInt(BasicSetFragment.this.getContext().getContentResolver(), "screen_brightness", i);
-                int i2 = Settings.System.getInt(BasicSetFragment.this.getContext().getContentResolver(), "screen_brightness", -1);
-                WindowManager.LayoutParams attributes = BasicSetFragment.this.getActivity().getWindow().getAttributes();
-                float f = ((float) i2) / 255.0f;
-                if (f > 0.0f && f <= 1.0f) {
-                    attributes.screenBrightness = f;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    //判断是否可以写入数据到系统
+                    if (!Settings.System.canWrite(getContext())) {
+                        Intent is = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                        is.setData(Uri.parse("package:" + getContext().getPackageName()));
+                        is.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        getContext().startActivity(is);
+                        return;
+                    } else {
+
+                        Settings.System.putInt(BasicSetFragment.this.getContext().getContentResolver(), "screen_brightness", i);
+                        int i2 = Settings.System.getInt(BasicSetFragment.this.getContext().getContentResolver(), "screen_brightness", -1);
+                        WindowManager.LayoutParams attributes = BasicSetFragment.this.getActivity().getWindow().getAttributes();
+                        float f = ((float) i2) / 255.0f;
+                        if (f > 0.0f && f <= 1.0f) {
+                            attributes.screenBrightness = f;
+                        }
+                        BasicSetFragment.this.getActivity().getWindow().setAttributes(attributes);
+                    }
+                } else {
+                    Settings.System.putInt(BasicSetFragment.this.getContext().getContentResolver(), "screen_brightness", i);
+                    int i2 = Settings.System.getInt(BasicSetFragment.this.getContext().getContentResolver(), "screen_brightness", -1);
+                    WindowManager.LayoutParams attributes = BasicSetFragment.this.getActivity().getWindow().getAttributes();
+                    float f = ((float) i2) / 255.0f;
+                    if (f > 0.0f && f <= 1.0f) {
+                        attributes.screenBrightness = f;
+                    }
+                    BasicSetFragment.this.getActivity().getWindow().setAttributes(attributes);
                 }
-                BasicSetFragment.this.getActivity().getWindow().setAttributes(attributes);
+
+
+
             }
         });
     }

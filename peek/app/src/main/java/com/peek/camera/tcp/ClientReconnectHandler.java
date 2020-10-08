@@ -75,7 +75,21 @@ public abstract class ClientReconnectHandler extends ChannelInboundHandlerAdapte
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         ByteBuf buffer = (ByteBuf) msg;
-        byte[] data = buffer.array();
+        byte[] arrays = buffer.array();
+        byte[] data = null;
+
+        //设备问题，返回数据有自动添加帧头现象，见过 三种情况 ： 00 00  、  08  00  、 04 00
+        if( (arrays[0] == 0x00 && arrays[1] == 0x00)
+                || ((arrays[0] & 0x00ff) == 0x40 && arrays[1] == 0x00)
+                || ((arrays[0] & 0x00ff) == 0x80 && arrays[1] == 0x00)
+        )  {
+            data = new byte[arrays.length - 2];
+            for (int i = 0; i < arrays.length - 2; i++) {
+                data[i] = arrays[i+2];
+            }
+        }else{
+            data = arrays;
+        }
 
         //中继电量
         if(data.length >= 4 && (data[0]&0x00FF) == 0x008f && (data[1]&0x00FF) == 0x00bb ){
@@ -98,8 +112,8 @@ public abstract class ClientReconnectHandler extends ChannelInboundHandlerAdapte
         }else if(data.length >= 7 && data[0] == 0x01 && data[1] == 0x03 && data[2] == 0x02){
             // 01 03 02 0H 0L CRC
             //电量取值范围 9-12.5, 精度0.01
-            int voltage = (((int)data[3]) << 8) + (int)data[4];
-            int power = (int) Math.round((voltage - 900) * 100.0 / (1250 - 900));
+            int voltage = ((data[3] & 0x00FF) << 8) + (data[4] & 0x00FF);
+            int power = (int)Math.round((voltage - 900) * 100.0 / (1250 - 900));
             if(power < 0){
                 power = 0;
             }
@@ -158,6 +172,11 @@ public abstract class ClientReconnectHandler extends ChannelInboundHandlerAdapte
                 }else{
                     CONNECTION_STATE = true;
                     System.out.println("重连成功");
+
+                    Message message = new Message();
+                    message.what = 6;
+                    message.obj = "重连成功";
+                    msgHandler.sendMessage(message);
                 }
             }
         });

@@ -68,7 +68,7 @@
     <string name="alreadyConnect">已连接</string>
     <string name="alreadyPause">已暂停</string>
     <string name="angle">0°</string>
-    <string name="app_name">Peek2S</string>
+    <string name="app_name">无线管道潜望镜</string>
     <string name="app_name_neutral">Quick View</string>
     <string name="appbar_scrolling_view_behavior">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="asbestosCementPipe">石棉水泥管</string>
@@ -120,7 +120,7 @@
     <string name="clickAgainToExit">再按一次返回键退出预览！</string>
     <string name="clockDescribeExample">时钟描述示例：</string>
     <string name="close">关</string>
-    <string name="company">深圳市博铭维智能科技有限公司</string>
+    <string name="company"></string>
     <string name="company_title">制造商:</string>
     <string name="concretePipe">混凝土管</string>
     <string name="connect">连接成功</string>
@@ -161,7 +161,7 @@
     <string name="firstConnectState">网络</string>
     <string name="flawDescribe">缺陷描述：</string>
     <string name="flowDown">顺流(SL)</string>
-    <string name="focus">聚焦</string>
+    <string name="focus">焦距控制</string>
     <string name="functionalityflaw">功能性缺陷</string>
     <string name="gaoganguang">高感光：</string>
     <string name="geoinverseCode">地理逆编码</string>
@@ -221,7 +221,7 @@
     <string name="masonryDitch">砖石沟</string>
     <string name="maxValue">最大值</string>
     <string name="minValue">最小值</string>
-    <string name="myComputor">深圳市博铭维智能科技有限公司</string>
+    <string name="myComputor"></string>
     <string name="name">名称</string>
     <string name="nextOption">下一页</string>
     <string name="next_step">下一步</string>
