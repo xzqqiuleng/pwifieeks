@@ -536,7 +536,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
     /* access modifiers changed from: private */
 
     /* renamed from: o */
-    public C1097b f3853o;
+//    public C1097b f3853o;
     /* access modifiers changed from: private */
 
     /* renamed from: p */
@@ -590,7 +590,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
         this.surfaceView.getHolder().setFormat(-3);
         this.f3857s = new C1073d(getApplicationContext(), this, this.surfaceView);
         Login_info.getInstance().initLoginInfo(this);
-        this.f3853o = new C1062b();
+//        this.f3853o = new C1062b();
         this.f3858t = new C1084g(this);
         this.f3864z = new C1059a(this);
         m5935B();
@@ -788,8 +788,8 @@ public class PreviewActivity extends BaseActivity implements C1237b {
         }
 
         this.f3637n.cancel();
-        this.f3853o.mo4513l();
-        this.f3853o = null;
+//        this.f3853o.mo4513l();
+//        this.f3853o = null;
         this.f3857s.mo4546c();
         new Thread(new Runnable() {
             public void run() {
@@ -821,17 +821,17 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 BaseActivity.m5794b("seekbar: onStopTrackingTouch: ");
                 if (PreviewActivity.this.f3854p) {
                    PreviewActivity.this.f3855q = progress;
-                    PreviewActivity.this.f3853o.mo4502b(PreviewActivity.this.f3855q);
+//                    PreviewActivity.this.f3853o.mo4502b(PreviewActivity.this.f3855q);
                 } else {
                 PreviewActivity.this.f3856r = progress;
-                    PreviewActivity.this.f3853o.mo4498a(PreviewActivity.this.f3856r);
+//                    PreviewActivity.this.f3853o.mo4498a(PreviewActivity.this.f3856r);
                 }
 
-                if (PreviewActivity.this.f3854p) {
-                    PreviewActivity.this.f3853o.mo4510i();
-                } else {
-                    PreviewActivity.this.f3853o.mo4509h();
-                }
+//                if (PreviewActivity.this.f3854p) {
+//                    PreviewActivity.this.f3853o.mo4510i();
+//                } else {
+//                    PreviewActivity.this.f3853o.mo4509h();
+//                }
 
 
 
@@ -893,7 +893,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
         m5794b("设置按钮！");
         Intent intent = new Intent(this, SettingActivity.class);
         intent.putExtra("batteryNum", this.f3863y);
-        this.f3853o.mo4503b(true);
+//        this.f3853o.mo4503b(true);
         startActivityForResult(intent, 0);
     }
     OsdHkInfo fpsOsd;
@@ -1028,7 +1028,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
             this.f3860v = false;
             this.rangingComposite.setImage(R.mipmap.ruler_gray);
             this.rangingComposite.setTextColor(R.color.white);
-            this.f3853o.mo4499a((Boolean) false);
+//            this.f3853o.mo4499a((Boolean) false);
 
 
             diastanceTs= null;
@@ -1038,7 +1038,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
         this.f3860v = true;
         this.rangingComposite.setImage(R.mipmap.ruler);
         this.rangingComposite.setTextColor(R.color.colorText);
-        this.f3853o.mo4499a((Boolean) true);
+//        this.f3853o.mo4499a((Boolean) true);
 
         diastanceTs= new OsdHkInfo();
         diastanceTs.setOsdX(40);
@@ -1280,8 +1280,8 @@ public class PreviewActivity extends BaseActivity implements C1237b {
             this.f3861w = false;
             this.clearFogComposite.setImage(R.mipmap.chuwu_off);
             this.clearFogComposite.setTextColor(R.color.white);
-            this.f3853o.mo4512k();
-
+//            this.f3853o.mo4512k();
+//
             if(f3854p){
                 this.lightAdjust.setProgress(f3855q);
 
@@ -1291,7 +1291,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
             this.f3861w = true;
             this.clearFogComposite.setImage(R.mipmap.chuwu_on);
             this.clearFogComposite.setTextColor(R.color.colorText);
-            this.f3853o.mo4511j();
+//            this.f3853o.mo4511j();
         }
 
 
@@ -2171,11 +2171,11 @@ public class PreviewActivity extends BaseActivity implements C1237b {
         super.onActivityResult(i, i2, intent);
         switch (i) {
             case 0:
-                if (this.f3853o != null) {
-                    this.f3853o.mo4503b(false);
-                    return;
-                }
-                return;
+//                if (this.f3853o != null) {
+//                    this.f3853o.mo4503b(false);
+//                    return;
+//                }
+//                return;
             case 1:
                 if (i2 != 100) {
                     if (intent != null) {
@@ -2316,7 +2316,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                     Toast.makeText(PreviewActivity.this,"请打开激光",Toast.LENGTH_SHORT).show();
                      return;
                 }
-                this.f3853o.mo4514m();
+//                this.f3853o.mo4514m();
 
                 ByteBuf buf = Unpooled.buffer(NettyClientBootstrap.FRAME_LEN_CMD);
                 buf.writeBytes(NettyClientBootstrap.DISTANCE);
@@ -2344,7 +2344,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 //                Intent intent = new Intent(this, SettingActivity.class);
                 Intent intent = new Intent(this, IpSetActivity.class);
                 intent.putExtra("batteryNum", this.f3863y);
-                this.f3853o.mo4503b(true);
+//                this.f3853o.mo4503b(true);
                 startActivityForResult(intent, 0);
                 return;
             case R.id.preview_moveAngel:
@@ -2690,11 +2690,11 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 int dlen = NettyClientBootstrap.FRAME_LEN_CMD;
                 byte[] ddata = null;
                 if (motionEvent.getAction() == 0) {
-                    this.f3853o.mo4501b();
+//                    this.f3853o.mo4501b();
                     ddata = NettyClientBootstrap.DOWN;
                 }
                 if (motionEvent.getAction() == 1) {
-                    this.f3853o.mo4508g();
+//                    this.f3853o.mo4508g();
                     ddata = NettyClientBootstrap.DOWN_RLS;
 
                 }
@@ -2711,11 +2711,11 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 byte[] updata = null;;
 
                 if (motionEvent.getAction() == 0) {
-                    this.f3853o.mo4497a();
+//                    this.f3853o.mo4497a();
                     updata = NettyClientBootstrap.UP;
                 }
                 if (motionEvent.getAction() == 1) {
-                    this.f3853o.mo4508g();
+//                    this.f3853o.mo4508g();
                     updata = NettyClientBootstrap.UP_RLS;
                     
                 }
@@ -2728,31 +2728,31 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 }
                 break;
             case R.id.size_add:
-                if (motionEvent.getAction() == 0) {
-                    this.f3853o.mo4504c();
-                    this.f3853o.mo4500a(true);
-                }
-                if (motionEvent.getAction() == 1) {
-                    this.f3853o.mo4508g();
-                    this.f3853o.mo4500a(false);
-                    break;
-                }
+//                if (motionEvent.getAction() == 0) {
+//                    this.f3853o.mo4504c();
+//                    this.f3853o.mo4500a(true);
+//                }
+//                if (motionEvent.getAction() == 1) {
+//                    this.f3853o.mo4508g();
+//                    this.f3853o.mo4500a(false);
+//                    break;
+//                }
                 break;
             case R.id.size_sub:
-                if (motionEvent.getAction() == 0) {
-                    this.f3853o.mo4505d();
-                    this.f3853o.mo4500a(true);
-                }
-                if (motionEvent.getAction() == 1) {
-                    this.f3853o.mo4508g();
-                    this.f3853o.mo4500a(false);
-                    break;
-                }
+//                if (motionEvent.getAction() == 0) {
+//                    this.f3853o.mo4505d();
+//                    this.f3853o.mo4500a(true);
+//                }
+//                if (motionEvent.getAction() == 1) {
+//                    this.f3853o.mo4508g();
+//                    this.f3853o.mo4500a(false);
+//                    break;
+//                }
                 break;
             case R.id.zoom_add:
 
                 if (motionEvent.getAction() == 0) {
-                    this.f3853o.mo4506e();
+//                    this.f3853o.mo4506e();
 
 
                     int m_iLogID2 = All_id_Info.getInstance().getM_iLogID();
@@ -2762,7 +2762,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                     }
                 }
                 if (motionEvent.getAction() == 1) {
-                    this.f3853o.mo4508g();
+//                    this.f3853o.mo4508g();
 
 
                     int m_iLogID2 = All_id_Info.getInstance().getM_iLogID();
