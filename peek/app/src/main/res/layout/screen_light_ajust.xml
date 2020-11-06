@@ -11,22 +11,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
+        android:textStyle="bold"
         android:text="@string/lightSetting" />
 
     <View
         android:id="@+id/fengexianl"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="0.6dp"
         android:layout_below="@+id/title"
-        android:layout_marginTop="5dp"
-        android:background="@color/colorview" />
+        android:layout_marginTop="15dp"
+        android:background="@color/white" />
 
     <SeekBar
         android:id="@+id/screen_seekbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/fengexianl"
+        android:splitTrack="false"
+        android:progressDrawable="@drawable/seek_shape"
+        android:thumb="@mipmap/dian"
         android:layout_marginTop="15dp" />
 </RelativeLayout>

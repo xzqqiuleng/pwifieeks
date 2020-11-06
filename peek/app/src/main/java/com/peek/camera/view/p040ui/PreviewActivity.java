@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -23,10 +24,12 @@ import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -51,8 +54,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTouch;
 import butterknife.Unbinder;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 
 import com.hikvision.netsdk.HCNetSDK;
 import com.hikvision.netsdk.NET_DVR_COMPRESSIONCFG_V30;
@@ -96,8 +97,7 @@ import com.peek.camera.p034b.C1159z;
 import com.peek.camera.p034b.p035a.C1107a;
 import com.peek.camera.p034b.p035a.C1110b;
 import com.peek.camera.service.MyServiceGetPlaceName;
-import com.peek.camera.tcp.NettyClientBootstrap;
-import com.peek.camera.tcp.NettyClientConnectionThread;
+import com.peek.camera.tcp.TcpClient;
 import com.peek.camera.view.fragments.C1329a;
 import com.peek.camera.view.fragments.DialogBiaojiMutiFragment;
 import com.peek.camera.view.fragments.DialogEdtNormalFragment;
@@ -112,6 +112,7 @@ import com.peek.camera.view.view.Vertical_seekbar;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -203,55 +204,31 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 
     /* renamed from: V */
     private Unbinder f3847V;
-   boolean isStart = false;
+    boolean isStart = false;
 
- boolean ipConnect = false;
-
+    boolean ipConnect = false;
 
     private Handler msgHandler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
-//            Toast.makeText(PreviewActivity.this, (String)msg.obj, Toast.LENGTH_SHORT).show();
 
             switch (msg.what){
                 case 0: //连接成功
                     ipConnect = true;
-                    int  len = NettyClientBootstrap.FRAME_LEN_TANTOU;
-                    byte[]data =  NettyClientBootstrap.TANTOU;
-
-                    try {
-                        ByteBuf buf = Unpooled.buffer(len);
-                        buf.writeBytes(data);
-                        NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
-                    }catch (Exception ex){
-                        ex.printStackTrace();
-                    }
-                    int len1 = NettyClientBootstrap.FRAME_LEN_CMD;
-                    byte[] data1 = NettyClientBootstrap.ZHONGJI;
-
-                    try {
-                        ByteBuf buf = Unpooled.buffer(len1);
-                        buf.writeBytes(data1);
-                        NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
-                    }catch (Exception ex){
-                        ex.printStackTrace();
-                    }
+                    TcpClient.sendMessage(TcpClient.CMD_TANTOU);
+                    TcpClient.sendMessage(TcpClient.CMD_ZHONGJI);
                     break;
                 case 1: //连接失败/重连失败
                     ipConnect = false;
                     Toast.makeText(PreviewActivity.this,"IP连接失败，请检查设置! ",Toast.LENGTH_SHORT).show();
                     break;
                 case 2: //重连中
-
                     break;
                 case 3: //收到测距结果
                     String distance = (String)msg.obj;
-
-
-
                     diastanceTs= new OsdHkInfo();
-                    diastanceTs.setOsdX(40);
+                    diastanceTs.setOsdX(48);
                     diastanceTs.setOsdY(544);
                     diastanceTs.setsString("距离： "+distance);
                     diastanceTs.setShowStr(1);
@@ -261,7 +238,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 case 4: //收到探头电量
                     int f = (int) msg.obj;
 
-                    battery_device.setBackgroundResource(C1104a.m5160a((int) f));
+                    battery_device.setBackgroundResource(C1104a.getTtbattert((int) f));
                     battery_device.setText(((int) f) + "%");
                     if (f <= 10.0f) {
                         battery_device.setTextColor(getResources().getColor(R.color.imageRed));
@@ -274,7 +251,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                 case 5: //收到中继电量
                     int zjf = (int) msg.obj;
 
-                    zj_device.setBackgroundResource(C1104a.m5160a((int) zjf));
+                    zj_device.setBackgroundResource(C1104a.getZjbattery((int) zjf));
                     zj_device.setText(((int) zjf) + "%");
                     if (zjf <= 10.0f) {
                         zj_device.setTextColor(getResources().getColor(R.color.imageRed));
@@ -285,6 +262,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                     zj_tv.setTextColor(getResources().getColor(R.color.colorText));
                     break;
             }
+
         }
     };
     private Timer mTimer;
@@ -297,26 +275,8 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                     @Override
                     public void run() {
                         if(ipConnect){
-                            int  len = NettyClientBootstrap.FRAME_LEN_TANTOU;
-                            byte[]data =  NettyClientBootstrap.TANTOU;
-
-                            try {
-                                ByteBuf buf = Unpooled.buffer(len);
-                                buf.writeBytes(data);
-                                NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
-                            }catch (Exception ex){
-                                ex.printStackTrace();
-                            }
-                            int len1 = NettyClientBootstrap.FRAME_LEN_CMD;
-                            byte[] data1 = NettyClientBootstrap.ZHONGJI;
-
-                            try {
-                                ByteBuf buf = Unpooled.buffer(len1);
-                                buf.writeBytes(data1);
-                                NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
-                            }catch (Exception ex){
-                                ex.printStackTrace();
-                            }
+                            TcpClient.sendMessage(TcpClient.CMD_TANTOU);
+                            TcpClient.sendMessage(TcpClient.CMD_ZHONGJI);
                         }
                     }
                 });
@@ -325,49 +285,28 @@ public class PreviewActivity extends BaseActivity implements C1237b {
         mTimer.schedule(timerTask,60000);
     }
 
-    NettyClientConnectionThread connection;
-
-
-    void onDisconnectClick(){
-        if(connection != null && ipConnect){
-            try {
-                System.out.println("断开连接");
-                connection.stopConnection();
-            }catch (Exception ex){
-                ex.printStackTrace();
-            }
+    void tcpConnect() {
+        String IP = BaseApplication.m4928b().getString("TCP_IP", "");
+        int port = BaseApplication.m4928b().getInt("TCP_PORT", -1);
+        if (TextUtils.isEmpty(IP) || port == -1) {
+            Toast.makeText(this, "请先前去配置IP地址", Toast.LENGTH_SHORT).show();
+        } else {
+            TcpClient.reconnectTime = 0;
+            TcpClient.startClient(IP, port);
         }
     }
 
-    void tcpConnect(){
-        onDisconnectClick();
-//        String IP = "192.168.1.3";
-//        int port = 2756;
-
-        String IP = BaseApplication.m4928b().getString("TCP_IP","");
-        int port = BaseApplication.m4928b().getInt("TCP_PORT",-1);
-       if(TextUtils.isEmpty(IP) || port == -1){
-           Toast.makeText(this,"请先前去配置IP地址",Toast.LENGTH_SHORT).show();
-       }else {
-           if(connection != null){
-               msgHandler.removeCallbacks(connection);
-
-           }
-           connection = new NettyClientConnectionThread(BaseApplication.m4925a(), IP, port, msgHandler);
-           connection.start();
-
-       }
-
-
+    void initTcp(){
+        TcpClient.setHandle(msgHandler);
     }
 
-   void appConstant(){
-       Calendar cd = Calendar.getInstance();
-       int year = cd.get(Calendar.YEAR);
-       if(year == 2021){
-           System.exit(0);
-       }
-   }
+    void appConstant(){
+        Calendar cd = Calendar.getInstance();
+        int year = cd.get(Calendar.YEAR);
+        if(year == 2021){
+            System.exit(0);
+        }
+    }
 
     /* renamed from: W */
     private BroadcastReceiver f3848W = new BroadcastReceiver() {
@@ -787,7 +726,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 
         }
 
-        this.f3637n.cancel();
+//        this.f3637n.cancel();
 //        this.f3853o.mo4513l();
 //        this.f3853o = null;
         this.f3857s.mo4546c();
@@ -814,16 +753,16 @@ public class PreviewActivity extends BaseActivity implements C1237b {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 if(f3861w && f3854p) {
                     Toast.makeText(getBaseContext(), "除雾状态下，不支持远光亮度调节", Toast.LENGTH_SHORT).show();
-                   lightAdjust.setProgress(0);
+                    lightAdjust.setProgress(0);
                     return;
                 }
                 int progress = seekBar.getProgress();
                 BaseActivity.m5794b("seekbar: onStopTrackingTouch: ");
                 if (PreviewActivity.this.f3854p) {
-                   PreviewActivity.this.f3855q = progress;
+                    PreviewActivity.this.f3855q = progress;
 //                    PreviewActivity.this.f3853o.mo4502b(PreviewActivity.this.f3855q);
                 } else {
-                PreviewActivity.this.f3856r = progress;
+                    PreviewActivity.this.f3856r = progress;
 //                    PreviewActivity.this.f3853o.mo4498a(PreviewActivity.this.f3856r);
                 }
 
@@ -833,15 +772,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 //                    PreviewActivity.this.f3853o.mo4509h();
 //                }
 
-
-
-                    ByteBuf buf = Unpooled.buffer(NettyClientBootstrap.FRAME_LEN_LIGHT);
-                buf.writeBytes(NettyClientBootstrap.getLightData(f3856r, f3855q, f3861w));
-                    try {
-                        NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
-                    }catch (Exception ex){
-                        ex.printStackTrace();
-                    }
+                TcpClient.sendTcpMessage(TcpClient.getLightData(f3856r, f3855q, f3861w));
 
             }
         });
@@ -894,12 +825,13 @@ public class PreviewActivity extends BaseActivity implements C1237b {
         Intent intent = new Intent(this, SettingActivity.class);
         intent.putExtra("batteryNum", this.f3863y);
 //        this.f3853o.mo4503b(true);
-        startActivityForResult(intent, 0);
+        startActivity(intent);
+//        startActivityForResult(intent, 0);
     }
     OsdHkInfo fpsOsd;
     boolean isGetConfig = false;
     public  void getConfig(){
-     final Handler chandler = new Handler();
+        final Handler chandler = new Handler();
         chandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -925,7 +857,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 
 
             frameRate  = CompressionCfg.struNormHighRecordPara.dwVideoFrameRate;
-              isGetConfig = true;
+            isGetConfig = true;
             System.out.println("get CompressionCfg succ! ");
             //分辨率 16-VGA(640*480)， 19，1280*720   20，1280*960    27，1920*1080       30，2048*1536
             System.out.println("分辨率: " + CompressionCfg.struNormHighRecordPara.byResolution);
@@ -1041,7 +973,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 //        this.f3853o.mo4499a((Boolean) true);
 
         diastanceTs= new OsdHkInfo();
-        diastanceTs.setOsdX(40);
+        diastanceTs.setOsdX(48);
         diastanceTs.setOsdY(544);
         diastanceTs.setsString("距离");
         diastanceTs.setShowStr(1);
@@ -1072,13 +1004,13 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                     try {
                         warter.clear();
                         OsdHkInfo osdHkInfo1= new OsdHkInfo();
-                        osdHkInfo1.setOsdX(40);
+                        osdHkInfo1.setOsdX(48);
                         osdHkInfo1.setOsdY(120);
                         osdHkInfo1.setsString(str);
                         osdHkInfo1.setShowStr(1);
 
                         OsdHkInfo osdHkInfo2= new OsdHkInfo();
-                        osdHkInfo2.setOsdX(40);
+                        osdHkInfo2.setOsdX(48);
                         osdHkInfo2.setOsdY(140);
                         osdHkInfo2.setsString(str2);
                         osdHkInfo2.setShowStr(1);
@@ -1294,21 +1226,12 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 //            this.f3853o.mo4511j();
         }
 
-
-        ByteBuf buf = Unpooled.buffer(NettyClientBootstrap.FRAME_LEN_LIGHT);
-        buf.writeBytes(NettyClientBootstrap.getLightData(f3856r, f3855q, f3861w));
+        TcpClient.sendTcpMessage(TcpClient.getLightData(f3856r, f3855q, f3861w));
         try {
-            NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    ByteBuf buf = Unpooled.buffer(NettyClientBootstrap.FRAME_LEN_LIGHT);
-                    buf.writeBytes(NettyClientBootstrap.getLightData(f3856r, f3855q, f3861w));
-                    try {
-                        NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    TcpClient.sendTcpMessage(TcpClient.getLightData(f3856r, f3855q, f3861w));
                 }
             },1000);
         }catch (Exception ex){
@@ -1345,14 +1268,8 @@ public class PreviewActivity extends BaseActivity implements C1237b {
     /* renamed from: W */
     private void m5969W() {
         m5794b("灯光按钮！");
-        ByteBuf buf = Unpooled.buffer(NettyClientBootstrap.FRAME_LEN_LIGHT);
-        buf.writeBytes(NettyClientBootstrap.getLightData(f3856r, f3855q, f3861w));
-        try {
-            NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
 
+        TcpClient.sendTcpMessage(TcpClient.getLightData(f3856r, f3855q, f3861w));
         if (this.f3854p) {
             this.light_text.setText(getString(R.string.lowBeam));
             this.f3854p = false;
@@ -1470,7 +1387,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 
                 if(placeAS == null){
                     placeAS= new OsdHkInfo();
-                    placeAS.setOsdX(40);
+                    placeAS.setOsdX(48);
                     placeAS.setOsdY(240);
                     placeAS.setsString(locationStr);
                     placeAS.setShowStr(1);
@@ -1763,14 +1680,14 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 
 
                 recordOsd= new OsdHkInfo();
-                recordOsd.setOsdX(40);
+                recordOsd.setOsdX(48);
                 recordOsd.setOsdY(18);
 
                 recordOsd.setShowStr(1);
                 recordOsd.setsString(sb8.toString()+sb9.toString());
 
                 recordOsd1= new OsdHkInfo();
-                recordOsd1.setOsdX(40);
+                recordOsd1.setOsdX(48);
                 recordOsd1.setOsdY(50);
 
                 recordOsd1.setShowStr(1);
@@ -1779,8 +1696,8 @@ public class PreviewActivity extends BaseActivity implements C1237b {
             }
         }
     }
-   OsdHkInfo recordOsd;
-   OsdHkInfo recordOsd1;
+    OsdHkInfo recordOsd;
+    OsdHkInfo recordOsd1;
     /* access modifiers changed from: private */
     /* renamed from: a */
     public void m5984a(final String str, final boolean z) {
@@ -1905,7 +1822,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 
 
         if(BaseApplication.m4928b().getInt("MODEL",0) == 1){
-             ll_zj.setVisibility(View.GONE);
+            ll_zj.setVisibility(View.GONE);
         }else {
             ll_zj.setVisibility(View.VISIBLE);
         }
@@ -2310,21 +2227,14 @@ public class PreviewActivity extends BaseActivity implements C1237b {
             case R.id.Records:
                 C1129g.m5232b();
                 m5957M();
-                return;
+              break;
             case R.id.autoHorizontal:
                 if(!f3860v){
                     Toast.makeText(PreviewActivity.this,"请打开激光",Toast.LENGTH_SHORT).show();
-                     return;
+                    return;
                 }
 //                this.f3853o.mo4514m();
-
-                ByteBuf buf = Unpooled.buffer(NettyClientBootstrap.FRAME_LEN_CMD);
-                buf.writeBytes(NettyClientBootstrap.DISTANCE);
-                try {
-                    NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
-                }catch (Exception ex){
-                    ex.printStackTrace();
-                }
+                TcpClient.sendMessage(TcpClient.CMD_DISTANCE);
                 return;
             case R.id.biaoji:
                 m5955L();
@@ -2343,9 +2253,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
 //                new C1215d(this);
 //                Intent intent = new Intent(this, SettingActivity.class);
                 Intent intent = new Intent(this, IpSetActivity.class);
-                intent.putExtra("batteryNum", this.f3863y);
-//                this.f3853o.mo4503b(true);
-                startActivityForResult(intent, 0);
+             startActivity(intent);
                 return;
             case R.id.preview_moveAngel:
 //                new C1215d(this);
@@ -2398,21 +2306,35 @@ public class PreviewActivity extends BaseActivity implements C1237b {
         window.setGravity(17);
         window.setContentView(R.layout.dialog_connect_state);
         ImageView f3312b = (ImageView) window.findViewById(R.id.connect_video_connect);
-        final ImageView f3313c = (ImageView) window.findViewById(R.id.connect_control_connect);
+         ImageView f3313c = (ImageView) window.findViewById(R.id.connect_control_connect);
+         TextView tvs1 = (TextView) window.findViewById(R.id.tv_state1);
+        TextView tvs2 = (TextView) window.findViewById(R.id.tv_state2);
         final RadioGroup f3315e = (RadioGroup) window.findViewById(R.id.radioGroup_dialog_connectStatic);
         final RadioButton f3316f = (RadioButton) window.findViewById(R.id.rb_connect_mainFrame);
         final RadioButton f3317g = (RadioButton) window.findViewById(R.id.rb_connect_repeater);
         new C1159z(context);
 
         if (ipConnect){
-            f3313c.setImageResource(R.mipmap.connect);
+            f3313c.setImageResource(R.mipmap.m_connect);
+
+            tvs2.setTextColor(Color.parseColor("#FFB20D"));
+            tvs2.setText("已连接");
+
         }else {
-            f3313c.setImageResource(R.mipmap.disconnect);
+            f3313c.setImageResource(R.mipmap.m_dis);
+            tvs2.setTextColor(Color.parseColor("#AAAAAA"));
+            tvs2.setText("未连接");
         }
         if ( All_id_Info.getInstance().getM_iLogID() >= 0){
-            f3312b.setImageResource(R.mipmap.connect);
+            f3312b.setImageResource(R.mipmap.m_connect);
+
+            tvs1.setTextColor(Color.parseColor("#FFB20D"));
+            tvs1.setText("已连接");
         }else {
-            f3312b.setImageResource(R.mipmap.disconnect);
+            f3312b.setImageResource(R.mipmap.m_dis);
+
+            tvs1.setTextColor(Color.parseColor("#AAAAAA"));
+            tvs1.setText("未连接");
         }
 
 //        if (Login_info.getInstance().isWifi_auto()) {
@@ -2478,7 +2400,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                     PreviewActivity.this.f3857s.mo4545b();
                     C1073d.hK_State = false;
                     ipConnect = false;
-
+                    TcpClient.stop();
                     WIFIAutoConnectionService.start(context,BaseApplication.m4928b().getString("baseMainFrameWifiSSID2",""),BaseApplication.m4928b().getString("WIFIPD2",""));
                     BaseApplication.m4928b().edit().putInt("MODEL",1).commit();
 
@@ -2513,6 +2435,7 @@ public class PreviewActivity extends BaseActivity implements C1237b {
                     C1073d.hK_State = false;
                     ipConnect = false;
 
+                    TcpClient.stop();
                     WIFIAutoConnectionService.start(context,BaseApplication.m4928b().getString("baseMainFrameWifiSSID1",""),BaseApplication.m4928b().getString("WIFIPD1",""));
 
                     isCheck = true;
@@ -2527,66 +2450,66 @@ public class PreviewActivity extends BaseActivity implements C1237b {
         });
 
     }
- BroadcastReceiver WIFIStateReceiver = new BroadcastReceiver() {
-     List<ScanResult> scanResults;
-     @Override
-     public void onReceive(Context context, Intent intent) {
+    BroadcastReceiver WIFIStateReceiver = new BroadcastReceiver() {
+        List<ScanResult> scanResults;
+        @Override
+        public void onReceive(Context context, Intent intent) {
 
-         if(isCheck){
-             if (!intent.getAction().equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
-                 return;
-             }
-             scanResults =  WIFIConnectionManager.getInstance(PreviewActivity.this).getWifiManager().getScanResults();
-             for (int i = 0 ; i < scanResults.size();i++) {
-                 Log.e("fxp","scanResults:----"+(scanResults.get(i)).SSID);
-             }
+            if(isCheck){
+                if (!intent.getAction().equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
+                    return;
+                }
+                scanResults =  WIFIConnectionManager.getInstance(PreviewActivity.this).getWifiManager().getScanResults();
+                for (int i = 0 ; i < scanResults.size();i++) {
+                    Log.e("fxp","scanResults:----"+(scanResults.get(i)).SSID);
+                }
 
-             String ssid = BaseApplication.m4928b().getString(Login_info.baseMainFrameWifiSSID,"");
-             String pwd = BaseApplication.m4928b().getString("WIFIPD","");
-             if (!WIFIConnectionManager.getInstance(PreviewActivity.this).isConnected(ssid)) {
-                 WIFIConnectionManager.getInstance(PreviewActivity.this).connect(ssid, pwd);
-             } else {
-                 Log.e("fxp","成功连接到wifi ：" + ssid);
+                String ssid = BaseApplication.m4928b().getString(Login_info.baseMainFrameWifiSSID,"");
+                String pwd = BaseApplication.m4928b().getString("WIFIPD","");
+                if (!WIFIConnectionManager.getInstance(PreviewActivity.this).isConnected(ssid)) {
+                    WIFIConnectionManager.getInstance(PreviewActivity.this).connect(ssid, pwd);
+                } else {
+                    Log.e("fxp","成功连接到wifi ：" + ssid);
 
-                     mo5120r();
+                    mo5120r();
 
-                     isCheck = false;
-                     new Handler().postDelayed(new Runnable() {
-                         @Override
-                         public void run() {
-                             m5933A();
-                             f3857s = new C1073d(getApplicationContext(), PreviewActivity.this, surfaceView);
-                             m5935B();
+                    isCheck = false;
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            m5933A();
+                            f3857s = new C1073d(getApplicationContext(), PreviewActivity.this, surfaceView);
+                            m5935B();
 
-                             if (PreviewActivity.this.surfaceView != null) {
-                                 PreviewActivity.this.surfaceView.post(new Runnable() {
-                                     public void run() {
-                                         ViewGroup.LayoutParams layoutParams = PreviewActivity.this.surfaceView.getLayoutParams();
-                                         int width = PreviewActivity.this.flSurfaceContainer.getWidth();
-                                         int height = PreviewActivity.this.flSurfaceContainer.getHeight();
-                                         if (!(width == 0 || height == 0)) {
-                                             layoutParams.width = width;
-                                             layoutParams.height = height;
-                                         }
-                                         PreviewActivity.this.surfaceView.setLayoutParams(layoutParams);
-                                         if (PreviewActivity.this.f3858t.mo4569a()) {
-                                             PreviewActivity.this.f3858t.mo4568a((String) null, false, (String) null);
-                                         }
-                                     }
-                                 });
-                             }
-                             PreviewActivity.this.f3857s.mo4544a();
-                             tcpConnect();
-                         }
-                     },3000);
+                            if (PreviewActivity.this.surfaceView != null) {
+                                PreviewActivity.this.surfaceView.post(new Runnable() {
+                                    public void run() {
+                                        ViewGroup.LayoutParams layoutParams = PreviewActivity.this.surfaceView.getLayoutParams();
+                                        int width = PreviewActivity.this.flSurfaceContainer.getWidth();
+                                        int height = PreviewActivity.this.flSurfaceContainer.getHeight();
+                                        if (!(width == 0 || height == 0)) {
+                                            layoutParams.width = width;
+                                            layoutParams.height = height;
+                                        }
+                                        PreviewActivity.this.surfaceView.setLayoutParams(layoutParams);
+                                        if (PreviewActivity.this.f3858t.mo4569a()) {
+                                            PreviewActivity.this.f3858t.mo4568a((String) null, false, (String) null);
+                                        }
+                                    }
+                                });
+                            }
+                            PreviewActivity.this.f3857s.mo4544a();
+                            tcpConnect();
+                        }
+                    },3000);
 
 
 
-             }
-         }
+                }
+            }
 
-     }
- };
+        }
+    };
 
 
     protected String[] needPermissions = {
@@ -2604,18 +2527,12 @@ public class PreviewActivity extends BaseActivity implements C1237b {
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(getApplicationContext(),"没有权限,请手动开启定位权限",Toast.LENGTH_SHORT).show();
             //申请一个（或多个）权限，并提供用于回调返回的获取码（用户定义）
             ActivityCompat.requestPermissions(this,needPermissions, 100);
-        }
 
         getWindow().setFlags(128,128);
         setContentView((int) R.layout.welcome);
+        initTcp();
         new Timer().schedule(new TimerTask() {
             public void run() {
                 PreviewActivity.this.runOnUiThread(new Runnable() {
@@ -2687,44 +2604,19 @@ public class PreviewActivity extends BaseActivity implements C1237b {
     public boolean onTouch(View view, MotionEvent motionEvent) {
         switch (view.getId()) {
             case R.id.moveDown:
-                int dlen = NettyClientBootstrap.FRAME_LEN_CMD;
-                byte[] ddata = null;
                 if (motionEvent.getAction() == 0) {
-//                    this.f3853o.mo4501b();
-                    ddata = NettyClientBootstrap.DOWN;
+                    TcpClient.sendMessage(TcpClient.CMD_DOWN);
                 }
                 if (motionEvent.getAction() == 1) {
-//                    this.f3853o.mo4508g();
-                    ddata = NettyClientBootstrap.DOWN_RLS;
-
-                }
-                try {
-                    ByteBuf buf = Unpooled.buffer(dlen);
-                    buf.writeBytes(ddata);
-                    NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
-                }catch (Exception ex){
-                    ex.printStackTrace();
+                    TcpClient.sendMessage(TcpClient.CMD_DOWN_RLS);
                 }
                 break;
             case R.id.moveUp:
-                int uplen = NettyClientBootstrap.FRAME_LEN_CMD;
-                byte[] updata = null;;
-
                 if (motionEvent.getAction() == 0) {
-//                    this.f3853o.mo4497a();
-                    updata = NettyClientBootstrap.UP;
+                    TcpClient.sendMessage(TcpClient.CMD_UP);
                 }
                 if (motionEvent.getAction() == 1) {
-//                    this.f3853o.mo4508g();
-                    updata = NettyClientBootstrap.UP_RLS;
-                    
-                }
-                try {
-                    ByteBuf buf = Unpooled.buffer(uplen);
-                    buf.writeBytes(updata);
-                    NettyClientBootstrap.getInstance().getSocketChannel().writeAndFlush(buf);
-                }catch (Exception ex){
-                    ex.printStackTrace();
+                    TcpClient.sendMessage(TcpClient.CMD_UP_RLS);
                 }
                 break;
             case R.id.size_add:

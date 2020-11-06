@@ -12,29 +12,31 @@
         android:layout_above="@+id/preview_move_container">
 
         <LinearLayout
+
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_gravity="center"
-            android:background="@drawable/bg_suspend"
-            android:padding="5dp">
+            android:gravity="center"
+            android:background="@drawable/circle_bg"
+          >
+
+            <ImageView
+                android:id="@+id/autoHorizontal"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/img_btn_bg"
+                android:clickable="true"
+                android:src="@mipmap/hozontal" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="测距"
                 android:layout_gravity="center"
                 android:textColor="@color/colorText"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="2dp"
                 />
-            <ImageView
-                android:id="@+id/autoHorizontal"
-                android:layout_width="@dimen/preview_autoHorizontal"
-                android:layout_height="@dimen/preview_autoHorizontal"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/img_btn_bg"
-                android:clickable="true"
-                android:padding="@dimen/preview_autoHorizontal_padding"
-                android:src="@mipmap/hozontal" />
         </LinearLayout>
     </FrameLayout>
 
@@ -44,22 +46,23 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/preview_moveImg_marginBottom"
-        android:background="@drawable/bg_suspend"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="5dp">
+       >
        <TextView
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:text="俯仰控制"
+           android:text="俯仰"
            android:textColor="@color/colorText"
            android:layout_marginBottom="10dp"
            />
         <ImageView
+
             android:id="@+id/moveUp"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/preview_moveImg_height"
-            android:background="@drawable/img_btn_bg"
+            android:padding="8dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/circle_bg"
             android:clickable="true"
             android:src="@mipmap/up" />
 
@@ -82,11 +85,12 @@
             android:src="@mipmap/zoom_out" />
 
         <ImageView
+           android:padding="8dp"
             android:layout_marginTop="20dp"
             android:id="@+id/moveDown"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/preview_moveImg_height"
-            android:background="@drawable/img_btn_bg"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/circle_bg"
             android:clickable="true"
             android:src="@mipmap/down" />
     </LinearLayout>

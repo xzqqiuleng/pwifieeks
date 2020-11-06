@@ -14,10 +14,11 @@
         <LinearLayout
             android:layout_marginTop="80dp"
             android:orientation="vertical" android:layout_width="match_parent"
-            android:gravity="center"
+            android:gravity="center_horizontal"
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:gravity="center"
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
                 android:layout_width="match_parent"
@@ -26,19 +27,22 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="IP地址："
-                    android:textColor="@color/colorText"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:textColor="@color/btn_press"
+                    android:textSize="16sp"
+
                     />
                 <EditText
                     android:paddingLeft="16dp"
                     android:id="@+id/et1"
+                    android:textColor="#fff"
+                    android:textSize="15sp"
                     android:layout_marginLeft="18dp"
-                    android:background="@color/white"
-                    android:layout_width="match_parent"
+                    android:background="@drawable/edit_bg"
+                    android:layout_width="200dp"
                     android:layout_height="30dp"/>
             </LinearLayout>
             <LinearLayout
+                android:gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
@@ -48,19 +52,21 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="用户名："
-                    android:textColor="@color/colorText"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:textColor="@color/btn_press"
+                    android:textSize="16sp"
                     />
                 <EditText
+                    android:textColor="#fff"
+                    android:textSize="15sp"
                     android:paddingLeft="16dp"
                     android:id="@+id/et2"
                     android:layout_marginLeft="18dp"
-                    android:background="@color/white"
-                    android:layout_width="match_parent"
+                    android:background="@drawable/edit_bg"
+                    android:layout_width="200dp"
                     android:layout_height="30dp"/>
             </LinearLayout>
             <LinearLayout
+                android:gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
@@ -70,20 +76,22 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="密码："
-                    android:textColor="@color/colorText"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:textColor="@color/btn_press"
+                    android:textSize="16sp"
                     />
                 <EditText
                     android:paddingLeft="16dp"
                     android:id="@+id/et3"
                     android:layout_marginLeft="18dp"
-                    android:background="@color/white"
-                    android:layout_width="match_parent"
+                    android:background="@drawable/edit_bg"
+                    android:layout_width="200dp"
+                    android:textColor="#fff"
+                    android:textSize="15sp"
                     android:layout_height="30dp"/>
             </LinearLayout>
 
             <LinearLayout
+                android:gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
@@ -93,19 +101,21 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="探头IP："
-                    android:textColor="@color/colorText"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:textColor="@color/btn_press"
+                    android:textSize="16sp"
                     />
                 <EditText
+                    android:textColor="#fff"
+                    android:textSize="15sp"
                     android:paddingLeft="16dp"
                     android:id="@+id/et5"
                     android:layout_marginLeft="18dp"
-                    android:background="@color/white"
-                    android:layout_width="match_parent"
+                    android:background="@drawable/edit_bg"
+                    android:layout_width="200dp"
                     android:layout_height="30dp"/>
             </LinearLayout>
             <LinearLayout
+                android:gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
@@ -115,20 +125,22 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="探头端口："
-                    android:textColor="@color/colorText"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:textColor="@color/btn_press"
+                    android:textSize="16sp"
                     />
                 <EditText
+                    android:textColor="#fff"
+                    android:textSize="15sp"
                     android:paddingLeft="16dp"
                     android:id="@+id/et6"
                     android:layout_marginLeft="18dp"
-                    android:background="@color/white"
-                    android:layout_width="match_parent"
+                    android:background="@drawable/edit_bg"
+                    android:layout_width="200dp"
                     android:layout_height="30dp"/>
             </LinearLayout>
 
             <LinearLayout
+                android:gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
@@ -138,19 +150,21 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="WIFI："
-                    android:textColor="@color/colorText"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:textColor="@color/btn_press"
+                    android:textSize="16sp"
                     />
                 <EditText
+                    android:textColor="#fff"
+                    android:textSize="15sp"
                     android:paddingLeft="16dp"
                     android:id="@+id/et4"
                     android:layout_marginLeft="18dp"
-                    android:background="@color/white"
-                    android:layout_width="match_parent"
+                    android:background="@drawable/edit_bg"
+                    android:layout_width="200dp"
                     android:layout_height="30dp"/>
             </LinearLayout>
             <LinearLayout
+                android:gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="60dp"
                 android:layout_marginRight="60dp"
@@ -160,16 +174,17 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="WIFI密码："
-                    android:textColor="@color/colorText"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:textColor="@color/btn_press"
+                    android:textSize="16sp"
                     />
                 <EditText
+                    android:textColor="#fff"
+                    android:textSize="15sp"
                     android:paddingLeft="16dp"
                     android:id="@+id/et7"
                     android:layout_marginLeft="18dp"
-                    android:background="@color/white"
-                    android:layout_width="match_parent"
+                    android:background="@drawable/edit_bg"
+                    android:layout_width="200dp"
                     android:layout_height="30dp"/>
             </LinearLayout>
 
@@ -177,9 +192,9 @@
                 android:id="@+id/con_br"
                 android:layout_marginTop="60dp"
                 android:gravity="center"
-                android:layout_width="200dp"
-                android:layout_height="36dp"
-                android:background="@color/colorText"
+                android:layout_width="113dp"
+                android:layout_height="40dp"
+                android:background="@mipmap/btnss2"
                 android:textColor="#fff"
                 android:textStyle="bold"
                 android:textSize="14sp"
@@ -192,8 +207,9 @@
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabSelectedTextColor="@color/colorText"
+            app:tabSelectedTextColor="@color/btn_press"
             app:tabIndicatorColor="@color/colorText"
+            app:tabIndicatorHeight="1dp"
             app:tabTextColor="@color/white"
             />
         <ImageView

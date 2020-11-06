@@ -19,11 +19,11 @@
             style="@style/dialog_record_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right"
+            android:gravity="left"
             android:minWidth="@dimen/recordTvWidth"
             android:padding="5dp"
             android:text="@string/record_task_name_e"
-            android:textColor="@color/colorText" />
+            android:textColor="@color/btn_press" />
 
         <EditText
             android:id="@+id/record_task_name_edt"
@@ -43,11 +43,12 @@
                 style="@style/dialog_record_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="left"
                 android:minWidth="@dimen/recordTvWidth"
                 android:padding="5dp"
+
                 android:text="@string/record_task_start_e"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/btn_press" />
 
             <EditText
                 android:id="@+id/record_task_start_edt"
@@ -61,11 +62,11 @@
                 style="@style/dialog_record_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="left"
                 android:minWidth="@dimen/recordTvWidth"
                 android:padding="5dp"
                 android:text="@string/record_task_end_e"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/btn_press"/>
 
             <EditText
                 android:id="@+id/record_task_end_edt"
@@ -89,11 +90,11 @@
             style="@style/dialog_record_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right"
+            android:gravity="left"
             android:minWidth="@dimen/recordTvWidth"
             android:padding="5dp"
             android:text="@string/record_task_id_e"
-            android:textColor="@color/colorText" />
+            android:textColor="@color/btn_press"/>
 
         <EditText
             android:id="@+id/record_task_id_edt"
@@ -113,11 +114,11 @@
                 style="@style/dialog_record_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="left"
                 android:minWidth="@dimen/recordTvWidth"
                 android:padding="5dp"
                 android:text="@string/record_task_direction_e"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/btn_press" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -148,11 +149,11 @@
                 style="@style/dialog_record_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="left"
                 android:minWidth="@dimen/recordTvWidth"
                 android:padding="5dp"
                 android:text="@string/record_task_sort_e"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/btn_press" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -193,11 +194,12 @@
             style="@style/dialog_record_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right"
+            android:gravity="left"
             android:minWidth="@dimen/recordTvWidth"
+
             android:padding="5dp"
             android:text="@string/record_task_people_e"
-            android:textColor="@color/colorText" />
+            android:textColor="@color/btn_press" />
 
         <EditText
             android:id="@+id/record_task_people_edt"
@@ -217,11 +219,11 @@
                 style="@style/dialog_record_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="left"
                 android:minWidth="@dimen/recordTvWidth"
                 android:padding="5dp"
                 android:text="@string/record_task_diameter_e"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/btn_press" />
 
             <EditText
                 android:id="@+id/record_task_diameter_edt"
@@ -236,11 +238,11 @@
                 style="@style/dialog_record_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="left"
                 android:minWidth="@dimen/recordTvWidth"
                 android:padding="5dp"
                 android:text="@string/record_task_guancai_e"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/btn_press" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -280,11 +282,11 @@
             style="@style/dialog_record_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right"
+            android:gravity="left"
             android:minWidth="@dimen/recordTvWidth"
             android:padding="5dp"
             android:text="@string/record_task_place_e"
-            android:textColor="@color/colorText" />
+            android:textColor="@color/btn_press"/>
 
         <EditText
             android:id="@+id/record_task_place_edt"
@@ -304,11 +306,11 @@
                 style="@style/dialog_record_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="left"
                 android:minWidth="@dimen/recordTvWidth"
                 android:padding="5dp"
                 android:text="@string/record_task_computer_e"
-                android:textColor="@color/colorText" />
+                android:textColor="@color/btn_press"/>
 
             <EditText
                 android:id="@+id/record_task_conputer_edt"

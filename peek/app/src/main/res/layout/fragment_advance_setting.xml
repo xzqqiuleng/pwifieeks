@@ -17,11 +17,14 @@
         android:orientation="horizontal">
 
         <TextView
+            android:drawableLeft="@mipmap/lx1"
+            android:drawablePadding="6dp"
+            android:textColor="@color/btn_press"
             style="@style/textSet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:padding="10dp"
             android:text="@string/cameraSetting" />
 
@@ -37,7 +40,7 @@
                 style="@style/textSet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_btn_rectangle"
+                android:background="@mipmap/btnss2"
                 android:clickable="true"
                 android:paddingLeft="15dp"
                 android:paddingTop="5dp"
@@ -57,11 +60,14 @@
         android:orientation="horizontal">
 
         <TextView
+            android:drawableLeft="@mipmap/lx2"
+            android:drawablePadding="6dp"
+            android:textColor="@color/btn_press"
             style="@style/textSet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:padding="10dp"
             android:text="@string/recordSetting" />
 
@@ -77,7 +83,7 @@
                 style="@style/textSet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_btn_rectangle"
+                android:background="@mipmap/btnss2"
                 android:clickable="true"
                 android:paddingLeft="15dp"
                 android:paddingTop="5dp"
@@ -89,6 +95,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginRight="25dp"
@@ -118,6 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
+                android:thumb="@mipmap/dian"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
                 android:paddingRight="10dp"
@@ -134,11 +142,14 @@
         android:orientation="horizontal">
 
         <TextView
+            android:drawableLeft="@mipmap/lx1"
+            android:drawablePadding="6dp"
+            android:textColor="@color/btn_press"
             style="@style/textSet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:padding="10dp"
             android:text="@string/hardwareSetting" />
 
@@ -152,6 +163,7 @@
             <Switch
                 android:id="@+id/switch_advance_yingjiema"
                 style="@style/textSet"
+                android:thumb="@mipmap/dian"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="true"
@@ -163,6 +175,7 @@
     </LinearLayout>
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginRight="25dp"
@@ -171,11 +184,14 @@
         android:orientation="horizontal">
 
         <TextView
+            android:drawableLeft="@mipmap/lx1"
+            android:drawablePadding="6dp"
+            android:textColor="@color/btn_press"
             style="@style/textSet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:padding="10dp"
             android:text="@string/subStreamSet" />
 
@@ -187,6 +203,7 @@
             android:orientation="vertical">
 
             <Switch
+                android:thumb="@mipmap/dian"
                 android:id="@+id/switch_advance_subStream"
                 style="@style/textSet"
                 android:layout_width="wrap_content"
@@ -200,6 +217,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginRight="25dp"
@@ -237,6 +255,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginRight="25dp"
@@ -268,6 +287,7 @@
                 android:clickable="true"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
+                android:thumb="@mipmap/dian"
                 android:paddingRight="10dp"
                 android:paddingBottom="5dp" />
         </LinearLayout>

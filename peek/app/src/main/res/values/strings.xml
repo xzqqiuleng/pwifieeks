@@ -161,7 +161,7 @@
     <string name="firstConnectState">网络</string>
     <string name="flawDescribe">缺陷描述：</string>
     <string name="flowDown">顺流(SL)</string>
-    <string name="focus">焦距控制</string>
+    <string name="focus">焦距</string>
     <string name="functionalityflaw">功能性缺陷</string>
     <string name="gaoganguang">高感光：</string>
     <string name="geoinverseCode">地理逆编码</string>
@@ -210,7 +210,7 @@
     <string name="lowBattery">低电量</string>
     <string name="lowBeam">近光灯</string>
     <string name="lowStorageAlarm">存储警告！剩余存储空间过低！</string>
-    <string name="mainFrame">主机:</string>
+    <string name="mainFrame">主机</string>
     <string name="mainFrameConnect">主机连接</string>
     <string name="mainFrameNoConnect">主机未连接！</string>
     <string name="manufacturer_title">正在修改生产商数据！</string>
@@ -312,7 +312,7 @@
     <string name="recording">录像</string>
     <string name="reflux">逆流(NL)</string>
     <string name="reinforcedConcretePipe">钢筋混凝土管</string>
-    <string name="repeater">中继:</string>
+    <string name="repeater">中继</string>
     <string name="repeaterConnect">中继连接</string>
     <string name="reset">重置</string>
     <string name="saveToSdcard">默认保存至存储卡</string>

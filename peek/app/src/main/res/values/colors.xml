@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background">#282737</color>
+    <color name="background">#000000</color>
     <color name="backgroundDark">#171616</color>
 
-    <color name="btn_press">#DC143C</color>
+    <color name="btn_press">#FFB20D</color>
 
     <color name="colorAccent">#ff4081</color>
     <color name="colorBackgroudDark">#1b1b1b</color>
     <color name="colorBase">#FF0000</color>
-    <color name="colorBase_dark">#DC143C</color>
+    <color name="colorBase_dark">#FFB20D</color>
     <color name="colorBase_light">#FF0000</color>
     <color name="colorPress">#DC143C</color>
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303f9f</color>
     <color name="colorReminderText">#F08080</color>
-    <color name="colorText">#FF0000</color>
+    <color name="colorText">#fff</color>
     <color name="color_editHint">#8B0000</color>
     <color name="colorview">#eb4f38</color>
 

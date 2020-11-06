@@ -6,7 +6,22 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp">
+<FrameLayout
+    android:layout_marginTop="20dp"
+    android:id="@+id/fls1"
+    android:layout_width="240dp"
+    android:layout_height="wrap_content">
 
+    <TextView
+        android:layout_gravity="left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="类型："
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="#fff"
+
+        />
     <RadioGroup
         android:id="@+id/radioGroup_dialog_connectStatic"
         android:layout_width="wrap_content"
@@ -20,62 +35,107 @@
             style="@style/small_textSet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="30dp"
+            android:textSize="16sp"
+            android:paddingLeft="10dp"
             android:button="@drawable/radiobutton_bg_color"
             android:text="@string/repeater" />
 
         <RadioButton
+            android:paddingLeft="10dp"
             android:id="@+id/rb_connect_mainFrame"
             style="@style/small_textSet"
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@drawable/radiobutton_bg_color"
             android:text="@string/mainFrame" />
     </RadioGroup>
 
-    <LinearLayout
-        android:id="@+id/connect_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/radioGroup_dialog_connectStatic"
+</FrameLayout>
+  <FrameLayout
+      android:layout_marginTop="20dp"
+      android:id="@+id/connect_first"
+      android:layout_below="@+id/fls1"
+      android:layout_width="240dp"
+      android:layout_height="wrap_content">
+
+      <TextView
+        android:layout_gravity="center_vertical"
+          android:textColor="@color/colorText"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+
+          android:textSize="16sp"
+          android:text="探头连接状态：" />
+      <LinearLayout
+
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="right|center_vertical"
+          android:gravity="center"
+          android:orientation="horizontal">
+
+
+          <ImageView
+              android:id="@+id/connect_video_connect"
+              android:layout_width="@dimen/connect_img_width"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="5dp"
+              android:src="@mipmap/m_connect" />
+          <TextView
+              android:id="@+id/tv_state1"
+              android:layout_marginLeft="4dp"
+              android:textColor="#FFB20D"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+            android:textSize="14sp"
+
+              android:text="已连接" />
+      </LinearLayout>
+
+
+  </FrameLayout>
+    <FrameLayout
+        android:layout_marginBottom="20dp"
         android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:textColor="@color/colorText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/connect_text"
-            android:text="@string/videoZhuji" />
-
-        <ImageView
-            android:id="@+id/connect_video_connect"
-            android:layout_width="@dimen/connect_img_width"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:src="@mipmap/disconnect" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_below="@+id/connect_first"
-        android:gravity="center"
-        android:orientation="horizontal">
-
+        android:layout_width="240dp"
+        android:layout_height="wrap_content">
         <TextView
+            android:layout_gravity="center_vertical"
             android:textColor="@color/colorText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/connect_text"
-            android:text="@string/controlZhuji" />
 
-        <ImageView
-            android:id="@+id/connect_control_connect"
-            android:layout_width="@dimen/connect_img_width"
+            android:textSize="16sp"
+            android:text="中继连接状态：" />
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:src="@mipmap/disconnect" />
-    </LinearLayout>
+            android:layout_gravity="right|center_vertical"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/connect_control_connect"
+                android:layout_width="@dimen/connect_img_width"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:src="@mipmap/m_dis" />
+            <TextView
+                android:id="@+id/tv_state2"
+                android:layout_marginLeft="4dp"
+                android:textColor="#FFB20D"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+
+                android:text="已连接" />
+
+
+        </LinearLayout>
+
+    </FrameLayout>
 </RelativeLayout>

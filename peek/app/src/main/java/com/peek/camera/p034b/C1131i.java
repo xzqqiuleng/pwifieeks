@@ -95,7 +95,7 @@ public class C1131i {
             HCNetSDK.getInstance();
             instance.NET_DVR_GetDVRConfig(m_iLogID, 1030, All_id_Info.getInstance().getM_iChanNum(), v5);
             int v3;
-            for(v3 = 0; v3 < 6; ++v3) {
+            for(v3 = 0; v3 < v4; ++v3) {
                 if(v4 != 0) {
                     try {
                         if(v3 < arg10.size()) {

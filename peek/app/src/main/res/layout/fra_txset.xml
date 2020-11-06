@@ -1,113 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@color/background"
-    android:gravity="center"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+
     android:layout_height="match_parent">
     <LinearLayout
-        android:layout_gravity="center"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:background="@color/background"
         android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <TextView
-            style="@style/textSet"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_gravity="center"
             android:gravity="center"
-            android:text="亮度" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <SeekBar
-            android:layout_marginLeft="20dp"
-            android:id="@+id/sb1"
-            android:layout_width="200dp"
-            android:layout_height="30dp"
-            android:max="10"
-            />
+            <TextView
+                android:drawablePadding="6dp"
+                android:drawableLeft="@mipmap/ld1"
+                android:textColor="@color/btn_press"
+                android:layout_marginRight="20dp"
+                style="@style/textSet"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="亮度" />
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="16dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+            <SeekBar
 
-        <TextView
+                android:id="@+id/sb1"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:max="10"
+                android:splitTrack="false"
+                android:progressDrawable="@drawable/seek_shape"
+                android:thumb="@mipmap/dian"
+                />
 
-            style="@style/textSet"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:text="对比度" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <SeekBar
-            android:layout_marginLeft="20dp"
-            android:id="@+id/sb2"
-            android:layout_width="200dp"
-            android:layout_height="30dp"
-            android:max="10"
-            />
+            <TextView
+                android:drawablePadding="6dp"
+                android:drawableLeft="@mipmap/ld2"
+                android:textColor="@color/btn_press"
+                style="@style/textSet"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="对比度" />
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="16dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+            <SeekBar
+                android:layout_marginLeft="20dp"
+                android:id="@+id/sb2"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:max="10"
+                android:splitTrack="false"
+                android:progressDrawable="@drawable/seek_shape"
+                android:thumb="@mipmap/dian"
+                />
 
-        <TextView
-
-            style="@style/textSet"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:text="饱和度" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <SeekBar
-            android:layout_marginLeft="20dp"
-            android:id="@+id/sb3"
-            android:layout_width="200dp"
-            android:layout_height="30dp"
-            android:max="10"
-            />
+            <TextView
+                android:drawablePadding="6dp"
+                android:drawableLeft="@mipmap/ld3"
+                android:textColor="@color/btn_press"
+                style="@style/textSet"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="饱和度" />
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="16dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+            <SeekBar
+                android:layout_marginLeft="20dp"
+                android:id="@+id/sb3"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:max="10"
+                android:splitTrack="false"
+                android:progressDrawable="@drawable/seek_shape"
+                android:thumb="@mipmap/dian"
+                />
 
-        <TextView
-
-            style="@style/textSet"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:text="锐度" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-        <SeekBar
+            <TextView
+                android:drawablePadding="6dp"
+                android:drawableLeft="@mipmap/ld4"
+                android:textColor="@color/btn_press"
+                style="@style/textSet"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="锐度" />
+
+            <SeekBar
+                android:layout_marginLeft="20dp"
+                android:id="@+id/sb4"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:max="10"
+                android:splitTrack="false"
+                android:progressDrawable="@drawable/seek_shape"
+                android:thumb="@mipmap/dian"
+                />
+
+        </LinearLayout>
+        <TextView
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
-            android:id="@+id/sb4"
-            android:layout_width="200dp"
-            android:layout_height="30dp"
-            android:max="10"
-
+            android:layout_marginRight="20dp"
+            android:id="@+id/save_tv"
+            android:layout_marginTop="20dp"
+            android:layout_width="113dp"
+            android:layout_height="40dp"
+            android:background="@mipmap/btnss2"
+            android:text="保存设置"
+            android:textColor="#fff"
+            android:gravity="center"
             />
-
     </LinearLayout>
-    <TextView
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:id="@+id/save_tv"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/colorText"
-        android:text="保存设置"
-        android:gravity="center"
-        />
-</LinearLayout>
+</ScrollView>

@@ -10,9 +10,14 @@ import com.peek.camera.R;
 public class C1104a {
     /* renamed from: a */
     public static int m5160a(int i) {
-        return i == 0 ? R.drawable.ic_battery_0 : i <= 10 ? R.drawable.ic_battery_1 : i <= 20 ? R.drawable.ic_battery_2 : i <= 30 ? R.drawable.ic_battery_3 : i <= 40 ? R.drawable.ic_battery_4 : i <= 50 ? R.drawable.ic_battery_5 : i <= 60 ? R.drawable.ic_battery_6 : i <= 70 ? R.drawable.ic_battery_7 : i <= 80 ? R.drawable.ic_battery_8 : i <= 90 ? R.drawable.ic_battery_9 : R.drawable.ic_battery_10;
+        return i == 0 ? R.mipmap.bc1 : i <= 10 ? R.mipmap.bc2 : i <= 30 ? R.mipmap.bc3: i <= 50 ? R.mipmap.bc4 : i <= 80 ? R.mipmap.bc5 : i <= 100 ? R.mipmap.ba6:R.mipmap.bc6;
     }
-
+    public static int getZjbattery(int i) {
+        return i == 0 ? R.mipmap.bb1 : i <= 10 ? R.mipmap.bb2 : i <= 30 ? R.mipmap.bb3: i <= 50 ? R.mipmap.bb4 : i <= 80 ? R.mipmap.bb5 : i <= 100 ? R.mipmap.ba6:R.mipmap.bb6;
+    }
+    public static int getTtbattert(int i) {
+        return i == 0 ? R.mipmap.ba1 : i <= 10 ? R.mipmap.ba2 : i <= 30 ? R.mipmap.ba3: i <= 50 ? R.mipmap.ba4 : i <= 80 ? R.mipmap.ba5 : i <= 100 ? R.mipmap.ba6:R.mipmap.ba6;
+    }
     /* renamed from: a */
     public static void m5161a(final Context context, Intent intent, final TextView textView, final TextView textView2) {
         if (textView != null) {

@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:textStyle="bold"
         android:id="@+id/dialog_record_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,40 +23,46 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/dialog_record_editor_container"
         android:layout_below="@+id/dialog_record_title"
-        android:background="@drawable/bg_dialog_editext"
+        android:background="@drawable/shape_dasc"
         android:orientation="vertical"
         android:padding="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorText"
+            android:background="@color/background"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="3dp">
 
             <TextView
                 style="@style/dialog_record_list_title"
+                android:textColor="@color/btn_press"
                 android:text="@string/record_task_id" />
 
             <TextView
                 style="@style/dialog_record_list_title"
+                android:textColor="@color/btn_press"
                 android:text="@string/record_task_name" />
 
             <TextView
                 style="@style/dialog_record_list_title"
+                android:textColor="@color/btn_press"
                 android:text="@string/record_task_place" />
 
             <TextView
                 style="@style/dialog_record_list_title"
+                android:textColor="@color/btn_press"
                 android:text="@string/record_task_start" />
 
             <TextView
                 style="@style/dialog_record_list_title"
+                android:textColor="@color/btn_press"
                 android:text="@string/record_task_end" />
 
             <TextView
                 style="@style/dialog_record_list_title"
+                android:textColor="@color/btn_press"
                 android:text="@string/record_task_direction" />
 
             <TextView
@@ -65,19 +72,23 @@
             <TextView
                 style="@style/dialog_record_list_title"
                 android:layout_marginLeft="8dp"
+                android:textColor="@color/btn_press"
                 android:maxEms="2"
                 android:text="@string/record_task_guancai" />
 
             <TextView
                 style="@style/dialog_record_list_title"
+                android:textColor="@color/btn_press"
                 android:text="@string/record_task_diameter" />
 
             <TextView
                 style="@style/dialog_record_list_title"
+                android:textColor="@color/btn_press"
                 android:text="@string/record_task_computer" />
 
             <TextView
                 style="@style/dialog_record_list_title"
+                android:textColor="@color/btn_press"
                 android:text="@string/record_task_people" />
         </LinearLayout>
 
@@ -106,50 +117,103 @@
             android:orientation="horizontal">
 
             <TextView
+                android:layout_marginLeft="6dp"
                 android:id="@+id/record_start_page_btn"
-                style="@style/dialog_record_button"
+                android:layout_width="70dp"
+                android:layout_height="34dp"
+                android:background="@drawable/shape_ss1"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:gravity="center"
                 android:text="@string/startOption" />
 
             <TextView
+                android:layout_marginLeft="6dp"
+                android:layout_width="70dp"
+                android:layout_height="34dp"
+                android:background="@drawable/shape_ss1"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:gravity="center"
                 android:id="@+id/record_last_page_btn"
-                style="@style/dialog_record_button"
                 android:text="@string/lastOption" />
 
             <TextView
+                android:layout_marginLeft="6dp"
                 android:id="@+id/record_next_page_btn"
-                style="@style/dialog_record_button"
+                android:layout_width="70dp"
+                android:layout_height="34dp"
+                android:background="@drawable/shape_ss1"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:gravity="center"
                 android:text="@string/nextOption" />
 
             <TextView
+                android:layout_marginLeft="6dp"
                 android:id="@+id/record_end_page_btn"
-                style="@style/dialog_record_button"
+                android:layout_width="70dp"
+                android:layout_height="34dp"
+                android:background="@drawable/shape_ss1"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:gravity="center"
                 android:text="@string/endOption" />
 
             <TextView
+                android:layout_marginLeft="16dp"
                 android:id="@+id/record_add_page_btn"
-                style="@style/dialog_record_button"
+                android:layout_width="60dp"
+                android:layout_height="34dp"
+                android:background="@drawable/shape_ss2"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:gravity="center"
                 android:text="@string/add" />
 
             <TextView
+                android:layout_marginLeft="6dp"
                 android:id="@+id/record_change_page_btn"
-                style="@style/dialog_record_button"
+                android:layout_width="60dp"
+                android:layout_height="34dp"
+                android:background="@drawable/shape_ss2"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:gravity="center"
                 android:text="@string/change" />
 
             <TextView
                 android:id="@+id/record_delete_page_btn"
-                style="@style/dialog_record_button"
+                android:layout_marginLeft="6dp"
+                android:layout_width="60dp"
+                android:layout_height="34dp"
+                android:background="@drawable/shape_ss2"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:gravity="center"
                 android:text="@string/delete" />
 
             <TextView
                 android:id="@+id/record_delete_all_page_btn"
-                style="@style/dialog_record_button"
+                android:layout_marginLeft="6dp"
+                android:layout_width="60dp"
+                android:layout_height="34dp"
+                android:background="@drawable/shape_ss2"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:gravity="center"
                 android:text="@string/deleteAll"
                 android:visibility="gone" />
         </LinearLayout>
 
         <TextView
+            android:background="@mipmap/btns1"
             android:id="@+id/record_cancel_record_btn"
-            style="@style/dialog_record_button"
+            android:layout_width="100dp"
+            android:layout_height="34dp"
+            android:textSize="12sp"
+            android:textColor="#fff"
+            android:gravity="center"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_gravity="right|center_vertical|center_horizontal|center"
@@ -158,7 +222,13 @@
 
         <TextView
             android:id="@+id/record_start_record_btn"
-            style="@style/dialog_record_button"
+            android:background="@mipmap/btnss2"
+            android:layout_width="100dp"
+            android:layout_height="34dp"
+            android:textSize="12sp"
+            android:textColor="#fff"
+            android:gravity="center"
+
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_gravity="right|center_vertical|center_horizontal|center"

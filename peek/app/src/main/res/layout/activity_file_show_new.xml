@@ -61,7 +61,7 @@
                 android:paddingLeft="8dp"
                 android:paddingRight="40dp"
                 android:textColor="@color/colorText"
-                android:textColorHint="@color/color_editHint"
+                android:textColorHint="#676F7B"
                 android:textSize="@dimen/preview_textsize" />
 
             <ImageView
@@ -83,7 +83,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="@dimen/preview_toMenu_height"
-            android:background="@drawable/bg_border_yellow_small"
+            android:background="@drawable/shape_dasc"
             android:padding="3dp">
 
             <android.support.v7.widget.RecyclerView

@@ -61,7 +61,7 @@
     </style>
     <style name="dialog_record_edit">
         <item name="android:textSize">@dimen/record_dialog_edit</item>
-        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textColor">@color/btn_press</item>
         <item name="android:padding">3dp</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
@@ -69,7 +69,7 @@
         <item name="android:imeOptions">actionUnspecified</item>
     </style>
     <style name="dialog_record_list_item">
-        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textColor">@color/btn_press</item>
         <item name="android:ellipsize">end</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -82,6 +82,7 @@
         <item name="android:textSize">@dimen/record_dialog_list_title</item>
         <item name="android:gravity">left|center_horizontal|clip_horizontal</item>
         <item name="android:padding">5dp</item>
+
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>

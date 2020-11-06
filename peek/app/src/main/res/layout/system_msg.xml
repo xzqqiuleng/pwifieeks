@@ -14,6 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:textStyle="bold"
         android:text="@string/systemInfo" />
 
     <ImageView
@@ -29,10 +30,10 @@
     <View
         android:id="@+id/fengexian"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="0.6dp"
         android:layout_below="@+id/sys_title"
         android:layout_marginTop="10dp"
-        android:background="@color/colorview" />
+        android:background="@color/white" />
 
     <TextView
         android:id="@+id/xinghao_text"

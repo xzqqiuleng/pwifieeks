@@ -47,4 +47,6 @@ dependencies {
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation "io.netty:netty-all:5.0.0.Alpha2"
+    implementation 'com.tencent.bugly:crashreport:latest.release'
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release'
 }

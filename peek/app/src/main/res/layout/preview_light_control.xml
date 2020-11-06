@@ -17,86 +17,105 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/bg_suspend"
+            android:background="@drawable/bg_jj"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="5dp">
 
             <ImageView
+                android:layout_marginTop="10dp"
                 android:id="@+id/zoom_add"
-                android:layout_width="match_parent"
+                android:layout_width="35dp"
                 android:layout_height="@dimen/preview_lightControl_zoomWidth"
                 android:background="@drawable/img_btn_bg"
                 android:clickable="true"
-                android:paddingLeft="@dimen/preview_light_LRlength"
-                android:paddingRight="@dimen/preview_light_LRlength"
+
                 android:src="@mipmap/add" />
 
             <TextView
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/focus"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/preview_lightControl_boom_textsize" />
+                android:textSize="14sp" />
 
             <ImageView
+                android:layout_marginBottom="10dp"
                 android:id="@+id/zoom_sub"
-                android:layout_width="match_parent"
+                android:layout_width="35dp"
                 android:layout_height="@dimen/preview_lightControl_zoomWidth"
                 android:background="@drawable/img_btn_bg"
                 android:clickable="true"
-                android:paddingLeft="@dimen/preview_light_LRlength"
-                android:paddingRight="@dimen/preview_light_LRlength"
+
                 android:src="@mipmap/sub" />
         </LinearLayout>
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/light_control_container"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="170dp"
+        android:background="@drawable/circle_bg"
+        android:gravity="center"
+        android:orientation="vertical"
+       >
+
+    <ImageView
+        android:id="@+id/lights_switch"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/jin_light" />
+
+    <TextView
+        android:id="@+id/lights_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/lowBeam"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/preview_lightControl_textsize" />
+    </LinearLayout>
+    <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/preview_moveImg_marginBottom"
-        android:background="@drawable/bg_suspend"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="5dp">
-        <TextView
+       <FrameLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="灯光控制"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/colorText"
-            android:textSize="@dimen/preview_lightControl_textsize" />
-        <ImageView
-            android:id="@+id/lights_switch"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/preview_lightControl_img_width"
-            android:background="@drawable/img_btn_bg"
-            android:paddingLeft="@dimen/preview_lightImg_lfLength_padding"
-            android:paddingRight="@dimen/preview_lightImg_lfLength_padding"
-            android:src="@mipmap/jin_light" />
 
-        <TextView
-            android:id="@+id/lights_show"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/lowBeam"
-            android:textColor="@color/colorText"
-            android:textSize="@dimen/preview_lightControl_textsize" />
+           <com.peek.camera.view.view.Vertical_seekbar
+               android:id="@+id/lights_adjust"
+               style="@style/sb_Normal"
+               android:layout_width="match_parent"
+               android:layout_height="140dp"
+               android:layout_gravity="center_horizontal"
+               android:max="9"
+               />
+           <ImageView
+               android:layout_marginTop="20dp"
+               android:layout_width="10dp"
+               android:layout_height="10dp"
+               android:background="@mipmap/jia"
+               android:layout_gravity="center_horizontal"
+               />
+           <ImageView
+               android:layout_marginBottom="20dp"
+               android:layout_width="10dp"
+               android:layout_height="10dp"
+               android:background="@mipmap/jian"
+               android:layout_gravity="center_horizontal|bottom"
+               />
+       </FrameLayout>
 
-        <com.peek.camera.view.view.Vertical_seekbar
-            android:id="@+id/lights_adjust"
-            style="@style/sb_Normal"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/preview_lightControl_seekbar_height"
-            android:layout_gravity="center_horizontal"
-            android:max="9"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp" />
     </LinearLayout>
 </RelativeLayout>

@@ -101,7 +101,7 @@
             style="@style/style_top_menu_main"
             android:layout_width="wrap_content"
             ns22:textColor="@color/colorText"
-            ns22:imgImage="@mipmap/w_set"
+            ns22:imgImage="@mipmap/m_set"
             ns24:textString="@string/firstConnectState" />
 
         <FrameLayout

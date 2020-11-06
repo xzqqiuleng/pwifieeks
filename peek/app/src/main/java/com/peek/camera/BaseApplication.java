@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.peek.camera.model.Login_info;
 import com.peek.camera.p034b.C1127e;
 import com.peek.camera.p034b.C1134k;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -153,6 +154,7 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        CrashReport.initCrashReport(getApplicationContext(), "e24fea2b33", true);
         C1127e.m5218a(getApplicationContext());
         f2898a = getApplicationContext();
         f2899b = f2898a.getResources();

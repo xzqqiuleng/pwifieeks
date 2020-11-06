@@ -66,11 +66,10 @@
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/baseSetting"
-                    android:textColor="@drawable/text_checked"
+                    android:textColor="@drawable/color_sele"
                     android:textSize="@dimen/setting_text" />
 
                 <RadioButton
-                    android:visibility="gone"
                     android:id="@+id/advance_settingRd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -79,8 +78,8 @@
                     android:button="@null"
                     android:gravity="center"
                     android:padding="5dp"
-                    android:text="@string/advanceSetting"
-                    android:textColor="@drawable/text_checked"
+                    android:text="参数设置"
+                    android:textColor="@drawable/color_sele"
                     android:textSize="@dimen/setting_text" />
 
                 <RadioButton
@@ -93,7 +92,7 @@
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="@string/environmentCount"
-                    android:textColor="@drawable/text_checked"
+                    android:textColor="@drawable/color_sele"
                     android:textSize="@dimen/setting_text" />
                 <RadioButton
                     android:id="@+id/rb_set"
@@ -105,7 +104,7 @@
                     android:gravity="center"
                     android:padding="5dp"
                     android:text="图像设置"
-                    android:textColor="@drawable/text_checked"
+                    android:textColor="@drawable/color_sele"
                     android:textSize="@dimen/setting_text" />
 
             </RadioGroup>
@@ -113,7 +112,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/colorBase"
+
                 android:paddingTop="0dp" />
 
             <FrameLayout

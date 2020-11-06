@@ -35,6 +35,9 @@
             android:visibility="gone" />
 
         <TextView
+            android:drawableLeft="@mipmap/base1"
+            android:drawablePadding="6dp"
+            android:textColor="@color/btn_press"
             style="@style/textSet"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -45,6 +48,9 @@
             android:text="@string/lightSetting" />
 
         <TextView
+            android:drawableLeft="@mipmap/base2"
+            android:drawablePadding="6dp"
+            android:textColor="@color/btn_press"
             style="@style/textSet"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -66,6 +72,9 @@
             android:text="@string/language_set" />
 
         <TextView
+            android:drawableLeft="@mipmap/base3"
+            android:drawablePadding="6dp"
+            android:textColor="@color/btn_press"
             style="@style/textSet"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -106,7 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/bg_radiu_btn"
+                android:background="@mipmap/btnss2"
                 android:clickable="true"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
@@ -126,14 +135,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/bg_btn_rectangle"
+                android:background="@mipmap/btnss2"
                 android:clickable="true"
                 android:paddingLeft="15dp"
                 android:paddingTop="5dp"
                 android:paddingRight="15dp"
                 android:paddingBottom="5dp"
                 android:text="@string/set"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/white" />
         </FrameLayout>
 
         <FrameLayout
@@ -148,14 +157,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/bg_btn_rectangle"
+                android:background="@mipmap/btnss2"
                 android:clickable="true"
                 android:paddingLeft="15dp"
                 android:paddingTop="5dp"
                 android:paddingRight="15dp"
                 android:paddingBottom="5dp"
                 android:text="@string/set"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/white" />
         </FrameLayout>
 
         <FrameLayout
@@ -170,14 +179,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/bg_btn_rectangle"
+                android:background="@mipmap/btnss2"
                 android:clickable="true"
                 android:paddingLeft="15dp"
                 android:paddingTop="5dp"
                 android:paddingRight="15dp"
                 android:paddingBottom="5dp"
                 android:text="@string/set"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/white" />
         </FrameLayout>
 
         <FrameLayout
@@ -191,14 +200,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/bg_btn_rectangle"
+                android:background="@mipmap/btnss2"
                 android:clickable="true"
                 android:paddingLeft="15dp"
                 android:paddingTop="5dp"
                 android:paddingRight="15dp"
                 android:paddingBottom="5dp"
                 android:text="@string/see"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/white" />
         </FrameLayout>
 
         <FrameLayout
@@ -213,14 +222,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/bg_btn_rectangle"
+                android:background="@mipmap/btnss2"
                 android:clickable="true"
                 android:paddingLeft="15dp"
                 android:paddingTop="5dp"
                 android:paddingRight="15dp"
                 android:paddingBottom="5dp"
                 android:text="@string/update"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/white" />
         </FrameLayout>
     </LinearLayout>
 </RelativeLayout>

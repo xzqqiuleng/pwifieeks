@@ -5,7 +5,7 @@
         <clip>
             <shape>
                 <corners android:radius="15dp"/>
-                <gradient android:startColor="#80ffd300" android:endColor="#a0ffcb00" android:angle="270" android:centerY="0.75" android:centerColor="#80ffb600"/>
+                <gradient android:startColor="#FFB20D" android:endColor="#FF7F0D" android:angle="270" android:centerY="0.75" android:centerColor="#FFB20D"/>
             </shape>
         </clip>
     </item>

@@ -14,6 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:textStyle="bold"
         android:text="@string/recordSetting" />
 
     <ImageView
@@ -29,10 +30,10 @@
     <View
         android:id="@+id/fengexian"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="0.6dp"
         android:layout_below="@+id/title"
         android:layout_marginTop="10dp"
-        android:background="@color/colorview" />
+        android:background="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -66,6 +67,7 @@
                 android:orientation="vertical">
 
                 <Switch
+                    android:thumb="@mipmap/dian"
                     android:id="@+id/tv_advance_recordAlwayShowHeader"
                     style="@style/textSet"
                     android:layout_width="wrap_content"
@@ -103,6 +105,7 @@
                 android:orientation="vertical">
 
                 <Switch
+                    android:thumb="@mipmap/dian"
                     android:id="@+id/tv_advance_recordName"
                     style="@style/textSet"
                     android:layout_width="wrap_content"
@@ -140,6 +143,7 @@
                 android:orientation="vertical">
 
                 <Switch
+                    android:thumb="@mipmap/dian"
                     android:id="@+id/tv_advance_recordPause"
                     style="@style/textSet"
                     android:layout_width="wrap_content"
@@ -177,6 +181,7 @@
                 android:orientation="vertical">
 
                 <Switch
+                    android:thumb="@mipmap/dian"
                     android:id="@+id/tv_advance_recordKanban"
                     style="@style/textSet"
                     android:layout_width="wrap_content"
@@ -190,6 +195,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="25dp"
@@ -225,6 +231,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="25dp"

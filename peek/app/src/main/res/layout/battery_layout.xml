@@ -20,10 +20,10 @@
 
             <TextView
                 android:id="@+id/tv_battery_terminal"
-                android:layout_width="@dimen/preview_topMenu_locateImg_height"
-                android:layout_height="wrap_content"
+                android:layout_width="18dp"
+                android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:background="@drawable/ic_battery_0"
+                android:background="@mipmap/bc1"
                 android:gravity="center"
                 android:text="0%"
                 android:textColor="@color/imageRed"
@@ -38,7 +38,7 @@
             android:singleLine="true"
             android:text="@string/battery_system"
             android:textColor="@color/imageRed"
-            android:textSize="@dimen/preview_top_textsize" />
+            android:textSize="10sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -56,13 +56,13 @@
 
             <TextView
                 android:id="@+id/tv_battery_device"
-                android:layout_width="@dimen/preview_topMenu_locateImg_height"
-                android:layout_height="wrap_content"
+                android:layout_width="18dp"
+                android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:background="@drawable/ic_battery_0"
+                android:background="@mipmap/ba1"
                 android:gravity="center"
                 android:text="0%"
-                android:textColor="@color/imageRed"
+                android:textColor="@color/white"
                 android:textSize="@dimen/preview_topMenu_battery_textsize" />
         </FrameLayout>
 
@@ -74,7 +74,7 @@
             android:singleLine="true"
             android:text="探头电量"
             android:textColor="@color/imageRed"
-            android:textSize="@dimen/preview_top_textsize" />
+            android:textSize="10sp" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ll_zj"
@@ -92,10 +92,10 @@
 
             <TextView
                 android:id="@+id/zj_device"
-                android:layout_width="@dimen/preview_topMenu_locateImg_height"
-                android:layout_height="wrap_content"
+                android:layout_width="18dp"
+                android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:background="@drawable/ic_battery_0"
+                android:background="@mipmap/bb1"
                 android:gravity="center"
                 android:text="0%"
                 android:textColor="@color/imageRed"
@@ -110,7 +110,7 @@
             android:singleLine="true"
             android:text="中继电量"
             android:textColor="@color/imageRed"
-            android:textSize="@dimen/preview_top_textsize" />
+            android:textSize="10sp" />
     </LinearLayout>
 
     <com.peek.camera.view.view.CompositeImageText xmlns:ns1="http://schemas.android.com/apk/res-auto"
